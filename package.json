@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test": "ts-node src/index.test.ts"
+    "test": "npx ts-node src/index.test.ts"
   },
   "author": "sovlookup",
   "license": "MIT",

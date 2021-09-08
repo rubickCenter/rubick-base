@@ -2,7 +2,7 @@
 
 Native Node.js modules that listen/send simulated events to devices
 
-use grpc to push io stream
+use grpc to push event stream
 
 ## build
 

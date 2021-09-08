@@ -2,7 +2,7 @@
 
 rubick 的 API 拓展层基座
 
-## Features
+## Built-in APIs
  - [x] 键鼠事件监听
 
 ## TODO

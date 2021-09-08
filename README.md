@@ -5,6 +5,12 @@ rubick 的 API 拓展层基座
 ## Features
  - [x] 键鼠事件监听
 
+## TODO
+
+ - [ ] electron 重编译
+ - [ ] 统一 proto 文件
+ - [ ] npm 发布
+
 ## Getting start
 
 ```js

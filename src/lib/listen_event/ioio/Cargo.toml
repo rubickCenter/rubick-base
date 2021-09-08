@@ -1,0 +1,24 @@
+[package]
+name = "ioio"
+version = "0.1.0"
+license = "ISC"
+edition = "2018"
+exclude = ["index.node"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+rdev = "0.5.1"
+tonic = "0.5"
+prost = "0.8"
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+chrono = "0.4.19"
+
+[build-dependencies]
+tonic-build = "0.5"
+
+[dependencies.neon]
+version = "0.9.1"
+default-features = false
+features = ["napi-6"]

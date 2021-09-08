@@ -1,3 +1,9 @@
 ## ioio
 
-https://github.com/SOVLOOKUP/ioio/commit/f06424128d1b1d12777a3cf9220b471fb300b487
+Native Node.js modules that listen/send simulated events to devices
+
+use grpc to push io stream
+
+## build
+
+`npm run build-release`

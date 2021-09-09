@@ -13,7 +13,7 @@ rubick 的 API 拓展层基座
 ```js
 const RubickServer = require('../dist').default
 
-const rubickServer = new RubickServer({
+let server = new RubickServer({
     port: 50051
 }, {
     ioio_hook: async (e) => {
@@ -21,11 +21,12 @@ const rubickServer = new RubickServer({
     }
 })
 
+const api = server.getAPI()
+
 async function main() {
-    await rubickServer.start()
-    setTimeout(async () => { await rubickServer.close() }, 5000)
+    await server.start()
+    await api.screenCapture("./ .png")
 }
 
-console.log("The service will close after 5 sec!")
 main()
 ```

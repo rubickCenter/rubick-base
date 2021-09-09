@@ -1,7 +1,7 @@
 {
-  "name": "rubick-grpc-server",
-  "version": "0.1.1",
-  "description": "The API base of Rubick",
+  "name": "rubickbase",
+  "version": "0.0.1",
+  "description": "Expand native capabilities for nodejs and electron based on rust",
   "main": "dist/index.js",
   "scripts": {
     "test": "node test/index.test.js",
@@ -12,13 +12,13 @@
   "license": "MPLv2",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SOVLOOKUP/rubick-grpc-server"
+    "url": "git+https://github.com/SOVLOOKUP/rubickbase"
   },
   "files": [
     "dist/**",
     "proto/**"
   ],
-  "homepage": "https://github.com/SOVLOOKUP/rubick-grpc-server",
+  "homepage": "https://github.com/SOVLOOKUP/rubickbase",
   "dependencies": {
     "@grpc/grpc-js": "^1.3.7",
     "@grpc/proto-loader": "^0.6.4",

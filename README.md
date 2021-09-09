@@ -25,7 +25,7 @@ const api = server.getAPI()
 
 async function main() {
     await server.start()
-    await api.screenCapture("./ .png")
+    await api.screenCapture("./capture.png")
 }
 
 main()

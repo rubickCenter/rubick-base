@@ -9,8 +9,7 @@
     "build-release": "npm run build -- --release",
     "install": "npm run build-release",
     "test": "cargo test",
-    "electron-rebuild": "electron-build-env neon build rubick_backend --release",
-    "postinstall": "node scripts/postinstall.js"
+    "electron-rebuild": "electron-build-env neon build rubick_backend --release"
   },
   "devDependencies": {
     "cargo-cp-artifact": "^0.1.5"

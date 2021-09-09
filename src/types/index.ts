@@ -1,17 +1,17 @@
-import Mali from 'mali'
+// import Mali from "mali"
 
-export default class RubickServerClass {
-  server: Mali<any>
-  port: string
-  env: string
-  silent: boolean
-  defaultHooks: RubickDefaultHooks
-  worker: any
-  logger: Logger
-  constructor(settings: RubickServerSettings, defaultHooks: RubickDefaultHooks)
-  start(): Promise<void>
-  close(): Promise<void>
-}
+// export default class RubickServerClass {
+//   server: Mali<any>
+//   port: string
+//   env: string
+//   silent: boolean
+//   defaultHooks: RubickDefaultHooks
+//   worker: any
+//   logger: Logger
+//   constructor(settings: RubickServerSettings, defaultHooks: RubickDefaultHooks)
+//   start(): Promise<void>
+//   close(): Promise<void>
+// }
 
 export interface DeviceEvent {
   device: string

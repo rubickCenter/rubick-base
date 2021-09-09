@@ -3,10 +3,9 @@
   "version": "0.0.3",
   "description": "The API base of Rubick",
   "main": "dist/index.js",
-  "types": "src/types/index.d.ts",
   "scripts": {
     "test": "node test/index.test.js",
-    "build": "tsup-node src/index.ts --minify --minify-whitespace --minify-identifiers --minify-syntax --clean --inlineDynamicImports --env.NODE_ENV production"
+    "build": "tsc && node scripts/build.js"
   },
   "author": "sovlookup",
   "email": "gonorth@qq.com",
@@ -14,7 +13,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SOVLOOKUP/rubick-grpc-server"
-  },  
+  },
   "dependencies": {
     "@grpc/grpc-js": "^1.3.7",
     "@grpc/proto-loader": "^0.6.4",
@@ -22,15 +21,9 @@
     "signale": "^1.4.0",
     "threads": "^1.6.5"
   },
-  "devDependencies": {
-    "@types/signale": "^1.4.2"
-  },
   "files": [
     "dist/**",
-    "src/types/**",
-    "proto/**",
-    "lib/index.js",
-    "lib/rust-backend/index.node",
-    "lib/rust-backend/index.d.ts"
-  ]
+    "proto/**"
+  ],
+  "homepage": "https://github.com/SOVLOOKUP/rubick-grpc-server"
 }

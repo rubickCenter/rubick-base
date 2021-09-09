@@ -2,11 +2,11 @@
   "compilerOptions": {
     "strict": true,
     "typeRoots": [
-      "node_modules/@types",
-      "src/types"
+      "node_modules/@types"
     ],
     "moduleResolution":"Node",
-    "module": "ESNext" /* 指定模块代码生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
+    "declaration": true,
+    "module": "commonjs" /* 指定模块代码生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
     "target": "ESNext" /* 指定ECMAScript目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
     "outDir": "./dist" /* 将输出结构重定向到目录。 */,
     "lib": [

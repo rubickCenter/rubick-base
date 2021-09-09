@@ -22,7 +22,7 @@ const RubickServer = require('rubickbase').default
 // esm
 import RubickServer from 'rubickbase'
 
-let server = new RubickServer({
+const server = new RubickServer({
     port: 50051
 }, {
     ioio_hook: async (e) => {

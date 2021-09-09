@@ -1,0 +1,18 @@
+{
+  "name": "rubick_backend",
+  "version": "0.1.0",
+  "description": "Native Node.js modules that listen/send simulated events to devices",
+  "main": "index.node",
+  "scripts": {
+    "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
+    "build-debug": "npm run build --",
+    "build-release": "npm run build -- --release",
+    "install": "npm run build-release",
+    "test": "cargo test",
+    "electron-rebuild": "electron-build-env neon build rubick_backend --release",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "devDependencies": {
+    "cargo-cp-artifact": "^0.1.5"
+  }
+}

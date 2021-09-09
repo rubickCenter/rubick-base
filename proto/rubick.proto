@@ -1,0 +1,16 @@
+syntax = "proto3";
+package rubick;
+
+service Rubick {
+  rpc ioio (DeviceEvent) returns (OK) {}
+}
+
+message DeviceEvent {
+  string device = 1;
+  string action = 2;
+  string info = 3;
+}
+
+message OK {
+  bool ok = 1;
+}

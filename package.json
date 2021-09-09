@@ -1,0 +1,23 @@
+{
+  "name": "rubick-grpc-server",
+  "version": "0.0.1",
+  "description": "The API base of Rubick",
+  "main": "dist/index.js",
+  "types": "src/types/index.d.ts",
+  "scripts": {
+    "test": "node test/index.test.js",
+    "build": "tsup-node src/index.ts --minify --minify-whitespace --minify-identifiers --minify-syntax --clean --inlineDynamicImports --env.NODE_ENV production"
+  },
+  "author": "sovlookup",
+  "license": "MPLv2",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.3.7",
+    "@grpc/proto-loader": "^0.6.4",
+    "mali": "^0.44.3",
+    "signale": "^1.4.0",
+    "threads": "^1.6.5"
+  },
+  "devDependencies": {
+    "@types/signale": "^1.4.2"
+  }
+}

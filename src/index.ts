@@ -3,11 +3,12 @@ import path from 'path'
 import { spawn, Worker, Thread } from "threads"
 import signale from 'signale'
 import { RubickDefaultHooks, Logger, RubickServerSettings, DeviceEvent } from './types'
+import RubickServerClass from './types'
 
 const proto_path = '../proto/rubick.proto'
 const backend_path = '../lib/index'
 
-export default class RubickServer {
+export default class RubickServer implements RubickServerClass {
   server: Mali<any>
   port: string
   env: string

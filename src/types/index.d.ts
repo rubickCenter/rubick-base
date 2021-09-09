@@ -9,8 +9,8 @@ export default class RubickServerClass {
   worker: any
   logger: Logger
   constructor(settings: RubickServerSettings, defaultHooks: RubickDefaultHooks)
-  start(): void
-  close(): void
+  start(): Promise<void>
+  close(): Promise<void>
 }
 
 export interface DeviceEvent {

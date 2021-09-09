@@ -29,10 +29,9 @@ export default class RubickServer implements RubickServerClass {
   }
 
   async start() {
-    let grpcServer = await this.server.start(`0.0.0.0:${this.port}`)
+    await this.server.start(`0.0.0.0:${this.port}`)
     this.worker = await spawn(new Worker(backend_path))
     await this.afterStart()
-    return grpcServer
   }
 
   async close() {

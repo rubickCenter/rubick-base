@@ -11,7 +11,7 @@ rubick 的 API 拓展层基座
 ## Getting start
 
 ```js
-const RubickServer = require('../dist').default
+const RubickServer = require('rubick-grpc-server').default
 
 let server = new RubickServer({
     port: 50051

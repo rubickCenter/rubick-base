@@ -1,6 +1,6 @@
 {
   "name": "rubick-grpc-server",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "The API base of Rubick",
   "main": "dist/index.js",
   "scripts": {

@@ -4,7 +4,7 @@
 
 ## Install
 
-`npm install --save rubickbase`
+npm install --save rubickbase
 
 ## Built-in APIs
 

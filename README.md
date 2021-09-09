@@ -1,6 +1,6 @@
-## rubick-grpc-server
+## rubickbase
 
-基于 Rust 提供各种拓展能力的 Nodejs 模块，用于取代 iohook 和 robotjs ，以及添加其他原生能力
+基于 Rust 提供原生能力 API 的现代 Nodejs 模块，大小 2.2M，可取代 iohook 和 robotjs
 
 ## Built-in APIs
 

@@ -1,6 +1,6 @@
 ## rubick-grpc-server
 
-rubick 的 API 拓展层基座
+基于 Rust 提供各种拓展能力的原生 Node 包.
 
 ## Built-in APIs
 

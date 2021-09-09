@@ -1,6 +1,6 @@
 ## rubick-grpc-server
 
-基于 Rust 提供各种拓展能力的原生 Node 包，用于取代 iohook 和 robotjs ，以及添加其他原生能力
+基于 Rust 提供各种拓展能力的 Nodejs 模块，用于取代 iohook 和 robotjs ，以及添加其他原生能力
 
 ## Built-in APIs
 

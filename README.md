@@ -11,7 +11,7 @@
 ## Getting start
 
 ```js
-const RubickServer = require('rubick-grpc-server').default
+const RubickServer = require('rubickbase').default
 
 let server = new RubickServer({
     port: 50051

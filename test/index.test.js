@@ -1,5 +1,4 @@
 const RubickServer = require('../dist').default
-const fs = require('fs')
 
 let server = new RubickServer({
     port: 50051
@@ -12,7 +11,8 @@ let server = new RubickServer({
 const api = server.getAPI()
 
 async function main() {
-    const b = await api.screenCapture("./ .png")
+    await server.start()
+    await api.screenCapture("./ .png")
 }
 
 main()

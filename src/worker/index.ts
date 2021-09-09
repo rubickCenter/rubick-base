@@ -1,12 +1,13 @@
 import rustBackend from './rust-backend'
 
-export interface API {
-    ioioStart:  (port: string) => Promise<boolean>    
+export interface WorkerAPI {
+    ioioStart: (port: string) => Promise<boolean>
+    capture: (path: string) => Promise<undefined>
 }
 
-const BackEnd: API = {
-    ioioStart: async (port: string) => { return await rustBackend.ioio_start(port) }
+const RustBackend: WorkerAPI = {
+    ioioStart: async (port: string) => { return await rustBackend.ioio_start(port) },
+    capture: async (path: string) => { return await rustBackend.capture_start(path) }
 }
  
-
-export default BackEnd
+export default RustBackend

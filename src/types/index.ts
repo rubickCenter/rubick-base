@@ -1,17 +1,28 @@
-// import Mali from "mali"
 
-// export default class RubickServerClass {
-//   server: Mali<any>
-//   port: string
-//   env: string
-//   silent: boolean
-//   defaultHooks: RubickDefaultHooks
-//   worker: any
-//   logger: Logger
-//   constructor(settings: RubickServerSettings, defaultHooks: RubickDefaultHooks)
-//   start(): Promise<void>
-//   close(): Promise<void>
-// }
+export interface RubickDefaultHooks {
+  // mouse/keyboard event listen
+  ioio_hook: (event: DeviceEvent) => {}
+}
+
+export interface RubickExtendAPI {
+  // capture screen and down to path
+  screenCapture: (path: string) => Promise<string>
+    
+  // Get pixel color at the cursur position
+  getPixelColor: () => Promise<Color>
+}
+
+export interface RGBA {
+  r: number
+  g: number
+  b: number
+  a: number
+}
+
+export interface Color {
+  hex16: string
+  rgba: RGBA
+}
 
 export interface DeviceEvent {
   device: string
@@ -24,10 +35,6 @@ export interface PointPosition {
   y: number
 }
 
-export interface RubickDefaultHooks {
-  ioio_hook: (event: DeviceEvent) => {}
-}
-
 export interface RubickServerSettings {
   port: number
   logger?: Logger
@@ -36,9 +43,9 @@ export interface RubickServerSettings {
 }
 
 export interface Logger {
-  error:Function
-  debug:Function
-  info:Function
-  success:Function
-  warn:Function
+  error: Function
+  debug: Function
+  info: Function
+  success: Function
+  warn: Function
 }

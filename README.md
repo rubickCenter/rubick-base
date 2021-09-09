@@ -5,7 +5,7 @@ rubick 的 API 拓展层基座
 ## Built-in APIs
 
  - [x] 键鼠事件监听
- - [ ] 截图
+ - [x] 截图
  - [ ] 取色
 
 ## Getting start

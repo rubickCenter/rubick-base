@@ -1,7 +1,8 @@
-mod ioio;
-use ioio::start;
-use std::thread;
+mod capture;
 
 fn main() {
-    thread::spawn(move || start("50051").expect("Rpc client error!"));
+    capture::capture(
+        "/home/sovlookup/桌面/test/rubick-grpc-server/src/worker/rust-backend/src/a.png"
+            .to_string(),
+    );
 }

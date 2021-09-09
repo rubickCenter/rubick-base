@@ -13,6 +13,8 @@ tonic = "0.5"
 prost = "0.8"
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
 chrono = "0.4.19"
+scrap = "0.5"
+repng = "0.2.2"
 
 [build-dependencies]
 tonic-build = "0.5"

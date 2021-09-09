@@ -7,11 +7,16 @@
  - [x] 键鼠事件监听
  - [x] 截图
  - [ ] 取色
+ - [ ] 获取鼠标位置
+ - [ ] 注册快捷键
 
 ## Getting start
 
 ```js
+// cjs
 const RubickServer = require('rubickbase').default
+// esm
+import RubickServer from 'rubickbase'
 
 let server = new RubickServer({
     port: 50051
@@ -24,7 +29,9 @@ let server = new RubickServer({
 const api = server.getAPI()
 
 async function main() {
+    // start grpc service
     await server.start()
+    // screen capture
     await api.screenCapture("./capture.png")
 }
 

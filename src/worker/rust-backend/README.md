@@ -11,7 +11,3 @@ Power by GRPC
 ## build
 
 `npm run build-release`
-
-## todo
-
- - 优化 repng 的速度

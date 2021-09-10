@@ -1,0 +1,28 @@
+on: [push]
+
+name: CI
+
+jobs:
+  build_and_test:
+   strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+    name: Rust project
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Install system deps
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get install libx11-dev
+
+      - run: cd src/worker/rust-backend
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --all-features

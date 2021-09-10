@@ -5,7 +5,14 @@ edition = "2018"
 exclude = ["index.node"]
 
 [lib]
-crate-type = ["cdylib", "rlib"]
+crate-type = ["cdylib"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+incremental = false
+opt-level = "s"
 
 [dependencies]
 rdev = "0.5.1"

@@ -21,7 +21,7 @@ jobs:
       - name: Install system deps
         if: matrix.platform == 'ubuntu-latest'
         run: |
-          sudo apt-get install pkg-config libx11-dev libxi-dev libxtst-dev
+          sudo apt-get install g++ pkg-config libx11-dev libxi-dev libxtst-dev
 
       - run: | 
           cd src/worker/rust-backend

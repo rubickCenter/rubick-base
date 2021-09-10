@@ -1,4 +1,4 @@
-import newRubickBase from '../dist'
+import newRubickBase from '../src'
 
 const rubickBase = newRubickBase()
 

@@ -1,7 +1,11 @@
-// import newRubickBase from 'rubickbase'
+import newRubickBase from 'rubickbase'
 
+async function s() {
+    const a = await import('rubickbase')
+    console.log(newRubickBase)
+}
 
-console.log(require('rubickbase'))
+s()
 // const rubickBase = newRubickBase.default({
 //     ioio_hook: (e) => {
 //         console.log(e)

@@ -1,4 +1,4 @@
-import fs from 'fs'
+const fs = require('fs')
 
 if (!fs.existsSync("dist/worker/rust-backend/")) {
     fs.mkdirSync("dist/worker/rust-backend/")

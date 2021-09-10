@@ -19,7 +19,7 @@ npm install --save rubickbase
 
 ```js
 // cjs
-const newRubickBase = require('../dist').default
+const newRubickBase = require('rubickbase').default
 // esm
 import newRubickBase from 'rubickbase'
 

@@ -3,14 +3,12 @@ on: [push]
 name: CI
 
 jobs:
-  build_and_test:
+  build_linux:
     strategy:
-      fail-fast: false
       matrix:
-        platform: [ ubuntu-latest, windows-latest, macos-latest ]
+        platform: [ ubuntu-latest ]
 
     runs-on: ${{ matrix.platform }}
-    name: Rust project
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -19,18 +17,44 @@ jobs:
       - uses: Swatinem/rust-cache@v1
       
       - name: Install system deps
-        if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt-get install g++ pkg-config libx11-dev libxi-dev libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev libxtst-dev libasound2-dev libssl-dev cmake libfreetype6-dev libexpat1-dev libxcb-composite0-dev
 
       - name: Build linux
-        if: matrix.platform == 'ubuntu-latest'
         run: | 
           cd src/worker/rust-backend
           rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
           rustup component add rustfmt --toolchain nightly-x86_64-unknown-linux-gnu
           cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu
 
+      - name: Create release
+        uses: Roang-zero1/github-create-release-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub release linux
+        uses: Roang-zero1/github-upload-release-artifacts-action@master
+        with:
+          args:
+          - src/worker/rust-backend/target/x86_64-unknown-linux-gnu/release/librubick_backend.so
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build_else:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ windows-latest, macos-latest ]
+
+    runs-on: ${{ matrix.platform }}
+    needs: build_linux
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+      - uses: Swatinem/rust-cache@v1
+      
       - name: Set up MinGW
         uses: egor-tensin/setup-mingw@v2
         if: matrix.platform == 'windows-latest'
@@ -45,6 +69,15 @@ jobs:
           rustup component add rustfmt --toolchain nightly-x86_64-pc-windows-msvc
           cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-pc-windows-msvc
 
+      - name: Create GitHub release windows
+        uses: Roang-zero1/github-upload-release-artifacts-action@master
+        if: matrix.platform == 'windows-latest'
+        with:
+          args:
+          - src/worker/rust-backend/target/x86_64-pc-windows-msvc/release/librubick_backend.dll
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build macos
         if: matrix.platform == 'macos-latest'
         run: | 
@@ -52,3 +85,12 @@ jobs:
           rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
           rustup component add rustfmt --toolchain nightly-x86_64-apple-darwin
           cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-apple-darwin
+
+      - name: Create GitHub release macos
+        uses: Roang-zero1/github-upload-release-artifacts-action@master
+        if: matrix.platform == 'macos-latest'
+        with:
+          args:
+          - src/worker/rust-backend/target/x86_64-apple-darwin/release/librubick_backend.dylib
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

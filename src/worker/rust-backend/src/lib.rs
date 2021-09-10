@@ -1,5 +1,3 @@
-#![feature(async_closure)]
-
 mod capture;
 mod ioio;
 use capture::capture;

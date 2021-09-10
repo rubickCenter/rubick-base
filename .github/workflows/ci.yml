@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ ubuntu-latest]
+        platform: [macos-latest, windows-latest, ubuntu-latest]
 
     runs-on: ${{ matrix.platform }}
     name: Rust project
@@ -20,7 +20,7 @@ jobs:
       - name: Install system deps
         if: matrix.platform == 'ubuntu-latest'
         run: |
-          sudo apt-get install libx11-dev libxss-dev
+          sudo apt-get install gcc-c++ remmina libX11-devel libxkbcommon-x11-devel
 
       - run: | 
           cd src/worker/rust-backend

@@ -35,8 +35,7 @@ jobs:
       - name: Create GitHub release linux
         uses: Roang-zero1/github-upload-release-artifacts-action@master
         with:
-          args:
-          - src/worker/rust-backend/target/x86_64-unknown-linux-gnu/release/librubick_backend.so
+          args: src/worker/rust-backend/target/x86_64-unknown-linux-gnu/release/librubick_backend.so
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -73,8 +72,7 @@ jobs:
         uses: Roang-zero1/github-upload-release-artifacts-action@master
         if: matrix.platform == 'windows-latest'
         with:
-          args:
-          - src/worker/rust-backend/target/x86_64-pc-windows-msvc/release/librubick_backend.dll
+          args: src/worker/rust-backend/target/x86_64-pc-windows-msvc/release/librubick_backend.dll
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -90,7 +88,6 @@ jobs:
         uses: Roang-zero1/github-upload-release-artifacts-action@master
         if: matrix.platform == 'macos-latest'
         with:
-          args:
-          - src/worker/rust-backend/target/x86_64-apple-darwin/release/librubick_backend.dylib
+          args: src/worker/rust-backend/target/x86_64-apple-darwin/release/librubick_backend.dylib
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

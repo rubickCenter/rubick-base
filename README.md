@@ -8,10 +8,11 @@ npm install --save rubickbase
 
 ## Built-in APIs
 
- - [x] 键鼠事件监听
+ - [x] 键鼠事件监听钩子
  - [x] 截图
- - [ ] 取色
- - [ ] 获取鼠标位置
+ - [x] 图片取色
+ - [x] 获取鼠标位置
+ - [x] 获取鼠标像素颜色
  - [ ] 注册快捷键(装饰器风格)
 
 ## Getting start

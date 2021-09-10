@@ -21,8 +21,7 @@ jobs:
         run: |
           sudo apt-get install libx11-dev
 
-      - run: cd src/worker/rust-backend
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release --all-features
+      - run: | 
+          cd src/worker/rust-backend
+          cargo build --release --all-features
+

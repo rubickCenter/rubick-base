@@ -30,14 +30,14 @@ jobs:
       - name: Create release
         uses: Roang-zero1/github-create-release-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
 
       - name: Create GitHub release linux
         uses: Roang-zero1/github-upload-release-artifacts-action@master
         with:
           args: src/worker/rust-backend/target/x86_64-unknown-linux-gnu/release/librubick_backend.so
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
 
   build_else:
     strategy:
@@ -74,7 +74,7 @@ jobs:
         with:
           args: src/worker/rust-backend/target/x86_64-pc-windows-msvc/release/librubick_backend.dll
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
 
       - name: Build macos
         if: matrix.platform == 'macos-latest'
@@ -90,4 +90,4 @@ jobs:
         with:
           args: src/worker/rust-backend/target/x86_64-apple-darwin/release/librubick_backend.dylib
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}

@@ -1,14 +1,14 @@
 import Mali from 'mali'
 import path from 'path'
 import signale from 'signale'
-import { RubickDefaultHooks, Logger, RubickServerSettings, DeviceEvent, RubickExtendAPI, Position, RubickAPI } from './types'
+import { RubickDefaultHooks, Logger, RubickBaseSettings, DeviceEvent, RubickExtendAPI, Position, RubickAPI } from './types'
 import worker, { WorkerAPI } from './worker'
 import extendAPI from './extendAPI'
 import os from 'os'
 
 const proto_path = '../proto/rubick.proto'
 
-export default class RubickServer {
+export class RubickBase {
   private server: Mali<any>
   private port: string
   private defaultHooks: RubickDefaultHooks
@@ -17,12 +17,12 @@ export default class RubickServer {
   private started: boolean
   private tmpdir: string
   logger: Logger
-  constructor(settings?: RubickServerSettings, defaultHooks?: RubickDefaultHooks) {
-    const { port, logger, tmpdir } = settings || {}
+  constructor(settings: RubickBaseSettings, defaultHooks: RubickDefaultHooks) {
+    const { port, logger, tmpdir } = settings 
     // if no port, gen a port from 50000-60000
     this.port = (port || this.getRandomNum(50000, 60000)).toString()
     this.tmpdir = tmpdir || os.tmpdir()
-    this.defaultHooks = defaultHooks || {}
+    this.defaultHooks = defaultHooks 
     this.logger = logger || signale
     this.cursorPosition = { x: 0, y: 0 }
     this.server = new Mali(path.resolve(__dirname, proto_path), 'Rubick')
@@ -107,4 +107,17 @@ export default class RubickServer {
       throw new Error("Rubick has not started! Start it first!")
     }
   }
+}
+
+export interface NewRubickBase {
+  settings?: RubickBaseSettings,
+  defaultHooks?: RubickDefaultHooks
+}
+
+export default function newRubickBase(setting?: NewRubickBase) {
+  const { settings, defaultHooks } = setting || {}
+  return new RubickBase(
+    settings || {},
+    defaultHooks || {}
+  )
 }

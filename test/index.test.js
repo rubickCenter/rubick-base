@@ -1,11 +1,11 @@
-const RubickServer = require('../dist').default
+const newRubickBase = require('../dist').default
 
-const server = new RubickServer()
+const rubickBase = newRubickBase()
 
 async function main() {
     // start rubickbase
-    await server.start()
-    const api = server.getAPI()
+    await rubickBase.start()
+    const api = rubickBase.getAPI()
     // screen capture
     await api.screenCapture("./capture.png")
     // cursor Position
@@ -14,7 +14,7 @@ async function main() {
     }, 1000)
     // close rubickbase
     setTimeout(async () => {
-        await server.close()
+        await rubickBase.close()
         clearInterval(task)
     }, 10000)
 }

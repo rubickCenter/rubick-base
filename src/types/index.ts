@@ -48,7 +48,7 @@ export interface Position {
   y: number
 }
 
-export interface RubickServerSettings {
+export interface RubickBaseSettings {
   port?: number
   logger?: Logger
   tmpdir?: string

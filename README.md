@@ -19,11 +19,11 @@ npm install --save rubickbase
 
 ```js
 // cjs
-const RubickServer = require('rubickbase').default
+const newRubickBase = require('../dist').default
 // esm
-import RubickServer from 'rubickbase'
+import newRubickBase from 'rubickbase'
 
-const server = new RubickServer()
+const rubickBase = newRubickBase()
 
 async function main() {
     // start rubickbase

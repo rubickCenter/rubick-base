@@ -1,18 +1,22 @@
 const RubickServer = require('../dist').default
 
-let server = new RubickServer({
-    port: 50051
-}, {
-    ioio_hook: async (e) => {
-        console.log(e)
-    }
-})
-
-const api = server.getAPI()
+const server = new RubickServer()
 
 async function main() {
+    // start rubickbase
     await server.start()
-    await api.screenCapture("./ .png")
+    const api = server.getAPI()
+    // screen capture
+    await api.screenCapture("./capture.png")
+    // cursor Position
+    let task = setInterval(async () => {
+        console.log(await api.getCursorPositionPixelColor())
+    }, 1000)
+    // close rubickbase
+    setTimeout(async () => {
+        await server.close()
+        clearInterval(task)
+    }, 10000)
 }
 
 main()

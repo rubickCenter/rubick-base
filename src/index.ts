@@ -1,47 +1,81 @@
 import Mali from 'mali'
 import path from 'path'
 import signale from 'signale'
-import { RubickDefaultHooks, Logger, RubickServerSettings, DeviceEvent, RubickExtendAPI } from './types'
+import { RubickDefaultHooks, Logger, RubickServerSettings, DeviceEvent, RubickExtendAPI, Position, RubickAPI } from './types'
 import worker, { WorkerAPI } from './worker'
-import apis from './apis'
+import extendAPI from './extendAPI'
+import os from 'os'
 
 const proto_path = '../proto/rubick.proto'
 
 export default class RubickServer {
-  server: Mali<any>
-  port: string
-  env: string
-  silent: boolean
-  defaultHooks: RubickDefaultHooks
+  private server: Mali<any>
+  private port: string
+  private defaultHooks: RubickDefaultHooks
+  private worker: WorkerAPI
+  private cursorPosition: Position
+  private started: boolean
+  private tmpdir: string
   logger: Logger
-  worker: WorkerAPI
-  apis: RubickExtendAPI
-  constructor(settings: RubickServerSettings, defaultHooks: RubickDefaultHooks) {
-    const { port, logger, env, silent } = settings
-    this.port = port.toString()
-    this.defaultHooks = defaultHooks
+  constructor(settings?: RubickServerSettings, defaultHooks?: RubickDefaultHooks) {
+    const { port, logger, tmpdir } = settings || {}
+    // if no port, gen a port from 50000-60000
+    this.port = (port || this.getRandomNum(50000, 60000)).toString()
+    this.tmpdir = tmpdir || os.tmpdir()
+    this.defaultHooks = defaultHooks || {}
     this.logger = logger || signale
-    this.env = env || 'development'
-    this.silent = silent || false
+    this.cursorPosition = { x: 0, y: 0 }
     this.server = new Mali(path.resolve(__dirname, proto_path), 'Rubick')
     this.worker = worker
-    this.apis = apis
     this.initBuiltinService()
+    this.started = false
   }
 
   async start() {
     await this.server.start(`0.0.0.0:${this.port}`)
     await this.afterStart()
+    this.started = true
   }
 
   async close() {
+    this.validStarted()
     await this.server.close()
+    this.started = false
   }
 
-  getAPI() {
-    return apis
+  getAPI(): RubickAPI {
+    this.validStarted()
+    const getCursorPosition = () => this.cursorPosition
+
+    const screenCapture = async (capturePath: string) => {
+      if (capturePath.endsWith("/")) {
+        capturePath = capturePath + Date.now().toString() + ".png"
+      }
+      if (!capturePath.endsWith(".png")) {
+        capturePath = capturePath + ".png"
+      }
+      await worker.capture(capturePath)
+      return path.resolve(capturePath)
+    }
+    
+    const getCursorPositionPixelColor = async () => {
+      const capturePath = await screenCapture(path.resolve(this.tmpdir, 'capture/'))
+      return extendAPI.getPicturePixelColor(capturePath, getCursorPosition())
+    }
+    return {
+      getCursorPosition,
+      screenCapture,
+      getCursorPositionPixelColor,
+      ...extendAPI
+    }
   }
 
+  // can work without server start
+  getExtendedAPI(): RubickExtendAPI {
+    return extendAPI
+  }
+
+  // start workers
   private async afterStart() {
     const log = (success: boolean, name: string) => { if (success) { this.logger.success(`Start ${name} worker`) } else { this.logger.error(`Start ${name} worker`) } }
     // start workers
@@ -50,14 +84,27 @@ export default class RubickServer {
 
   // registe builtin RPC services
   private initBuiltinService() {
-    this.server.use('ioio', (ctx: any) => {
+    this.server.use('ioio', async (ctx: any) => {
       const event: DeviceEvent = ctx.request.req
-      // info is still string here
+      // mousemove info is still string here convert to Position
       if ((event.info as string).startsWith("{")) {
         event.info = JSON.parse((event.info as string))
+        this.cursorPosition = event.info as Position
       }
-      this.defaultHooks.ioio_hook(event)
+      if (this.defaultHooks.ioio_hook) await this.defaultHooks.ioio_hook(event)
       ctx.res = { ok: true }
     })
+  }
+
+  private getRandomNum(Min: number, Max: number) {
+    var Range = Max - Min
+    var Rand = Math.random()
+    return (Min + Math.round(Rand * Range))
+  }
+
+  private validStarted() {
+    if (!this.started) {
+      throw new Error("Rubick has not started! Start it first!")
+    }
   }
 }

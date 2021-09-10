@@ -17,7 +17,7 @@ jobs:
         with:
           toolchain: stable
       - name: Install system deps
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt-get install libx11-dev
 

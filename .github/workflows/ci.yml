@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ ubuntu-latest]
+        platform: [ ubuntu-latest ]
 
     runs-on: ${{ matrix.platform }}
     name: Rust project
@@ -21,7 +21,7 @@ jobs:
       - name: Install system deps
         if: matrix.platform == 'ubuntu-latest'
         run: |
-          sudo apt-get install g++ pkg-config libx11-dev libxi-dev libxtst-dev
+          sudo apt-get install g++ pkg-config libx11-dev libxi-dev libxtst-dev libasound2-dev libssl-dev cmake libfreetype6-dev libexpat1-dev libxcb-composite0-dev
 
       - run: | 
           cd src/worker/rust-backend

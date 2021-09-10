@@ -20,7 +20,7 @@ jobs:
       - name: Install system deps
         if: matrix.platform == 'ubuntu-latest'
         run: |
-          sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev
+          sudo apt-get install g++ pkg-config libx11-dev libxmu-dev libasound2-dev libudev-dev
 
       - run: | 
           cd src/worker/rust-backend

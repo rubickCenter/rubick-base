@@ -4,7 +4,7 @@ name: CI
 
 jobs:
   build_and_test:
-   strategy:
+    strategy:
       fail-fast: false
       matrix:
         platform: [macos-latest, ubuntu-latest, windows-latest]

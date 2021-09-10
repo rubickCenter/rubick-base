@@ -2,10 +2,6 @@
 
 基于 Rust 提供原生能力 API 的现代 Nodejs 模块，大小 2.2M，使用简单，可取代 iohook 和 robotjs
 
-## Install
-
-npm install --save rubickbase
-
 ## Built-in APIs
 
  - [x] 键鼠事件监听钩子
@@ -13,7 +9,12 @@ npm install --save rubickbase
  - [x] 图片取色
  - [x] 获取鼠标位置
  - [x] 获取鼠标像素颜色
+ - [ ] 事件订阅模式
  - [ ] 注册快捷键(装饰器风格)
+
+## Install
+
+npm install --save rubickbase
 
 ## Getting start
 
@@ -44,3 +45,7 @@ async function main() {
 
 main()
 ```
+
+## TODO
+
+ - [ ] 去除 jimp 依赖，精简安装大小

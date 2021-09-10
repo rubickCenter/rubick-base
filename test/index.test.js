@@ -1,4 +1,4 @@
-const newRubickBase = require('../dist').default
+import newRubickBase from '../dist'
 
 const rubickBase = newRubickBase()
 

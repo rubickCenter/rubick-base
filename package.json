@@ -1,8 +1,9 @@
 {
   "name": "rubickbase",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Expand native capabilities for nodejs and electron based on rust",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "test": "node test/index.test.js",
     "build": "tsc && node scripts/build.js"

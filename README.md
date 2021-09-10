@@ -19,9 +19,9 @@ npm install --save rubickbase
 
 ```js
 // cjs
-const newRubickBase = require('rubickbase').default
+const { newRubickBase } = require('rubickbase')
 // esm
-import newRubickBase from 'rubickbase'
+import { newRubickBase } from 'rubickbase'
 
 const rubickBase = newRubickBase()
 

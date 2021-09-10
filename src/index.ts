@@ -18,11 +18,11 @@ export class RubickBase {
   private tmpdir: string
   logger: Logger
   constructor(settings: RubickBaseSettings, defaultHooks: RubickDefaultHooks) {
-    const { port, logger, tmpdir } = settings 
+    const { port, logger, tmpdir } = settings
     // if no port, gen a port from 50000-60000
     this.port = (port || this.getRandomNum(50000, 60000)).toString()
     this.tmpdir = tmpdir || os.tmpdir()
-    this.defaultHooks = defaultHooks 
+    this.defaultHooks = defaultHooks
     this.logger = logger || signale
     this.cursorPosition = { x: 0, y: 0 }
     this.server = new Mali(path.resolve(__dirname, proto_path), 'Rubick')
@@ -57,7 +57,7 @@ export class RubickBase {
       await worker.capture(capturePath)
       return path.resolve(capturePath)
     }
-    
+
     const getCursorPositionPixelColor = async () => {
       const capturePath = await screenCapture(path.resolve(this.tmpdir, 'capture/'))
       return extendAPI.getPicturePixelColor(capturePath, getCursorPosition())
@@ -114,7 +114,7 @@ export interface NewRubickBase {
   defaultHooks?: RubickDefaultHooks
 }
 
-export default function newRubickBase(setting?: NewRubickBase) {
+export const newRubickBase = (setting?: NewRubickBase) => {
   const { settings, defaultHooks } = setting || {}
   return new RubickBase(
     settings || {},

@@ -1,6 +1,6 @@
 {
   "name": "rubickbase",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Expand native capabilities for nodejs and electron based on rust",
   "main": "dist/index.js",
   "scripts": {

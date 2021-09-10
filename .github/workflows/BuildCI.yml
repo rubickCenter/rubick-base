@@ -1,6 +1,9 @@
-on: [push]
+on:
+    push:
+        tags:
+            - '*'
 
-name: CI
+name: Build dylib
 
 jobs:
   build_linux:

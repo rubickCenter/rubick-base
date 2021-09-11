@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.1.13"></a>
+## 0.1.13 (2021-09-11)
+
+### Fixed
+
+- 💚 fix npm release [[dd234a1](https://github.com/SOVLOOKUP/rubickbase/commit/dd234a1a9a438131dacab46bc1869e65d23f6c61)]
+
+
 <a name="0.1.12"></a>
 ## 0.1.12 (2021-09-11)
 

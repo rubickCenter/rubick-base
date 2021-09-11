@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.1.6"></a>
+## 0.1.6 (2021-09-11)
+
+### Fixed
+
+- 💚 lockfile [[1f5f315](https://github.com/SOVLOOKUP/rubickbase/commit/1f5f315ed13095958f551da1ba8122d0ec8ca125)]
+
+
 <a name="0.1.5"></a>
 ## 0.1.5 (2021-09-11)
 

@@ -7,6 +7,12 @@
   "cpu": [
     "x64"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SOVLOOKUP/rubickbase"
+  },
+  "license": "MPLv2",
+  "author": "sovlookup <gonorth@qq.com>",
   "type": "module",
   "scripts": {
     "build": "npx zx scripts/build.js",

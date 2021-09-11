@@ -87,3 +87,15 @@ jobs:
           cd packages/rust-backend
           npm run publish-platform
           cd ../../
+
+      # release rubickbase
+      - name: Release rust_bakcend
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm run build
+          cd packages/rubickbase
+          npx ncu -u
+          npm publish --access=public
+          cd ../../

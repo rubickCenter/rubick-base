@@ -8,16 +8,18 @@ let suffix
 switch (platform) {
     case 'win32': {
         suffix = '.dll'
-        target = 'x86_64-pc-windows-msvc'
+        target = 'x86_64-pc-windows-gnu'
         break
     }
     case 'darwin': {
         suffix = '.dylib'
         target = 'x86_64-apple-darwin'
+        break
     }
     case 'linux': {
         suffix = '.so'
         target = 'x86_64-unknown-linux-gnu'
+        break
     }
 }
 

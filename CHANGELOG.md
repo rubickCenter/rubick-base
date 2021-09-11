@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.3.0"></a>
+## 0.3.0 (2021-09-11)
+
+### Fixed
+
+- 🐛 fix proto bug [[840b8ad](https://github.com/SOVLOOKUP/rubickbase/commit/840b8adb3b4a80613740e149c3d56321e43e444f)]
+
+
 <a name="0.2.3"></a>
 ## 0.2.3 (2021-09-11)
 

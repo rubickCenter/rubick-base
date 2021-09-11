@@ -1,6 +1,34 @@
 {
+  "name": "rubickbase",
+  "version": "0.0.5",
+  "description": "Expand native capabilities for nodejs and electron based on rust",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "author": "sovlookup",
+  "email": "gonorth@qq.com",
+  "license": "MPLv2",
+  "homepage": "https://github.com/SOVLOOKUP/rubickbase",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SOVLOOKUP/rubickbase"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "directory": "dist"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./*": {
+      "require": "./dist/*.js",
+      "import": "./dist/*.mjs"
+    }
+  },
   "scripts": {
-    "prepack": "bob-esbuild build"
+    "prepack": "bob-esbuild build --clean"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.3.7",

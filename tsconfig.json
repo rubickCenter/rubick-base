@@ -27,9 +27,10 @@
     "packages"
   ],
   "exclude": [
-    "example",
-    "node_modules",
-    "test",
-    "scripts"
+    "**/example",
+    "**/node_modules",
+    "**/test",
+    "**/scripts",
+    "**/dist"
   ]
 }

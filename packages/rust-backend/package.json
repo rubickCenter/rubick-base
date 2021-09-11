@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "Native Node.js modules that listen/send simulated events to devices",
   "main": "index.node",
+  "homepage": "https://github.com/SOVLOOKUP/rubickbase",
   "scripts": {
     "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
     "build-debug": "npm run build --",

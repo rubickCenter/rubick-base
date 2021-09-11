@@ -1,3 +1,4 @@
+import os from 'os'
 import Mali from 'mali'
 import path from 'path'
 import signale from 'signale'
@@ -11,10 +12,8 @@ import {
 	RubickAPI,
 } from './types'
 import newRustBackend, { RustBackendAPI } from './worker'
+import rubickProto from '../proto/rubick.proto'
 import extendAPI from './extendAPI'
-import os from 'os'
-
-const proto_path = '../../proto/rubick.proto'
 
 export class RubickBase {
 	private server: Mali<any>
@@ -33,7 +32,7 @@ export class RubickBase {
 		this.defaultHooks = defaultHooks
 		this.logger = logger || signale
 		this.cursorPosition = { x: 0, y: 0 }
-		this.server = new Mali(path.resolve(__dirname, proto_path), 'Rubick')
+		this.server = new Mali(rubickProto, 'Rubick')
 		this.initBuiltinService()
 		this.started = false
 	}

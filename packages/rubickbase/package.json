@@ -1,7 +1,6 @@
 {
 	"name": "rubickbase",
 	"version": "0.2.1",
-	"type": "module",
 	"os": [
 		"linux",
 		"win32",

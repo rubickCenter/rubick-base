@@ -1,36 +1,24 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "moduleResolution": "Node",
-    "declaration": true,
-    "module": "ESNext", /* 指定模块代码生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
-    "target": "ESNext", /* 指定ECMAScript目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
-    "outDir": "dist", /* 将输出结构重定向到目录。 */
-    "rootDir": ".",
-    "lib": [
-      "esnext"
-    ], /* 指定要包含在编译中的库文件。 */
-    "esModuleInterop": true, /* 支持CommonJS和ES模块之间的互操作性。 */
-    "removeComments": true, /* 输出清除注释。 */
-    "noEmitOnError": true, /* 报错时不生成输出文件 */
-    "isolatedModules": true, /* 强制要求每一个ts文件必须是一个模块 */
-    "experimentalDecorators": true, /* 实验修饰符 */
-    "emitDecoratorMetadata": true, /* 给源码里的装饰器声明加上设计类型元数据 */
-    "strictNullChecks": true, /* 在严格的null检查模式下，null和undefined值不包含在任何类型里，只允许用它们自己和any来赋值（有个例外，undefined可以赋值到void） */
-    "allowJs": true,
-    "checkJs": true
-  },
-  "include": [
-    "packages"
-  ],
-  "exclude": [
-    "**/example",
-    "**/node_modules",
-    "**/test",
-    "**/scripts",
-    "**/dist"
-  ]
+	"compilerOptions": {
+		"strict": true,
+		"typeRoots": ["node_modules/@types"],
+		"moduleResolution": "Node",
+		"declaration": true,
+		"module": "ESNext" /* 指定模块代码生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
+		"target": "ESNext" /* 指定ECMAScript目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
+		"outDir": "dist" /* 将输出结构重定向到目录。 */,
+		"rootDir": ".",
+		"lib": ["esnext"] /* 指定要包含在编译中的库文件。 */,
+		"esModuleInterop": true /* 支持CommonJS和ES模块之间的互操作性。 */,
+		"removeComments": true /* 输出清除注释。 */,
+		"noEmitOnError": true /* 报错时不生成输出文件 */,
+		"isolatedModules": true /* 强制要求每一个ts文件必须是一个模块 */,
+		"experimentalDecorators": true /* 实验修饰符 */,
+		"emitDecoratorMetadata": true /* 给源码里的装饰器声明加上设计类型元数据 */,
+		"strictNullChecks": true /* 在严格的null检查模式下，null和undefined值不包含在任何类型里，只允许用它们自己和any来赋值（有个例外，undefined可以赋值到void） */,
+		"allowJs": true,
+		"checkJs": true
+	},
+	"include": ["packages", "packages/rubickbase/typings.d.ts"],
+	"exclude": ["**/example", "**/node_modules", "**/test", "**/scripts", "**/dist"]
 }

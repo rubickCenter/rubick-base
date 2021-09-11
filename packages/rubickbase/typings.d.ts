@@ -1,4 +1,4 @@
 declare module '*.proto' {
-	const value: object
+	const value: import('protobufjs').INamespace
 	export default value
 }

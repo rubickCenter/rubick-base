@@ -13,7 +13,7 @@ importers:
       gitmoji-cli: ^4.6.1
       prettier: ^2.4.0
       release-it: ^14.11.5
-      rollup-plugin-gproto: ^1.0.1
+      rollup-plugin-proto: ^1.1.2
       zx: ^4.2.0
     devDependencies:
       '@release-it/bumper': 3.0.1_release-it@14.11.5
@@ -25,7 +25,7 @@ importers:
       gitmoji-cli: 4.6.1
       prettier: 2.4.0
       release-it: 14.11.5
-      rollup-plugin-gproto: 1.0.1
+      rollup-plugin-proto: 1.1.2
       zx: 4.2.0
 
   packages/rubickbase:
@@ -34,6 +34,7 @@ importers:
       '@grpc/proto-loader': ^0.6.4
       jimp: ^0.16.1
       mali: ^0.44.3
+      protobufjs: ^6.11.2
       rubick_backend-darwin: '*'
       rubick_backend-linux: '*'
       rubick_backend-win32: '*'
@@ -48,27 +49,8 @@ importers:
       rubick_backend-darwin: 0.1.13
       rubick_backend-linux: 0.1.13
       rubick_backend-win32: 0.2.1
-
-  packages/rubickbase/dist:
-    specifiers:
-      '@grpc/grpc-js': ^1.3.7
-      '@grpc/proto-loader': ^0.6.4
-      jimp: ^0.16.1
-      mali: ^0.44.3
-      rubick_backend: ^0.1.1
-      rubick_backend-darwin: ^0.1.2
-      rubick_backend-linux: ^0.1.2
-      signale: ^1.4.0
-    dependencies:
-      '@grpc/grpc-js': 1.3.7
-      '@grpc/proto-loader': 0.6.4
-      jimp: 0.16.1
-      mali: 0.44.3_b281119f965c860136eb24aecb6803dd
-      rubick_backend: 0.1.9
-      signale: 1.4.0
-    optionalDependencies:
-      rubick_backend-darwin: 0.1.13
-      rubick_backend-linux: 0.1.13
+    devDependencies:
+      protobufjs: 6.11.2
 
   packages/rust-backend:
     specifiers:
@@ -145,14 +127,6 @@ packages:
     dependencies:
       '@types/node': 16.9.1
     dev: false
-
-  /@grpc/proto-loader/0.5.6:
-    resolution: {integrity: sha512-DT14xgw3PSzPxwS13auTEwxhMMOoz33DPUKNtmYK/QYbBSpLXJy78FGGs5yVoxVobEqPm4iW9MOIoz0A3bLTRQ==}
-    engines: {node: '>=6'}
-    dependencies:
-      lodash.camelcase: 4.3.0
-      protobufjs: 6.11.2
-    dev: true
 
   /@grpc/proto-loader/0.6.4:
     resolution: {integrity: sha512-7xvDvW/vJEcmLUltCUGOgWRPM8Oofv0eCFSVMuKqaqWJaXSzmB+m9hiyqe34QofAl4WAzIKUZZlinIF9FOHyTQ==}
@@ -3761,6 +3735,7 @@ packages:
 
   /lodash.camelcase/4.3.0:
     resolution: {integrity: sha1-soqmKIorn8ZRA1x3EfZathkDMaY=}
+    dev: false
 
   /lodash.castarray/4.4.0:
     resolution: {integrity: sha1-wCUTUV4wna3dTCTGDP3c9ZdtkRU=}
@@ -5479,15 +5454,6 @@ packages:
       del: 5.1.0
     dev: true
 
-  /rollup-plugin-gproto/1.0.1:
-    resolution: {integrity: sha512-OOo67v6eBmdWCscbetQfcsacFUWUIAxPrkmU8InkZ+698qDPeDhr6cc1NmDNJHgpwnYamaO1LAclk3zjcOrVrg==}
-    peerDependencies:
-      rollup: ^1.20.0 || ^2.0.0
-    dependencies:
-      '@grpc/proto-loader': 0.5.6
-      '@rollup/pluginutils': 3.1.0
-    dev: true
-
   /rollup-plugin-node-externals/2.2.0_builtin-modules@3.2.0:
     resolution: {integrity: sha512-WM7TtQ76GdsLceEGmZzQzn1afj8JgOQT5VLs1Y9RMqowM/8eK2mBj/Lv7hoE833U75QsUZIRirYUtFatu51RJA==}
     engines: {node: '>=8.0.0'}
@@ -5496,6 +5462,15 @@ packages:
     dependencies:
       builtin-modules: 3.2.0
       find-up: 4.1.0
+    dev: true
+
+  /rollup-plugin-proto/1.1.2:
+    resolution: {integrity: sha512-524zKZpElWlebHju/lWSZJUz1ilbRKfGtJshKJJCfVLeuZBlBSD2IN43Tf7mN1u7iHuCGyTjsp8lWFbZ2BtUzA==}
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
+    dependencies:
+      '@rollup/pluginutils': 3.1.0
+      protobufjs: 6.11.2
     dev: true
 
   /rollup/2.56.3:
@@ -5528,11 +5503,6 @@ packages:
     os: [win32]
     dev: false
     optional: true
-
-  /rubick_backend/0.1.9:
-    resolution: {integrity: sha512-Kz5X+nEx00d+su6BOY5o6DvVd9POXuxe/6Lmq6FoTVV32RgTjfMzKqcQCsJ9Gwt38WUiePWVDJUrc5m25jn3xA==}
-    cpu: [x64]
-    dev: false
 
   /run-async/2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}

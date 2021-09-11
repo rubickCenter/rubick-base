@@ -1,4 +1,4 @@
-import proto from 'rollup-plugin-gproto'
+import proto from 'rollup-plugin-proto'
 
 export const config: import('bob-esbuild').BobConfig = {
 	tsc: {

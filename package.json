@@ -24,7 +24,7 @@
 		"gitmoji-cli": "^4.6.1",
 		"prettier": "^2.4.0",
 		"release-it": "^14.11.5",
-		"rollup-plugin-gproto": "^1.0.1",
+		"rollup-plugin-proto": "^1.1.2",
 		"zx": "^4.2.0"
 	},
 	"release-it": {
@@ -36,7 +36,8 @@
 				"in": "package.json",
 				"out": [
 					"packages/rubickbase/package.json",
-					"packages/rust-backend/package.json"
+					"packages/rust-backend/package.json",
+					"example/package.json"
 				]
 			}
 		},

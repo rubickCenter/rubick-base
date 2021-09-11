@@ -14,6 +14,8 @@ import {
 import newRustBackend, { RustBackendAPI } from './worker'
 import rubickProto from './proto/rubick.proto'
 import extendAPI from './extendAPI'
+import { loadPackageDefinition } from '@grpc/grpc-js'
+import { fromJSON } from '@grpc/proto-loader'
 
 export class RubickBase {
 	private server: Mali<any>
@@ -32,9 +34,11 @@ export class RubickBase {
 		this.defaultHooks = defaultHooks
 		this.logger = logger || signale
 		this.cursorPosition = { x: 0, y: 0 }
-		this.server = new Mali(rubickProto, 'Rubick')
-		this.initBuiltinService()
 		this.started = false
+		const pd = fromJSON(rubickProto)
+		const proto = loadPackageDefinition(pd)
+		this.server = new Mali(proto, 'Rubick')
+		this.initBuiltinService()
 	}
 
 	async start() {

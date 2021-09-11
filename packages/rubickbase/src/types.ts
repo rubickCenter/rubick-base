@@ -1,6 +1,6 @@
 export interface RubickDefaultHooks {
 	// mouse/keyboard event listen hook
-	ioio_hook?: (event: DeviceEvent) => Promise<void>
+	ioio_hook?: (event: DeviceEvent) => void
 }
 
 export interface RubickAPI extends RubickExtendAPI {

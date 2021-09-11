@@ -46,6 +46,9 @@
 		"mali": "^0.44.3",
 		"signale": "^1.4.0"
 	},
+	"devDependencies": {
+		"protobufjs": "^6.11.2"
+	},
 	"files": [
 		"dist"
 	]

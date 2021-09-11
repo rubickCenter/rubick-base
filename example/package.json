@@ -1,15 +1,15 @@
 {
-  "name": "rubickbase-example",
-  "version": "0.0.1",
-  "description": "example usage of rubickbase",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "sovlookup",
-  "license": "MIT",
-  "devDependencies": {
-    "rubickbase": "^0.0.5"
-  }
+	"name": "rubickbase-example",
+	"version": "0.0.1",
+	"description": "example usage of rubickbase",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "sovlookup",
+	"license": "MIT",
+	"devDependencies": {
+		"rubickbase": "^0.2.3"
+	}
 }

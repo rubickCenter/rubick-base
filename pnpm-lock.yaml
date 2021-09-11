@@ -7,11 +7,13 @@ importers:
       '@release-it/bumper': ^3.0.1
       '@types/estree': ^0.0.50
       '@types/signale': ^1.4.2
-      bob-esbuild: ^1.2.3
+      bob-esbuild: ^1.3.0
       bob-esbuild-cli: ^1.0.1
       gitmoji-changelog: ^2.2.1
-      gitmoji-cli: ^4.5.1
+      gitmoji-cli: ^4.6.1
+      prettier: ^2.4.0
       release-it: ^14.11.5
+      zx: ^4.2.0
     devDependencies:
       '@release-it/bumper': 3.0.1_release-it@14.11.5
       '@types/estree': 0.0.50
@@ -20,7 +22,9 @@ importers:
       bob-esbuild-cli: 1.0.1_bob-esbuild@1.3.0
       gitmoji-changelog: 2.2.1
       gitmoji-cli: 4.6.1
+      prettier: 2.4.0
       release-it: 14.11.5
+      zx: 4.2.0
 
   packages/rubickbase:
     specifiers:
@@ -36,6 +40,22 @@ importers:
       jimp: 0.16.1
       mali: 0.44.3_b281119f965c860136eb24aecb6803dd
       rubick_backend: link:../rust-backend
+      signale: 1.4.0
+
+  packages/rubickbase/dist:
+    specifiers:
+      '@grpc/grpc-js': ^1.3.7
+      '@grpc/proto-loader': ^0.6.4
+      jimp: ^0.16.1
+      mali: ^0.44.3
+      rubick_backend: ^0.1.1
+      signale: ^1.4.0
+    dependencies:
+      '@grpc/grpc-js': 1.3.7
+      '@grpc/proto-loader': 0.6.4
+      jimp: 0.16.1
+      mali: 0.44.3_b281119f965c860136eb24aecb6803dd
+      rubick_backend: link:../../rust-backend
       signale: 1.4.0
 
   packages/rust-backend:
@@ -4881,6 +4901,12 @@ packages:
   /prepend-http/2.0.0:
     resolution: {integrity: sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=}
     engines: {node: '>=4'}
+    dev: true
+
+  /prettier/2.4.0:
+    resolution: {integrity: sha512-DsEPLY1dE5HF3BxCRBmD4uYZ+5DCbvatnolqTqcxEgKVZnL2kUfyu7b8pPQ5+hTBkdhU9SLUmK0/pHb07RE4WQ==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
     dev: true
 
   /process-nextick-args/2.0.1:

@@ -6,8 +6,8 @@ Power by GRPC
 
 ### APIs
 
- - **ioio** Listen events to devices / Input simulate.
+-   **ioio** Listen events to devices / Input simulate.
 
 ## build
 
-`npm run build-release`
+`pnpm run build-release`

@@ -1,15 +1,15 @@
 import { newRubickBase } from 'rubickbase'
 
 const rubickBase = newRubickBase({
-    defaultHooks: {
-        ioio_hook: (e) => {
-            console.log(e)
-        }
-    }
+	defaultHooks: {
+		ioio_hook: (e) => {
+			console.log(e)
+		},
+	},
 })
 
 async function main() {
-    await rubickBase.start()
+	await rubickBase.start()
 }
 
 main()

@@ -6,96 +6,82 @@ on:
 name: Release
 
 jobs:
-  release:
-    strategy:
-      fail-fast: false
-      matrix:
-        platform: [ windows-latest, macos-latest, ubuntu-latest ]
+    release:
+        strategy:
+            fail-fast: false
+            matrix:
+                platform: [windows-latest, macos-latest, ubuntu-latest]
 
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v2
+        runs-on: ${{ matrix.platform }}
+        steps:
+            - uses: actions/checkout@v2
 
-      # nodejs
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-          registry-url: 'https://npm.pkg.github.com'
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        with:
-            path: ~/.pnpm-store
-            key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-            restore-keys: |
-                ${{ runner.os }}-
-      - uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.14.5
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile false]
+            # nodejs
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://npm.pkg.github.com'
+            - name: Cache pnpm modules
+              uses: actions/cache@v2
+              with:
+                  path: ~/.pnpm-store
+                  key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-
+            - uses: pnpm/action-setup@v2.0.1
+              with:
+                  version: 6.14.5
+                  run_install: |
+                      - recursive: true
+                        args: [--frozen-lockfile false]
 
-      # rust
-      - uses: Swatinem/rust-cache@v1
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-      
-      # Prepare
-      - name: Prepare linux
-        if: matrix.platform == 'ubuntu-latest'
-        run: |
-          sudo apt-get install g++ pkg-config libx11-dev libxi-dev libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev libxtst-dev libasound2-dev libssl-dev cmake libfreetype6-dev libexpat1-dev libxcb-composite0-dev
-          rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
-          rustup component add rustfmt --toolchain nightly-x86_64-unknown-linux-gnu
+            # rust
+            - uses: Swatinem/rust-cache@v1
+            - uses: actions-rs/toolchain@v1
+              with:
+                  toolchain: nightly
 
-      - name: Prepare windows
-        if: matrix.platform == 'windows-latest'
-        run: | 
-          rustup component add rust-src --toolchain nightly-x86_64-pc-windows-msvc
-          rustup component add rustfmt --toolchain nightly-x86_64-pc-windows-msvc
-      
-      - name: Set up MinGW
-        uses: egor-tensin/setup-mingw@v2
-        if: matrix.platform == 'windows-latest'
-        with:
-          platform: x64
+            # Prepare
+            - name: Prepare linux
+              if: matrix.platform == 'ubuntu-latest'
+              run: |
+                  sudo apt-get install g++ pkg-config libx11-dev libxi-dev libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev libxtst-dev libasound2-dev libssl-dev cmake libfreetype6-dev libexpat1-dev libxcb-composite0-dev
+                  rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+                  rustup component add rustfmt --toolchain nightly-x86_64-unknown-linux-gnu
 
-      - name: Prepare macos
-        if: matrix.platform == 'macos-latest'
-        run: | 
-          rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
-          rustup component add rustfmt --toolchain nightly-x86_64-apple-darwin
-          
-      # changelog
-      - name: Release
-        if: matrix.platform == 'ubuntu-latest'
-        uses: taiki-e/create-gh-release-action@v1
-        with:
-            changelog: CHANGELOG.md
-            title: $version
-            draft: true
-        env:
-            GITHUB_TOKEN: ${{ secrets.github_token }}
+            - name: Prepare windows
+              if: matrix.platform == 'windows-latest'
+              run: |
+                  rustup component add rust-src --toolchain nightly-x86_64-pc-windows-msvc
+                  rustup component add rustfmt --toolchain nightly-x86_64-pc-windows-msvc
 
-      # release rust_bakcend
-      - name: Release rust_bakcend
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          cd packages/rust-backend
-          npm run publish-platform
-          cd ../../
+            - name: Set up MinGW
+              uses: egor-tensin/setup-mingw@v2
+              if: matrix.platform == 'windows-latest'
+              with:
+                  platform: x64
 
-      # release rubickbase
-      - name: Release rust_bakcend
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          npm run build
-          cd packages/rubickbase
-          npx ncu -u
-          npm publish --access=public
-          cd ../../
+            - name: Prepare macos
+              if: matrix.platform == 'macos-latest'
+              run: |
+                  rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
+                  rustup component add rustfmt --toolchain nightly-x86_64-apple-darwin
+
+            # changelog
+            - name: Release
+              if: matrix.platform == 'ubuntu-latest'
+              uses: taiki-e/create-gh-release-action@v1
+              with:
+                  changelog: CHANGELOG.md
+                  title: $version
+                  draft: true
+              env:
+                  GITHUB_TOKEN: ${{ secrets.github_token }}
+
+            # release
+            - name: Release rust_bakcend
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  pnpm ci:publish

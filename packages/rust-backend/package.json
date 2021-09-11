@@ -1,34 +1,34 @@
 {
-  "name": "rubick_backend",
-  "version": "0.1.9",
-  "description": "Native Node.js modules that listen/send simulated events to devices",
-  "main": "index.node",
-  "homepage": "https://github.com/SOVLOOKUP/rubickbase",
-  "cpu": [
-    "x64"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SOVLOOKUP/rubickbase"
-  },
-  "license": "MPLv2",
-  "author": "sovlookup <gonorth@qq.com>",
-  "type": "module",
-  "scripts": {
-    "build": "npx zx scripts/build.js",
-    "prepublish-platform": "npm run build",
-    "publish-platform": "npx zx scripts/publish.js",
-    "build-linux": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu",
-    "build-win32": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-pc-windows-msvc",
-    "build-darwin": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-apple-darwin",
-    "test": "cargo test",
-    "electron-rebuild": "electron-build-env neon build rubick_backend --release"
-  },
-  "devDependencies": {
-    "zx": "^4.2.0"
-  },
-  "files": [
-    "index.node",
-    "index.d.ts"
-  ]
+	"name": "rubick_backend",
+	"version": "0.1.9",
+	"description": "Native Node.js modules that listen/send simulated events to devices",
+	"main": "index.node",
+	"homepage": "https://github.com/SOVLOOKUP/rubickbase",
+	"cpu": [
+		"x64"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SOVLOOKUP/rubickbase"
+	},
+	"license": "MPLv2",
+	"author": "sovlookup <gonorth@qq.com>",
+	"type": "module",
+	"scripts": {
+		"build": "pnpx zx scripts/build.js",
+		"prepublish-platform": "pnpm run build",
+		"publish-platform": "pnpx zx scripts/publish.js",
+		"build-linux": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu",
+		"build-win32": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-pc-windows-msvc",
+		"build-darwin": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-apple-darwin",
+		"test": "cargo test",
+		"electron-rebuild": "electron-build-env neon build rubick_backend --release"
+	},
+	"devDependencies": {
+		"zx": "^4.2.0"
+	},
+	"files": [
+		"index.node",
+		"index.d.ts"
+	]
 }

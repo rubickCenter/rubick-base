@@ -1,57 +1,53 @@
 {
-  "name": "rubickbase",
-  "version": "0.1.9",
-  "os": [
-    "linux",
-    "win32",
-    "darwin"
-  ],
-  "cpu": [
-    "x64"
-  ],
-  "description": "Expand native capabilities for nodejs and electron based on rust",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "author": "sovlookup",
-  "email": "gonorth@qq.com",
-  "license": "MPLv2",
-  "homepage": "https://github.com/SOVLOOKUP/rubickbase",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SOVLOOKUP/rubickbase"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "directory": "dist"
-  },
-  "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
-    },
-    "./*": {
-      "require": "./dist/*.js",
-      "import": "./dist/*.mjs"
-    }
-  },
-  "scripts": {
-    "prepack": "bob-esbuild build --clean"
-  },
-  "optionalDependencies": {
-    "rubick_backend-darwin": "^0.1.2",
-    "rubick_backend-linux": "^0.1.2",
-    "rubick_backend-win32": "^0.1.2"
-  },
-  "dependencies": {
-    "@grpc/grpc-js": "^1.3.7",
-    "@grpc/proto-loader": "^0.6.4",
-    "jimp": "^0.16.1",
-    "mali": "^0.44.3",
-    "rubick_backend": "^0.1.1",
-    "signale": "^1.4.0"
-  },
-  "files": [
-    "dist"
-  ]
+	"name": "rubickbase",
+	"version": "0.1.9",
+	"os": [
+		"linux",
+		"win32",
+		"darwin"
+	],
+	"cpu": [
+		"x64"
+	],
+	"description": "Expand native capabilities for nodejs and electron based on rust",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"author": "sovlookup <gonorth@qq.com>",
+	"email": "gonorth@qq.com",
+	"license": "MPLv2",
+	"homepage": "https://github.com/SOVLOOKUP/rubickbase",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SOVLOOKUP/rubickbase"
+	},
+	"exports": {
+		".": {
+			"require": "./dist/index.js",
+			"import": "./dist/index.mjs"
+		},
+		"./*": {
+			"require": "./dist/*.js",
+			"import": "./dist/*.mjs"
+		}
+	},
+	"scripts": {
+		"prepack": "bob-esbuild build --clean"
+	},
+	"optionalDependencies": {
+		"rubick_backend-darwin": "^0.1.2",
+		"rubick_backend-linux": "^0.1.2",
+		"rubick_backend-win32": "^0.1.2"
+	},
+	"dependencies": {
+		"@grpc/grpc-js": "^1.3.7",
+		"@grpc/proto-loader": "^0.6.4",
+		"jimp": "^0.16.1",
+		"mali": "^0.44.3",
+		"rubick_backend": "^0.1.1",
+		"signale": "^1.4.0"
+	},
+	"files": [
+		"dist"
+	]
 }

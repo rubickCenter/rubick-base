@@ -29,7 +29,7 @@ jobs:
           version: 6.14.5
           run_install: |
             - recursive: true
-              args: [--frozen-lockfile]
+              args: [--frozen-lockfile false]
 
       # rust
       - uses: Swatinem/rust-cache@v1

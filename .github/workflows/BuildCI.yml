@@ -27,7 +27,9 @@ jobs:
       - uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.14.5
-          run_install: true
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile]
 
       # rust
       - uses: Swatinem/rust-cache@v1

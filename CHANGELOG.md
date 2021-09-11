@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.2.1"></a>
+## 0.2.1 (2021-09-11)
+
+### Fixed
+
+- 💚 fix win ci build [[ca7855a](https://github.com/SOVLOOKUP/rubickbase/commit/ca7855ab8547eda611cc31eadd7b79a4d6fb41b5)]
+
+
 <a name="0.2.0"></a>
 ## 0.2.0 (2021-09-11)
 

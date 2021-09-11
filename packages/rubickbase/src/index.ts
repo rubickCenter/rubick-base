@@ -12,7 +12,7 @@ import {
 	RubickAPI,
 } from './types'
 import newRustBackend, { RustBackendAPI } from './worker'
-import rubickProto from '../proto/rubick.proto'
+import rubickProto from './proto/rubick.proto'
 import extendAPI from './extendAPI'
 
 export class RubickBase {

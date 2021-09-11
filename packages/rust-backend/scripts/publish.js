@@ -21,7 +21,7 @@ await fs.writeJSON(`${dist}/package.json`, packagejson)
 cd(dist)
 
 try {
-	await $`pnpm publish --access=public`
+	await $`pnpm publish --access public --no-git-checks`
 } catch (error) {
 	console.error(error)
 } finally {

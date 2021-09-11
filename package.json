@@ -7,9 +7,9 @@
 	"scripts": {
 		"test": "ts-node test/index.test.ts",
 		"build": "bob-esbuild tsc && pnpm prepack -r",
-		"commit": "git add . && pnpx gitmoji -c",
+		"commit": "git add . && gitmoji -c",
 		"release": "release-it",
-		"ok": "pnpm run commit && pnpm run release",
+		"ok": "pnpm commit && pnpm release",
 		"ci:publish": "pnpm pretty:all && zx scripts/publish.js",
 		"pretty:all": "prettier -w \"**/*.{ts,tsx,js,cjs,mjs}\""
 	},
@@ -40,7 +40,8 @@
 			}
 		},
 		"hooks": {
-			"after:bump": "pnpx gitmoji-changelog --group-similar-commits"
+			"after:bump": "pnpx gitmoji-changelog --group-similar-commits",
+			"before:git:commit": "pnpm pretty:all"
 		}
 	}
 }

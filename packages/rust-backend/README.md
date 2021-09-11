@@ -10,4 +10,4 @@ Power by GRPC
 
 ## build
 
-`pnpm run build-release`
+`pnpm build-release`

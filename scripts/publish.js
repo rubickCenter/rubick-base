@@ -2,11 +2,11 @@
 import { cd } from 'zx'
 
 // build
-await $`pnpm run build`
+await $`pnpm build`
 
 // publish rust-backend
 cd('packages/rust-backend')
-await $`pnpm run publish-platform`
+await $`pnpm publish-platform`
 cd('../../')
 
 // publish rubickbase

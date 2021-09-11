@@ -15,9 +15,8 @@
 	"author": "sovlookup <gonorth@qq.com>",
 	"type": "module",
 	"scripts": {
-		"build": "pnpx zx scripts/build.js",
-		"prepublish-platform": "pnpm run build",
-		"publish-platform": "pnpx zx scripts/publish.js",
+		"build": "zx scripts/build.js",
+		"publish-platform": "pnpm build && zx scripts/publish.js",
 		"build-linux": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu",
 		"build-win32": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-pc-windows-msvc",
 		"build-darwin": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-apple-darwin",

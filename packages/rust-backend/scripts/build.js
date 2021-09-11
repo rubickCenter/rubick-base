@@ -25,5 +25,5 @@ switch (platform) {
 
 const targetPath = `target/${target}/release/librubick_backend${suffix}`
 
-await $`pnpm run build-${platform}`
+await $`pnpm build-${platform}`
 await fs.copyFile(targetPath, 'index.node')

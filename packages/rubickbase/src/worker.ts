@@ -1,4 +1,4 @@
-import rustBackend from '../../rust-backend'
+import rustBackend from 'rubick_backend'
 
 export interface WorkerAPI {
     ioioStart: (port: string) => Promise<boolean>

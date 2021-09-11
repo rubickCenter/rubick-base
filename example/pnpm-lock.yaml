@@ -4,4 +4,4 @@ specifiers:
   rubickbase: ^0.0.5
 
 devDependencies:
-  rubickbase: link:..
+  rubickbase: link:../packages/rubickbase/dist

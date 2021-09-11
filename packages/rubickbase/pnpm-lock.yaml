@@ -6,6 +6,7 @@ specifiers:
   jimp: ^0.16.1
   mali: ^0.44.3
   rubick_backend: ^0.1.1
+  rubick_backend-linux: 0.1.2
   signale: ^1.4.0
 
 dependencies:
@@ -13,8 +14,11 @@ dependencies:
   '@grpc/proto-loader': registry.nlark.com/@grpc/proto-loader/0.6.4
   jimp: registry.nlark.com/jimp/0.16.1
   mali: registry.nlark.com/mali/0.44.3_b281119f965c860136eb24aecb6803dd
-  rubick_backend: registry.nlark.com/rubick_backend/0.1.1
+  rubick_backend: link:../rust-backend
   signale: 1.4.0
+
+optionalDependencies:
+  rubick_backend-linux: link:../rust-backend/dist
 
 packages:
 
@@ -1139,12 +1143,6 @@ packages:
     name: require-directory
     version: 2.1.1
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  registry.nlark.com/rubick_backend/0.1.1:
-    resolution: {integrity: sha1-ITdJbAxeunKGC5iGBKO7M65cwAo=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/rubick_backend/download/rubick_backend-0.1.1.tgz?cache=0&sync_timestamp=1631337844069&other_urls=https%3A%2F%2Fregistry.nlark.com%2Frubick_backend%2Fdownload%2Frubick_backend-0.1.1.tgz}
-    name: rubick_backend
-    version: 0.1.1
     dev: false
 
   registry.nlark.com/string-width/4.2.2:

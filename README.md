@@ -46,6 +46,15 @@ async function main() {
 main()
 ```
 
+## Contribute
+
+| Action           | Command                                      |
+| ---------------- | -------------------------------------------- |
+| Install          | · `pnpm i -r`                                |
+| Build            | · `pnpm build`                               |
+| Commit           | · `pnpm commit`                              |
+| Release          | · `pnpm release`                             |
+
 ## TODO
 
  - [ ] 去除 jimp 依赖，精简安装大小

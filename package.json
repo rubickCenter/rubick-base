@@ -1,20 +1,43 @@
 {
   "name": "rubickbase",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "description": "Expand native capabilities for nodejs and electron based on rust",
   "packageManager": "pnpm@6.10.0",
   "type": "module",
   "author": "sovlookup",
   "email": "gonorth@qq.com",
   "scripts": {
+    "commit": "git add . && npx gitmoji -c",
     "test": "ts-node test/index.test.ts",
-    "build": "bob-esbuild tsc && pnpm prepack -r"
+    "build": "bob-esbuild tsc && pnpm prepack -r",
+    "release": "release-it"
   },
   "license": "MPLv2",
   "devDependencies": {
     "@types/estree": "^0.0.50",
     "@types/signale": "^1.4.2",
     "bob-esbuild": "^1.2.3",
-    "bob-esbuild-cli": "^1.0.1"
+    "bob-esbuild-cli": "^1.0.1",
+    "@release-it/bumper": "^3.0.1",
+    "gitmoji-changelog": "^2.2.1",
+		"gitmoji-cli": "^4.5.1",
+    "release-it": "^14.11.5"
+  },
+  "release-it": {
+    "npm": {
+      "publish": false
+    },
+    "plugins": {
+      "@release-it/bumper": {
+        "in": "package.json",
+        "out": [
+          "packages/rubickbase/package.json",
+          "packages/rust-backend/package.json"
+        ]
+      }
+    },
+    "hooks": {
+      "after:bump": "npx gitmoji-changelog --group-similar-commits"
+    }
   }
 }

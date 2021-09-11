@@ -17,10 +17,6 @@ jobs:
             - uses: actions/checkout@v2
 
             # nodejs
-            - uses: actions/setup-node@v2
-              with:
-                  node-version: '16.x'
-                  registry-url: 'https://npm.pkg.github.com'
             - name: Cache pnpm modules
               uses: actions/cache@v2
               with:
@@ -31,9 +27,7 @@ jobs:
             - uses: pnpm/action-setup@v2.0.1
               with:
                   version: 6.14.5
-                  run_install: |
-                      - recursive: true
-                        args: [--frozen-lockfile false]
+                  run_install: true
 
             # rust
             - uses: Swatinem/rust-cache@v1
@@ -79,9 +73,12 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.github_token }}
 
             # release
-            - name: Release rust_bakcend
+            - name: Release npm pkg
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16.x'
+                  registry-url: 'https://registry.npmjs.org'
+            - run: pnpm ci:publish
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: |
-                  pnpm ci:publish
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

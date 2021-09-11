@@ -1,6 +1,6 @@
 ## rubickbase
 
-基于 Rust 提供原生能力 API 的现代 Nodejs 模块，大小 2.2M，使用简单，可取代 iohook 和 robotjs
+基于 Rust 提供原生能力 API 的现代 Nodejs 模块，大小 1M，使用简单，可取代 iohook 和 robotjs
 
 ## Built-in APIs
 

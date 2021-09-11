@@ -50,7 +50,7 @@ main()
 
 | Action           | Command                                      |
 | ---------------- | -------------------------------------------- |
-| Install          | · `pnpm i -r`                                |
+| Install          | · `pnpm i`                                |
 | Build            | · `pnpm build`                               |
 | Commit           | · `pnpm commit`                              |
 | Release          | · `pnpm release`                             |

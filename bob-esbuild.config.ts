@@ -3,5 +3,5 @@ export const config: import('bob-esbuild').BobConfig = {
     dirs: ['packages/*'],
   },
   verbose: true,
-  clean: true
+  clean: true,
 };

@@ -1,6 +1,6 @@
 {
   "name": "rubickbase",
-  "version": "0.0.5",
+  "version": "0.1.2",
   "description": "Expand native capabilities for nodejs and electron based on rust",
   "packageManager": "pnpm@6.10.0",
   "type": "module",

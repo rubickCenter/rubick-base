@@ -81,7 +81,8 @@ jobs:
       # release rust_bakcend
       - name: Release rust_bakcend
         env: 
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd packages/rust-backend
           npm run publish-platform

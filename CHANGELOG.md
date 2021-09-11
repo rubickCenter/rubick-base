@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.2.0"></a>
+## 0.2.0 (2021-09-11)
+
+### Fixed
+
+- 💚 ci and example [[fc2f0ba](https://github.com/SOVLOOKUP/rubickbase/commit/fc2f0bafdabde976937b7d23967b4daa5dae4453)]
+
+
 <a name="0.1.13"></a>
 ## 0.1.13 (2021-09-11)
 

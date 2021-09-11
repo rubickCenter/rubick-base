@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.1.11"></a>
+## 0.1.11 (2021-09-11)
+
+### Fixed
+
+- 💚 build before publish [[dff9370](https://github.com/SOVLOOKUP/rubickbase/commit/dff9370d5a26f51e4fccd7d375c982749ef135cd)]
+
+
 <a name="0.1.10"></a>
 ## 0.1.10 (2021-09-11)
 

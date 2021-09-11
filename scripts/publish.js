@@ -3,13 +3,8 @@ import { cd } from 'zx'
 
 // publish rust-backend
 cd('packages/rust-backend')
-try {
-  await $`pnpm publish-platform`
-} catch (error) {
-  console.error(error)
-} finally {
-  cd('../../')
-}
+await $`pnpm publish-platform`
+
 
 // publish rubickbase
 if (process.platform === 'linux') {
@@ -17,12 +12,6 @@ if (process.platform === 'linux') {
   await $`pnpm build`
 
   cd('packages/rubickbase')
-  try {
-    await $`pnpx ncu -u`
-    await $`pnpm publish --access public --no-git-checks`
-  } catch (error) {
-    console.error(error)
-  } finally {
-    cd('../../')
-  }
+  await $`pnpx ncu -u`
+  await $`pnpm publish --access public --no-git-checks`
 }

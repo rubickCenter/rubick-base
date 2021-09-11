@@ -1,6 +1,7 @@
 {
 	"name": "rubickbase",
 	"version": "0.1.13",
+	"type": "module",
 	"os": [
 		"linux",
 		"win32",
@@ -35,16 +36,15 @@
 		"prepack": "bob-esbuild build --clean"
 	},
 	"optionalDependencies": {
-		"rubick_backend-darwin": "^0.1.2",
-		"rubick_backend-linux": "^0.1.2",
-		"rubick_backend-win32": "^0.1.2"
+		"rubick_backend-darwin": "*",
+		"rubick_backend-linux": "*",
+		"rubick_backend-win32": "*"
 	},
 	"dependencies": {
 		"@grpc/grpc-js": "^1.3.7",
 		"@grpc/proto-loader": "^0.6.4",
 		"jimp": "^0.16.1",
 		"mali": "^0.44.3",
-		"rubick_backend": "^0.1.1",
 		"signale": "^1.4.0"
 	},
 	"files": [

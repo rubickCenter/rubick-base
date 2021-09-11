@@ -10,7 +10,7 @@ import {
 	Position,
 	RubickAPI,
 } from './types'
-import worker, { WorkerAPI } from './worker'
+import newRustBackend, { RustBackendAPI } from './worker'
 import extendAPI from './extendAPI'
 import os from 'os'
 
@@ -20,7 +20,7 @@ export class RubickBase {
 	private server: Mali<any>
 	private port: string
 	private defaultHooks: RubickDefaultHooks
-	private worker: WorkerAPI
+	private worker!: RustBackendAPI
 	private cursorPosition: Position
 	private started: boolean
 	private tmpdir: string
@@ -34,12 +34,12 @@ export class RubickBase {
 		this.logger = logger || signale
 		this.cursorPosition = { x: 0, y: 0 }
 		this.server = new Mali(path.resolve(__dirname, proto_path), 'Rubick')
-		this.worker = worker
 		this.initBuiltinService()
 		this.started = false
 	}
 
 	async start() {
+		this.worker = await newRustBackend()
 		await this.server.start(`0.0.0.0:${this.port}`)
 		await this.afterStart()
 		this.started = true
@@ -62,7 +62,7 @@ export class RubickBase {
 			if (!capturePath.endsWith('.png')) {
 				capturePath = capturePath + '.png'
 			}
-			await worker.capture(capturePath)
+			await this.worker?.capture(capturePath)
 			return path.resolve(capturePath)
 		}
 
@@ -93,7 +93,7 @@ export class RubickBase {
 			}
 		}
 		// start workers
-		log(await this.worker.ioioStart(this.port), 'ioio')
+		log(await this.worker?.ioioStart(this.port), 'ioio')
 	}
 
 	// registe builtin RPC services

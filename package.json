@@ -2,15 +2,15 @@
   "name": "rubickbase",
   "version": "0.1.1",
   "description": "Expand native capabilities for nodejs and electron based on rust",
-  "packageManager": "pnpm@6.10.0",
   "type": "module",
   "author": "sovlookup",
   "email": "gonorth@qq.com",
   "scripts": {
-    "commit": "git add . && npx gitmoji -c",
     "test": "ts-node test/index.test.ts",
     "build": "bob-esbuild tsc && pnpm prepack -r",
-    "release": "release-it"
+    "commit": "git add . && npx gitmoji -c",
+    "release": "release-it",
+    "ok": "npm run commit && npm run release"
   },
   "license": "MPLv2",
   "devDependencies": {

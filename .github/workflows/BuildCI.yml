@@ -60,7 +60,8 @@ jobs:
         run: | 
           rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
           rustup component add rustfmt --toolchain nightly-x86_64-apple-darwin
-
+          
+      # changelog
       - name: Release
         if: matrix.os == 'ubuntu-latest'
         uses: taiki-e/create-gh-release-action@v1

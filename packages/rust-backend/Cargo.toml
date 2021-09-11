@@ -1,0 +1,32 @@
+[package]
+name = "rubick_backend"
+version = "0.1.0"
+edition = "2018"
+exclude = ["index.node"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+incremental = false
+opt-level = "s"
+
+[dependencies]
+rdev = "0.5.1"
+tonic = "0.5"
+prost = "0.8"
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+chrono = "0.4.19"
+scrap = "0.5"
+repng = "0.2.2"
+
+[build-dependencies]
+tonic-build = "0.5"
+
+[dependencies.neon]
+version = "0.9.1"
+default-features = false
+features = ["napi-6"]

@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.1.8"></a>
+## 0.1.8 (2021-09-11)
+
+### Fixed
+
+- 💚 npm release [[77bb74b](https://github.com/SOVLOOKUP/rubickbase/commit/77bb74b3194863eada8a38ae9a6949bdd5868276)]
+
+
 <a name="0.1.7"></a>
 ## 0.1.7 (2021-09-11)
 

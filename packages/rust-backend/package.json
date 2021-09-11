@@ -4,7 +4,9 @@
   "description": "Native Node.js modules that listen/send simulated events to devices",
   "main": "index.node",
   "homepage": "https://github.com/SOVLOOKUP/rubickbase",
-  "cpu": ["x64"],
+  "cpu": [
+    "x64"
+  ],
   "type": "module",
   "scripts": {
     "build": "npx zx scripts/build.js",

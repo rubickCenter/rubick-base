@@ -1,8 +1,14 @@
 {
   "name": "rubickbase",
   "version": "0.1.2",
-  "os": ["linux", "win32", "darwin"],
-  "cpu": ["x64"],
+  "os": [
+    "linux",
+    "win32",
+    "darwin"
+  ],
+  "cpu": [
+    "x64"
+  ],
   "description": "Expand native capabilities for nodejs and electron based on rust",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

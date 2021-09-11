@@ -1,6 +1,6 @@
 {
   "name": "rubickbase",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Expand native capabilities for nodejs and electron based on rust",
   "type": "module",
   "author": "sovlookup",
@@ -20,7 +20,7 @@
     "bob-esbuild-cli": "^1.0.1",
     "@release-it/bumper": "^3.0.1",
     "gitmoji-changelog": "^2.2.1",
-		"gitmoji-cli": "^4.5.1",
+    "gitmoji-cli": "^4.5.1",
     "release-it": "^14.11.5"
   },
   "release-it": {

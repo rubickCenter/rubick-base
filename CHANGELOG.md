@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="0.1.4"></a>
+## 0.1.4 (2021-09-11)
+
+### Fixed
+
+- 💚 pnpm workspace [[237f3e2](https://github.com/SOVLOOKUP/rubickbase/commit/237f3e2b1dc22246f61528f9bc052cb309f50cfc)]
+
+### Miscellaneous
+
+-  Update BuildCI.yml [[f01fa7b](https://github.com/SOVLOOKUP/rubickbase/commit/f01fa7bb8cf0edf306ec37f54486aeff0dd8e8c9)]
+
+
 <a name="0.1.3"></a>
 ## 0.1.3 (2021-09-11)
 

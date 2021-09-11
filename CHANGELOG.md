@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.1.3"></a>
+## 0.1.3 (2021-09-11)
+
+### Fixed
+
+- 💚 fix build [[be21db0](https://github.com/SOVLOOKUP/rubickbase/commit/be21db049645db3d8ad39673926ccb9504165997)]
+
+
 <a name="0.1.2"></a>
 ## 0.1.2 (2021-09-11)
 

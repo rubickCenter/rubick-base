@@ -8,7 +8,7 @@ let suffix
 switch (platform) {
 	case 'win32': {
 		suffix = '.dll'
-		target = 'x86_64-pc-windows-gnu'
+		target = 'x86_64-pc-windows-msvc'
 		break
 	}
 	case 'darwin': {
@@ -23,7 +23,7 @@ switch (platform) {
 	}
 }
 
-const targetPath = `target/${target}/release/librubick_backend${suffix}`
+const targetPath = `target/${target}/release/${platform === 'win32' ? "" : "lib"}rubick_backend${suffix}`
 
 await $`pnpm build-${platform}`
 await fs.copyFile(targetPath, 'index.node')

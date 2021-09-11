@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.2.2"></a>
+## 0.2.2 (2021-09-11)
+
+### Added
+
+- ✨ proto bundled [[392b81d](https://github.com/SOVLOOKUP/rubickbase/commit/392b81d673e032fed8c5622f0aa0cd92c184e6eb)]
+
+
 <a name="0.2.1"></a>
 ## 0.2.1 (2021-09-11)
 

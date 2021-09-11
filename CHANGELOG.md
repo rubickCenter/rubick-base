@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.2.3"></a>
+## 0.2.3 (2021-09-11)
+
+### Fixed
+
+- 🐛 fix proto build bug [[140a254](https://github.com/SOVLOOKUP/rubickbase/commit/140a25433bee434cf3f073879df56c3888acd525)]
+
+
 <a name="0.2.2"></a>
 ## 0.2.2 (2021-09-11)
 

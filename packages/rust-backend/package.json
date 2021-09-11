@@ -12,5 +12,6 @@
   },
   "devDependencies": {
     "cargo-cp-artifact": "^0.1.5"
-  }
+  },
+  "files": ["index.node","index.d.ts"]
 }

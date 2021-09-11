@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.1.5"></a>
+## 0.1.5 (2021-09-11)
+
+### Fixed
+
+- 💚 pnpm i [[783b83f](https://github.com/SOVLOOKUP/rubickbase/commit/783b83febbba981bbba2229563d0bafd853887f4)]
+
+
 <a name="0.1.4"></a>
 ## 0.1.4 (2021-09-11)
 

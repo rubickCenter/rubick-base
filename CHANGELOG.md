@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.1.7"></a>
+## 0.1.7 (2021-09-11)
+
+### Fixed
+
+- 💚 fix ci release [[d25fe45](https://github.com/SOVLOOKUP/rubickbase/commit/d25fe4589f119496165772af7f080ed9cfa95b34)]
+
+
 <a name="0.1.6"></a>
 ## 0.1.6 (2021-09-11)
 

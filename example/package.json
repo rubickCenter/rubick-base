@@ -1,6 +1,6 @@
 {
 	"name": "rubickbase-example",
-	"version": "0.3.3",
+	"version": "0.3.4",
 	"description": "example usage of rubickbase",
 	"main": "src/index.js",
 	"type": "module",

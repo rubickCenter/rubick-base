@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="0.3.4"></a>
+## 0.3.4 (2021-09-12)
+
+### Fixed
+
+- 🐛 fix windows backend dependecies bug [[d20c6cd](https://github.com/SOVLOOKUP/rubickbase/commit/d20c6cdc9a5950070d68174d2dc34c6906094f86)]
+
+### Miscellaneous
+
+- 📝 upgrade example [[abcbdea](https://github.com/SOVLOOKUP/rubickbase/commit/abcbdeaafeb9b97814c8868e2accc7f9a62ebc2e)]
+
+
 <a name="0.3.3"></a>
 ## 0.3.3 (2021-09-12)
 

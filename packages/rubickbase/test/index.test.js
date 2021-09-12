@@ -1,11 +1,8 @@
 const { newRubickBase } = require('../dist')
 
 const rubickBase = newRubickBase({
-	defaultHooks: {
-		ioio_hook: (e) => {
-			console.log(e)
-		},
-	},
+	// device event listener
+	ioEventCallback: (e) => { console.log(e) }
 })
 
 async function main() {
@@ -13,10 +10,10 @@ async function main() {
 	await rubickBase.start()
 	const api = rubickBase.getAPI()
 	// screen capture
-	// await api.screenCapture('./capture.png')
+	await api.screenCapture('./capture.png')
 	// cursor Position
 	let task = setInterval(async () => {
-		console.log(await api.getCursorPositionPixelColor())
+		console.log("cursor at ", api.getCursorPosition())
 	}, 1000)
 	// close rubickbase
 	setTimeout(async () => {

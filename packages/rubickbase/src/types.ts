@@ -1,8 +1,3 @@
-export interface RubickDefaultHooks {
-	// mouse/keyboard event listen hook
-	ioio_hook?: (event: DeviceEvent) => void | Promise<void>
-}
-
 export interface RubickAPI extends RubickExtendAPI {
 	/** get cursor position
 	 * @returns {Position} 鼠标位置
@@ -178,9 +173,14 @@ export interface Position {
 }
 
 export interface RubickBaseSettings {
+	// grpc server port
 	port?: number
+	// custom logger
 	logger?: Logger
+	// tmpdir for file storage
 	tmpdir?: string
+	// event callback
+	ioEventCallback?: (event: DeviceEvent) => void | Promise<void>
 }
 
 export interface Logger {

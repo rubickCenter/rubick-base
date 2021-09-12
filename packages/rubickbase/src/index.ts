@@ -3,14 +3,12 @@ import Mali from 'mali'
 import path from 'path'
 import signale from 'signale'
 import {
-	RubickDefaultHooks,
 	Logger,
 	RubickBaseSettings,
 	DeviceEvent,
 	RubickExtendAPI,
 	Position,
 	RubickAPI,
-	Color,
 } from './types'
 import newRustBackend, { RustBackendAPI } from './worker'
 import extendAPI from './extendAPI'
@@ -19,31 +17,42 @@ import { fromJSON } from '@grpc/proto-loader'
 import { INamespace } from 'protobufjs'
 import { join } from 'path'
 import fs from 'fs'
+import { Evt } from 'evt'
+
+const evtDeviceEvent = new Evt<DeviceEvent>()
 
 export class RubickBase {
 	private server!: Mali<any>
 	private worker!: RustBackendAPI
 	private port: string
-	private defaultHooks: RubickDefaultHooks
 	private cursorPosition: Position
 	private started: boolean
 	private tmpdir: string
 	logger: Logger
-	constructor(settings: RubickBaseSettings, defaultHooks: RubickDefaultHooks) {
-		const { port, logger, tmpdir } = settings
+	constructor(settings: RubickBaseSettings) {
+		const { port, logger, tmpdir, ioEventCallback } = settings
+		// settings
 		// if no port, gen a port from 50000-60000
 		this.port = (port || this.getRandomNum(50000, 60000)).toString()
-		this.tmpdir = tmpdir || os.tmpdir()
-		this.defaultHooks = defaultHooks
 		this.logger = logger || signale
-		this.cursorPosition = { x: 0, y: 0 }
+		this.tmpdir = tmpdir || os.tmpdir()
+		// values
 		this.started = false
+		this.cursorPosition = { x: 0, y: 0 }
+		// base init
 		this.initBuiltinService()
 		// create capture tmp path
 		const captureTmpPath = path.resolve(this.tmpdir, 'capture')
 		if (fs.existsSync(captureTmpPath)) {
 			fs.mkdirSync(captureTmpPath)
 		}
+		// listen event
+		evtDeviceEvent.attachExtract(async (event) => {
+			if (ioEventCallback) await ioEventCallback(event)
+			if (event.device === 'Mouse' && event.action === 'Move') {
+				this.cursorPosition = event.info
+			}
+		})
 	}
 
 	async start() {
@@ -61,6 +70,7 @@ export class RubickBase {
 
 	getAPI(): RubickAPI {
 		this.validStarted()
+
 		const getCursorPosition = () => this.cursorPosition
 
 		const screenCapture = async (capturePath: string, captureName?: string) => {
@@ -87,10 +97,18 @@ export class RubickBase {
 			const captureTmpPath = path.resolve(this.tmpdir, 'capture')
 			const capturePath = await screenCapture(captureTmpPath)
 			try {
-				return extendAPI.getPicturePixelColor(capturePath, getCursorPosition())
+				return extendAPI.getPicturePixelColor(capturePath, await getCursorPosition())
 			} catch (error) {
 				this.logger.error(error)
-				return <Color>{}
+				return {
+					hex16: 'error',
+					rgba: {
+						r: -1,
+						g: -1,
+						b: -1,
+						a: -1,
+					},
+				}
 			}
 		}
 
@@ -125,12 +143,15 @@ export class RubickBase {
 		this.server = new Mali(await this.loadProto(), 'Rubick')
 		this.server.use('ioio', async (ctx: any) => {
 			const event: DeviceEvent = ctx.request.req
-			// mousemove info is still string here convert to Position
-			if ((event.info as string).startsWith('{')) {
-				event.info = JSON.parse(event.info as string)
-				this.cursorPosition = event.info as Position
+			// mousemove info is still string here, need convert to Position object
+			if (
+				event.device === 'Mouse' &&
+				event.action === 'Move' &&
+				((<unknown>event.info) as string).startsWith('{')
+			) {
+				event.info = JSON.parse((<unknown>event.info) as string)
 			}
-			if (this.defaultHooks.ioio_hook) await this.defaultHooks.ioio_hook(event)
+			evtDeviceEvent.post(event)
 			ctx.res = { ok: true }
 		})
 	}
@@ -161,12 +182,6 @@ export class RubickBase {
 	}
 }
 
-export interface NewRubickBase {
-	settings?: RubickBaseSettings
-	defaultHooks?: RubickDefaultHooks
-}
-
-export const newRubickBase = (setting?: NewRubickBase) => {
-	const { settings, defaultHooks } = setting || {}
-	return new RubickBase(settings || {}, defaultHooks || {})
+export const newRubickBase = (settings?: RubickBaseSettings) => {
+	return new RubickBase(settings || {})
 }

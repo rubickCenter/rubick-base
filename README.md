@@ -1,16 +1,16 @@
 ## rubickbase
 
- 基于 Rust 提供截图、键鼠事件监听模拟等跨平台功能的现代 Nodejs 模块，大小仅 1M，安装便捷，使用简单，可取代 iohook 和 robotjs
+基于 Rust 提供截图、键鼠事件监听模拟等跨平台功能的现代 Nodejs 模块，大小仅 1M，安装便捷，使用简单，可取代 iohook 和 robotjs
 
 ## Built-in APIs
 
 -   [x] 键鼠事件监听钩子 mouse/keyboard event listen
 -   [x] 截图 screen capture
 -   [x] 图片取色 pixel color picker
--   [x] 获取鼠标位置 get cursar position
--   [x] 获取鼠标像素颜色 pick color at cursar position
--   [ ] 事件订阅模式
--   [ ] 注册快捷键(装饰器风格) 
+-   [x] 获取鼠标位置 get cursor position
+-   [x] 获取鼠标像素颜色 pick color at cursor position
+-   [x] 事件订阅模式
+-   [ ] 注册快捷键(装饰器风格)
 -   [ ] 键盘事件模拟
 -   [ ] 鼠标事件模拟
 
@@ -62,3 +62,4 @@ npm install -g pnpm
 ## TODO
 
 -   [ ] 去除 jimp 依赖，精简安装大小
+-   [ ] 降低 GRPC 资源占用

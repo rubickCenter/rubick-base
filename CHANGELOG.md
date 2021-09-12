@@ -1,5 +1,18 @@
 # Changelog
 
+<a name="0.4.0"></a>
+## 0.4.0 (2021-09-12)
+
+### Added
+
+- ✨ use rust color picker [[03603ea](https://github.com/SOVLOOKUP/rubickbase/commit/03603ea3821d3483f4fd4fccac1855115739d0f5)]
+
+### Miscellaneous
+
+-  Update README.md [[2a8bfdc](https://github.com/SOVLOOKUP/rubickbase/commit/2a8bfdc6b3053b8ef0b631f41918186bd30c91f8)]
+    *  Update README.md ([b7e2cb9](https://github.com/SOVLOOKUP/rubickbase/commit/b7e2cb9eda0e8a226cc4a0abd101614e8cf05613))
+
+
 <a name="0.3.5"></a>
 ## 0.3.5 (2021-09-12)
 

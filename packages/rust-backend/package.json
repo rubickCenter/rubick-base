@@ -16,9 +16,12 @@
 	"scripts": {
 		"build": "zx scripts/build.mjs",
 		"publish-platform": "pnpm build && zx scripts/publish.mjs",
-		"build-linux": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu",
-		"build-win32": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-pc-windows-msvc",
-		"build-darwin": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-apple-darwin",
+		"build-linux": "cargo build --release --target x86_64-unknown-linux-gnu",
+		"build-win32": "cargo build --release --target x86_64-pc-windows-msvc",
+		"build-darwin": "cargo build --release --target x86_64-apple-darwin",
+		"build-linux-min": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-unknown-linux-gnu",
+		"build-win32-min": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-pc-windows-msvc",
+		"build-darwin-min": "cargo +nightly build --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort --target x86_64-apple-darwin",
 		"test": "cargo test",
 		"electron-rebuild": "electron-build-env neon build rubick_backend --release"
 	},

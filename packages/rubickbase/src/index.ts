@@ -12,16 +12,16 @@ import {
 	RubickAPI,
 } from './types'
 import newRustBackend, { RustBackendAPI } from './worker'
-import rubickProto from './proto/rubick.proto'
 import extendAPI from './extendAPI'
 import { loadPackageDefinition } from '@grpc/grpc-js'
 import { fromJSON } from '@grpc/proto-loader'
+import { INamespace } from 'protobufjs'
 
 export class RubickBase {
-	private server: Mali<any>
+	private server!: Mali<any>
+	private worker!: RustBackendAPI
 	private port: string
 	private defaultHooks: RubickDefaultHooks
-	private worker!: RustBackendAPI
 	private cursorPosition: Position
 	private started: boolean
 	private tmpdir: string
@@ -35,9 +35,6 @@ export class RubickBase {
 		this.logger = logger || signale
 		this.cursorPosition = { x: 0, y: 0 }
 		this.started = false
-		const pd = fromJSON(rubickProto)
-		const proto = loadPackageDefinition(pd)
-		this.server = new Mali(proto, 'Rubick')
 		this.initBuiltinService()
 	}
 
@@ -100,7 +97,8 @@ export class RubickBase {
 	}
 
 	// registe builtin RPC services
-	private initBuiltinService() {
+	private async initBuiltinService() {
+		this.server = new Mali(await this.loadProto(), 'Rubick')
 		this.server.use('ioio', async (ctx: any) => {
 			const event: DeviceEvent = ctx.request.req
 			// mousemove info is still string here convert to Position
@@ -123,6 +121,19 @@ export class RubickBase {
 		if (!this.started) {
 			throw new Error('Rubick has not started! Start it first!')
 		}
+	}
+
+	private async loadProto(): Promise<string | object> {
+		let proto
+		try {
+			const protoJSON = await import('./proto/rubick.proto')
+			proto = loadPackageDefinition(fromJSON(protoJSON as INamespace))
+			this.logger.info('You are in production mode, protoJSON loaded.')
+		} catch {
+			this.logger.info('You are in development mode, load proto from file.')
+			proto = './proto/rubick.proto'
+		}
+		return proto
 	}
 }
 

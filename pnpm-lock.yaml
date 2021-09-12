@@ -35,9 +35,9 @@ importers:
       jimp: ^0.16.1
       mali: ^0.44.3
       protobufjs: ^6.11.2
-      rubick_backend-darwin: '*'
-      rubick_backend-linux: '*'
-      rubick_backend-win32: '*'
+      rubick_backend-darwin: '>=0.3.0'
+      rubick_backend-linux: '>=0.3.0'
+      rubick_backend-win32: '>=0.3.0'
       signale: ^1.4.0
     dependencies:
       '@grpc/grpc-js': 1.3.7
@@ -46,9 +46,9 @@ importers:
       mali: 0.44.3_b281119f965c860136eb24aecb6803dd
       signale: 1.4.0
     optionalDependencies:
-      rubick_backend-darwin: 0.1.13
-      rubick_backend-linux: 0.1.13
-      rubick_backend-win32: 0.2.1
+      rubick_backend-darwin: 0.3.0
+      rubick_backend-linux: 0.3.0
+      rubick_backend-win32: 0.3.0
     devDependencies:
       protobufjs: 6.11.2
 
@@ -5481,24 +5481,22 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rubick_backend-darwin/0.1.13:
-    resolution: {integrity: sha512-wNA1TY7Tma5Dh3WspHjfXD2ZNmdTP60ddWOKk7duRlSs4qfCtboZdWS1olEo+d6tlh6XIL99Z+LCE1ti4kLonQ==}
+  /rubick_backend-darwin/0.3.0:
+    resolution: {integrity: sha512-9CWTNz9k7Q7rE+sNZOa7pMdvS8hJH1jlO69xwCNEnXUfRMm/hn96FI1oISVXCUuVYIuq+ZNgKE1x0pYvhUBNhw==}
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
     dev: false
     optional: true
 
-  /rubick_backend-linux/0.1.13:
-    resolution: {integrity: sha512-bu6ttv6nGNCWVyR66DICA1CFbhDHO685zc1Pa1nBBFfhqJpcxws+7w11qYBjUEFnhH4PAVEe1fU9K1F5fAIJWQ==}
+  /rubick_backend-linux/0.3.0:
+    resolution: {integrity: sha512-MGyddEwbnvHf1kqr5sK9ArlTieBP1cBpZYGtkzU3vbUINvKgXD4ZcZnfZoznMrPDJfnPHhTv3/L9gj82/IxraQ==}
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
     dev: false
     optional: true
 
-  /rubick_backend-win32/0.2.1:
-    resolution: {integrity: sha512-vrHk2617yAN/xCuZNjA1gserUfgpRTsfj6PBxEFXazNuUEnHvh3pVeo78l/mnOVGJUlxuMGMtcDQbgGM71VHIw==}
+  /rubick_backend-win32/0.3.0:
+    resolution: {integrity: sha512-wfxqXqzqt3NqSSZ/5+Htn1bP/E/3eTw17v8OdycxGgRpptOF9jc2hUvRrVddNIhv/IbraqQchft8jwhh+7s1qw==}
     cpu: [x64]
     os: [win32]
     dev: false

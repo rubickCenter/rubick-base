@@ -2,7 +2,6 @@
 	"name": "rubickbase",
 	"version": "0.3.0",
 	"description": "Expand native capabilities for nodejs and electron based on rust",
-	"type": "module",
 	"author": "sovlookup <gonorth@qq.com>",
 	"scripts": {
 		"test": "ts-node test/index.test.ts",
@@ -10,7 +9,7 @@
 		"commit": "git add . && gitmoji -c",
 		"release": "release-it",
 		"ok": "pnpm commit && pnpm release",
-		"ci:publish": "pnpm pretty:all && zx scripts/publish.js",
+		"ci:publish": "pnpm pretty:all && zx scripts/publish.mjs",
 		"pretty:all": "prettier -w \"**/*.{ts,tsx,js,cjs,mjs}\""
 	},
 	"license": "MPLv2",

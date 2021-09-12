@@ -1,6 +1,6 @@
 export interface RubickDefaultHooks {
 	// mouse/keyboard event listen hook
-	ioio_hook?: (event: DeviceEvent) => void
+	ioio_hook?: (event: DeviceEvent) => void | Promise<void>
 }
 
 export interface RubickAPI extends RubickExtendAPI {
@@ -37,10 +37,138 @@ export interface Color {
 	rgba: RGBA
 }
 
-export interface DeviceEvent {
-	device: string
-	action: string
-	info: string | Position
+export type DeviceEvent = MouseEvent | KeyBoardEvent
+
+export interface KeyBoardEvent {
+	device: 'KeyBoard'
+	action: 'Press' | 'Release'
+	info:
+		| 'Alt'
+		| 'AltGr'
+		| 'Backspace'
+		| 'CapsLock'
+		| 'ControlLeft'
+		| 'ControlRight'
+		| 'Delete'
+		| 'DownArrow'
+		| 'End'
+		| 'Escape'
+		| 'F1'
+		| 'F10'
+		| 'F11'
+		| 'F12'
+		| 'F2'
+		| 'F3'
+		| 'F4'
+		| 'F5'
+		| 'F6'
+		| 'F7'
+		| 'F8'
+		| 'F9'
+		| 'Home'
+		| 'LeftArrow'
+		| 'MetaLeft'
+		| 'MetaRight'
+		| 'PageDown'
+		| 'PageUp'
+		| 'Return'
+		| 'RightArrow'
+		| 'ShiftLeft'
+		| 'ShiftRight'
+		| 'Space'
+		| 'Tab'
+		| 'UpArrow'
+		| 'PrintScreen'
+		| 'ScrollLock'
+		| 'Pause'
+		| 'NumLock'
+		| 'BackQuote'
+		| 'Num1'
+		| 'Num2'
+		| 'Num3'
+		| 'Num4'
+		| 'Num5'
+		| 'Num6'
+		| 'Num7'
+		| 'Num8'
+		| 'Num9'
+		| 'Num0'
+		| 'Minus'
+		| 'Equal'
+		| 'KeyQ'
+		| 'KeyW'
+		| 'KeyE'
+		| 'KeyR'
+		| 'KeyT'
+		| 'KeyY'
+		| 'KeyU'
+		| 'KeyI'
+		| 'KeyO'
+		| 'KeyP'
+		| 'LeftBracket'
+		| 'RightBracket'
+		| 'KeyA'
+		| 'KeyS'
+		| 'KeyD'
+		| 'KeyF'
+		| 'KeyG'
+		| 'KeyH'
+		| 'KeyJ'
+		| 'KeyK'
+		| 'KeyL'
+		| 'SemiColon'
+		| 'Quote'
+		| 'BackSlash'
+		| 'IntlBackslash'
+		| 'KeyZ'
+		| 'KeyX'
+		| 'KeyC'
+		| 'KeyV'
+		| 'KeyB'
+		| 'KeyN'
+		| 'KeyM'
+		| 'Comma'
+		| 'Dot'
+		| 'Slash'
+		| 'Insert'
+		| 'KpReturn'
+		| 'KpMinus'
+		| 'KpPlus'
+		| 'KpMultiply'
+		| 'KpDivide'
+		| 'Kp0'
+		| 'Kp1'
+		| 'Kp2'
+		| 'Kp3'
+		| 'Kp4'
+		| 'Kp5'
+		| 'Kp6'
+		| 'Kp7'
+		| 'Kp8'
+		| 'Kp9'
+		| 'KpDelete'
+		| 'Function'
+		| number
+}
+
+export type MouseEvent = MouseClickEvent | MouseMoveEvent | MouseWheelEvent
+
+export interface MouseClickEvent {
+	device: 'Mouse'
+	action: 'Press' | 'Release'
+	info: 'Left' | 'Right' | 'Middle' | number
+}
+
+export interface MouseWheelEvent {
+	device: 'Mouse'
+	action: 'Wheel'
+	info: 'Up' | 'Down'
+}
+
+export interface MouseMoveEvent {
+	device: 'Mouse'
+	action: 'Move'
+	info: Position
 }
 
 export interface Position {

@@ -11,8 +11,9 @@ export interface RubickAPI extends RubickExtendAPI {
 
 	/** capture screen and save file to path
 	 * @param capturePath 截屏文件存放的文件路径
+	 * @param captureName 截屏文件存放的文件名称 默认时间戳
 	 */
-	screenCapture: (path: string) => Promise<string>
+	screenCapture: (capturePath: string, captureName?: string) => Promise<string>
 
 	/** get pixel color at cursor position
 	 * @return {Promise<Color>} 鼠标位置像素颜色

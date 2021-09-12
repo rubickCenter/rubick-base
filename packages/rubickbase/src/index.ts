@@ -48,7 +48,7 @@ export class RubickBase {
 
 	async start() {
 		this.worker = await newRustBackend()
-		await this.server.start(`0.0.0.0:${this.port}`)
+		await this.server.start(`127.0.0.1:${this.port}`)
 		await this.afterStart()
 		this.started = true
 	}
@@ -63,18 +63,22 @@ export class RubickBase {
 		this.validStarted()
 		const getCursorPosition = () => this.cursorPosition
 
-		const screenCapture = async (capturePath: string) => {
-			if (fs.lstatSync(capturePath).isDirectory()) {
-				capturePath = join(capturePath, Date.now().toString() + '.png')
-			}
-			if (!capturePath.endsWith('.png')) {
-				capturePath = capturePath + '.png'
-			}
-			try {
-				await this.worker.capture(capturePath)
-				return path.resolve(capturePath)
-			} catch (error) {
-				this.logger.error(error)
+		const screenCapture = async (capturePath: string, captureName?: string) => {
+			if (fs.existsSync(capturePath) && fs.lstatSync(capturePath).isDirectory()) {
+				captureName = captureName || Date.now().toString() + '.png'
+				if (!captureName.endsWith('.png')) {
+					captureName = captureName + '.png'
+				}
+				const captureFilePath = join(capturePath, captureName)
+				try {
+					await this.worker.capture(captureFilePath)
+					return path.resolve(captureFilePath)
+				} catch (error) {
+					this.logger.error(error)
+					return 'error'
+				}
+			} else {
+				this.logger.error('No such directory!')
 				return 'error'
 			}
 		}

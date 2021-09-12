@@ -43,7 +43,7 @@ export class RubickBase {
 		this.initBuiltinService()
 		// create capture tmp path
 		const captureTmpPath = path.resolve(this.tmpdir, 'capture')
-		if (fs.existsSync(captureTmpPath)) {
+		if (!fs.existsSync(captureTmpPath)) {
 			fs.mkdirSync(captureTmpPath)
 		}
 		// listen event

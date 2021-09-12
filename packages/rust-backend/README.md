@@ -1,6 +1,6 @@
 ## rubickbase rust_backend
 
-A native Node.js module that make Rubick APIs.
+A native Node.js module to make RubickBase APIs.
 
 Power by GRPC
 

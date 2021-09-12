@@ -4,10 +4,7 @@ A native Node.js module that make Rubick APIs.
 
 Power by GRPC
 
-### APIs
+## TODO
 
--   **ioio** Listen events to devices / Input simulate.
-
-## build
-
-`pnpm build-release`
+- [ ] 优化异常处理
+- [ ] ioio_stop

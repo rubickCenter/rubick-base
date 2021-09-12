@@ -1,5 +1,18 @@
 # Changelog
 
+<a name="0.3.1"></a>
+## 0.3.1 (2021-09-12)
+
+### Miscellaneous
+
+- 🏷️ add event type [[c16f42d](https://github.com/SOVLOOKUP/rubickbase/commit/c16f42d2b5d850c3180d9674221f91b573bd32b8)]
+-  Update package.json [[f109529](https://github.com/SOVLOOKUP/rubickbase/commit/f1095298cae41deb75f2ad879580790461536504)]
+-  Create README.md [[0da2de0](https://github.com/SOVLOOKUP/rubickbase/commit/0da2de0f44aa054a685fa01c33ac7d8c9e25fdb2)]
+-  Update README.md [[64ddf08](https://github.com/SOVLOOKUP/rubickbase/commit/64ddf08b5ee26758602938489bddb72d5ff881e3)]
+    *  Update README.md ([37f2ed8](https://github.com/SOVLOOKUP/rubickbase/commit/37f2ed86f284147c1bc1090ef5efbebdb1f30946))
+    *  Update README.md ([1b8f92f](https://github.com/SOVLOOKUP/rubickbase/commit/1b8f92f52119cc5aabe2ceeb0a8477b2d3fa9f6c))
+
+
 <a name="0.3.0"></a>
 ## 0.3.0 (2021-09-11)
 

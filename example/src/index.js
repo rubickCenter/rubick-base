@@ -1,4 +1,4 @@
-import { newRubickBase } from 'rubickbase'
+const { newRubickBase } = require('rubickbase')
 
 const rubickBase = newRubickBase({
 	// device event listener

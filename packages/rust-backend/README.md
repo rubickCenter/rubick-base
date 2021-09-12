@@ -1,4 +1,4 @@
-## rubick_backend
+## rubickbase rust_backend
 
 A native Node.js module that make Rubick APIs.
 

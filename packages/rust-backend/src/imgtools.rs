@@ -1,12 +1,14 @@
 extern crate scrap;
 
+use image::{GenericImageView, ImageError, Rgba};
 use scrap::{Capturer, Display};
+use std::io::ErrorKind::WouldBlock;
 use std::thread;
 use std::time::Duration;
-use std::{fs::File, io::ErrorKind::WouldBlock};
+extern crate image;
 
 #[allow(dead_code)]
-pub fn capture(name: String) {
+pub fn screen_capture(path: String) {
     let one_second = Duration::new(1, 0);
     let one_frame = one_second / 60;
 
@@ -28,21 +30,26 @@ pub fn capture(name: String) {
                 }
             }
         };
-
-        // Flip the ARGB image into a BGRA image.
-
-        let mut bitflipped = Vec::with_capacity(w * h * 4);
         let stride = buffer.len() / h;
-
-        for y in 0..h {
-            for x in 0..w {
-                let i = stride * y + 4 * x;
-                bitflipped.extend_from_slice(&[buffer[i + 2], buffer[i + 1], buffer[i], 255]);
-            }
+        let mut imgbuf = image::ImageBuffer::new(w as u32, h as u32);
+        // Iterate over the coordinates and pixels of the image
+        for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
+            let i: usize = stride * y as usize + 4 * x as usize;
+            *pixel = image::Rgb([buffer[i + 2], buffer[i + 1], buffer[i]]);
         }
 
-        repng::encode(File::create(name).unwrap(), w as u32, h as u32, &bitflipped).unwrap();
-
+        imgbuf
+            .save_with_format(path, image::ImageFormat::Png)
+            .expect("img save error!");
         break;
     }
+}
+
+#[allow(dead_code)]
+pub fn color_picker(path: String, x: u32, y: u32) -> Result<Rgba<u8>, ImageError> {
+    let img = image::io::Reader::open(path)?
+        .with_guessed_format()?
+        .decode()?;
+    let px = img.get_pixel(x, y);
+    Ok(px)
 }

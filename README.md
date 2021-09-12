@@ -61,4 +61,4 @@ npm install -g pnpm
 
 ## TODO
 
--   [ ] 解决 jimp 依赖占用磁盘、CPU、内存的问题
+-   [x] 解决 jimp 依赖占用磁盘、CPU、内存的问题

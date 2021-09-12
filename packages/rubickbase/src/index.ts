@@ -20,6 +20,9 @@ import fs from 'fs'
 import { Evt } from 'evt'
 
 const evtDeviceEvent = new Evt<DeviceEvent>()
+function rgbToHex(r: number, g: number, b: number) {
+	return ((r << 16) | (g << 8) | b).toString(16)
+}
 
 export class RubickBase {
 	private server!: Mali<any>
@@ -93,11 +96,11 @@ export class RubickBase {
 			}
 		}
 
-		const getCursorPositionPixelColor = async () => {
-			const captureTmpPath = path.resolve(this.tmpdir, 'capture')
-			const capturePath = await screenCapture(captureTmpPath)
+		const getPicturePixelColor = async (path: string, position: Position) => {
 			try {
-				return extendAPI.getPicturePixelColor(capturePath, await getCursorPosition())
+				const rgba = await this.worker.colorPicker(path, position)
+				// rgbToHex
+				return { hex16: rgbToHex(rgba.r, rgba.b, rgba.a), rgba }
 			} catch (error) {
 				this.logger.error(error)
 				return {
@@ -112,7 +115,14 @@ export class RubickBase {
 			}
 		}
 
+		const getCursorPositionPixelColor = async () => {
+			const captureTmpPath = path.resolve(this.tmpdir, 'capture')
+			const capturePath = await screenCapture(captureTmpPath)
+			return getPicturePixelColor(capturePath, getCursorPosition())
+		}
+
 		return {
+			getPicturePixelColor,
 			getCursorPosition,
 			screenCapture,
 			getCursorPositionPixelColor,

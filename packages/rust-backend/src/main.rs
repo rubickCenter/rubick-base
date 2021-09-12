@@ -1,8 +1,7 @@
-mod capture;
+mod imgtools;
 
 fn main() {
-    capture::capture(
-        "/home/sovlookup/桌面/test/rubick-grpc-server/src/worker/rust-backend/src/a.png"
-            .to_string(),
-    );
+    // imgtools::screen_capture("./cap.png".to_string());
+    let a = imgtools::color_picker("./cap.png".to_string(), 44, 44).unwrap();
+    println!("{:?}", a);
 }

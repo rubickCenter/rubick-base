@@ -14,12 +14,16 @@ export interface RubickAPI extends RubickExtendAPI {
 	 * @return {Promise<Color>} 鼠标位置像素颜色
 	 */
 	getCursorPositionPixelColor: () => Promise<Color>
-}
 
-export interface RubickExtendAPI {
-	// Get pixel color at the cursor position
+	/** get pixel color at picture position
+	 * @param path 图片存放的文件路径
+	 * @param position 取色位置
+	 * @return {Promise<Color>} 位置像素颜色
+	 */
 	getPicturePixelColor: (path: string, position: Position) => Promise<Color>
 }
+
+export interface RubickExtendAPI {}
 
 export interface RGBA {
 	r: number

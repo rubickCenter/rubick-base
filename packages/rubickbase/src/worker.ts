@@ -1,6 +1,9 @@
+import { Position, RGBA } from './types'
+
 export interface RustBackendAPI {
 	ioioStart: (port: string) => Promise<boolean>
 	capture: (path: string) => Promise<undefined>
+	colorPicker: (path: string, position: Position) => Promise<RGBA>
 }
 
 async function newRustBackend(): Promise<RustBackendAPI> {
@@ -11,6 +14,9 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		},
 		capture: async (path: string) => {
 			return await rustBackend.capture_start(path)
+		},
+		colorPicker: async (path: string, position: Position) => {
+			return await rustBackend.color_picker_start(path, position.x, position.y)
 		},
 	}
 }

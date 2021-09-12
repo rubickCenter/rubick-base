@@ -2,7 +2,7 @@
 	"name": "rubickbase-example",
 	"version": "0.3.3",
 	"description": "example usage of rubickbase",
-	"main": "index.js",
+	"main": "src/index.js",
 	"type": "module",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,6 @@
 	"author": "sovlookup",
 	"license": "MIT",
 	"devDependencies": {
-		"rubickbase": "^0.3.2"
+		"rubickbase": "^0.3.3"
 	}
 }

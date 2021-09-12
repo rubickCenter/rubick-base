@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="0.3.3"></a>
+## 0.3.3 (2021-09-12)
+
+### Added
+
+- ✨ event emit [[4d83eea](https://github.com/SOVLOOKUP/rubickbase/commit/4d83eea98e0cb3ffe4ad00e3f88f1932b3eb806f)]
+
+### Fixed
+
+- 🐛 fix windows port bug [[7968b2c](https://github.com/SOVLOOKUP/rubickbase/commit/7968b2c7105209cea580f5bc038c78b342f4a388)]
+
+
 <a name="0.3.2"></a>
 ## 0.3.2 (2021-09-12)
 

@@ -8,11 +8,11 @@ exclude = ["index.node"]
 crate-type = ["cdylib"]
 
 [profile.release]
-panic = "abort"
-codegen-units = 1
 lto = true
-incremental = false
 opt-level = "s"
+# panic = "abort"
+# codegen-units = 1
+# incremental = false
 
 [dependencies]
 rdev = "0.5.1"

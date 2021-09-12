@@ -35,9 +35,9 @@
 		"prepack": "bob-esbuild build --clean"
 	},
 	"optionalDependencies": {
-		"rubick_backend-darwin": ">=0.3.0",
-		"rubick_backend-linux": ">=0.3.0",
-		"rubick_backend-win32": ">=0.3.0"
+		"rubick_backend-darwin": "*",
+		"rubick_backend-linux": "*",
+		"rubick_backend-win32": "*"
 	},
 	"dependencies": {
 		"@grpc/grpc-js": "^1.3.7",

@@ -61,5 +61,4 @@ npm install -g pnpm
 
 ## TODO
 
--   [ ] 去除 jimp 依赖，精简安装大小
--   [ ] 降低 GRPC 资源占用
+-   [ ] 解决 jimp 依赖占用磁盘、CPU、内存的问题

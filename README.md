@@ -61,4 +61,6 @@ npm install -g pnpm
 
 ## TODO
 
--   [x] 解决 jimp 依赖占用磁盘、CPU、内存的问题
+- [x] 解决 jimp 依赖占用磁盘、CPU、内存的问题
+- [ ] 优化启动提示 ioio waitfor
+- [ ] 抽离 utils 函数

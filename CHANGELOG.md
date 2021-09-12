@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.3.2"></a>
+## 0.3.2 (2021-09-12)
+
+### Fixed
+
+- 🐛 fix path bug [[1078e20](https://github.com/SOVLOOKUP/rubickbase/commit/1078e207e4fc87db07f566d6885921e397501910)]
+
+
 <a name="0.3.1"></a>
 ## 0.3.1 (2021-09-12)
 

@@ -1,5 +1,19 @@
 # Changelog
 
+<a name="0.3.5"></a>
+## 0.3.5 (2021-09-12)
+
+### Fixed
+
+- 🐛 fix capture tmpdir bug [[bf1c853](https://github.com/SOVLOOKUP/rubickbase/commit/bf1c853aaa15e16207825401c17a254b4c63aa24)]
+
+### Miscellaneous
+
+-  Update index.js [[fe68f0a](https://github.com/SOVLOOKUP/rubickbase/commit/fe68f0adcc57973a0d1044289db309aeb2eaee27)]
+-  Update package.json [[b87eea7](https://github.com/SOVLOOKUP/rubickbase/commit/b87eea7847d2b8223a2c534db2962dc7cfdd20cd)]
+    *  Update package.json ([aa3ff44](https://github.com/SOVLOOKUP/rubickbase/commit/aa3ff441bf96056f642299b5472469cc61c90ec0))
+
+
 <a name="0.3.4"></a>
 ## 0.3.4 (2021-09-12)
 

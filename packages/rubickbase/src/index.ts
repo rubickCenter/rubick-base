@@ -10,12 +10,15 @@ import {
 	RubickExtendAPI,
 	Position,
 	RubickAPI,
+	Color,
 } from './types'
 import newRustBackend, { RustBackendAPI } from './worker'
 import extendAPI from './extendAPI'
 import { loadPackageDefinition } from '@grpc/grpc-js'
 import { fromJSON } from '@grpc/proto-loader'
 import { INamespace } from 'protobufjs'
+import { join } from 'path'
+import fs from 'fs'
 
 export class RubickBase {
 	private server!: Mali<any>
@@ -36,6 +39,11 @@ export class RubickBase {
 		this.cursorPosition = { x: 0, y: 0 }
 		this.started = false
 		this.initBuiltinService()
+		// create capture tmp path
+		const captureTmpPath = path.resolve(this.tmpdir, 'capture')
+		if (fs.existsSync(captureTmpPath)) {
+			fs.mkdirSync(captureTmpPath)
+		}
 	}
 
 	async start() {
@@ -56,20 +64,32 @@ export class RubickBase {
 		const getCursorPosition = () => this.cursorPosition
 
 		const screenCapture = async (capturePath: string) => {
-			if (capturePath.endsWith('/')) {
-				capturePath = capturePath + Date.now().toString() + '.png'
+			if (fs.lstatSync(capturePath).isDirectory()) {
+				capturePath = join(capturePath, Date.now().toString() + '.png')
 			}
 			if (!capturePath.endsWith('.png')) {
 				capturePath = capturePath + '.png'
 			}
-			await this.worker?.capture(capturePath)
-			return path.resolve(capturePath)
+			try {
+				await this.worker.capture(capturePath)
+				return path.resolve(capturePath)
+			} catch (error) {
+				this.logger.error(error)
+				return 'error'
+			}
 		}
 
 		const getCursorPositionPixelColor = async () => {
-			const capturePath = await screenCapture(path.resolve(this.tmpdir, 'capture/'))
-			return extendAPI.getPicturePixelColor(capturePath, getCursorPosition())
+			const captureTmpPath = path.resolve(this.tmpdir, 'capture')
+			const capturePath = await screenCapture(captureTmpPath)
+			try {
+				return extendAPI.getPicturePixelColor(capturePath, getCursorPosition())
+			} catch (error) {
+				this.logger.error(error)
+				return <Color>{}
+			}
 		}
+
 		return {
 			getCursorPosition,
 			screenCapture,

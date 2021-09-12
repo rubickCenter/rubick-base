@@ -1,6 +1,7 @@
 #!/usr/bin/env zx
 import { fs } from 'zx'
 const platform = process.platform
+import { join } from 'path'
 
 let target
 let suffix
@@ -23,7 +24,7 @@ switch (platform) {
 	}
 }
 
-const targetPath = `target/${target}/release/${platform === 'win32' ? "" : "lib"}rubick_backend${suffix}`
+const targetPath = join('target', target, "release", `${platform === 'win32' ? "" : "lib"}rubick_backend${suffix}`)
 
 await $`pnpm build-${platform}`
 await fs.copyFile(targetPath, 'index.node')

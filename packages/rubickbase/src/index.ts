@@ -95,7 +95,7 @@ export class RubickBase {
 		const getPicturePixelColor = async (path: string, position: Position) => {
 			try {
 				const rgba = await this.worker.colorPicker(path, position)
-				return { hex16: rgbToHex(rgba.r, rgba.b, rgba.a), rgba }
+				return { hex16: rgbToHex(rgba.r, rgba.g, rgba.b), rgba }
 			} catch (error) {
 				this.logger.error(error)
 				return {

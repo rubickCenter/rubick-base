@@ -70,3 +70,4 @@ npm install -g pnpm
 -   [ ] 优化启动提示 ioio waitfor
 -   [ ] 使用 rust 进行屏幕取色 并防止超出边界
 -   [ ] 解决 hex16 转换bug
+-   [ ] 解决截图有黑屏的情况

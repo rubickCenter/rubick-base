@@ -17,12 +17,8 @@ import { fromJSON } from '@grpc/proto-loader'
 import { INamespace } from 'protobufjs'
 import { join } from 'path'
 import fs from 'fs'
-import { Evt } from 'evt'
-
-const evtDeviceEvent = new Evt<DeviceEvent>()
-function rgbToHex(r: number, g: number, b: number) {
-	return ((r << 16) | (g << 8) | b).toString(16)
-}
+import { getRandomNum, rgbToHex } from './utils'
+import { evtDeviceEvent } from './event'
 
 export class RubickBase {
 	private server!: Mali<any>
@@ -36,7 +32,7 @@ export class RubickBase {
 		const { port, logger, tmpdir, ioEventCallback } = settings
 		// settings
 		// if no port, gen a port from 50000-60000
-		this.port = (port || this.getRandomNum(50000, 60000)).toString()
+		this.port = (port || getRandomNum(50000, 60000)).toString()
 		this.logger = logger || signale
 		this.tmpdir = tmpdir || os.tmpdir()
 		// values
@@ -99,7 +95,6 @@ export class RubickBase {
 		const getPicturePixelColor = async (path: string, position: Position) => {
 			try {
 				const rgba = await this.worker.colorPicker(path, position)
-				// rgbToHex
 				return { hex16: rgbToHex(rgba.r, rgba.b, rgba.a), rgba }
 			} catch (error) {
 				this.logger.error(error)
@@ -164,12 +159,6 @@ export class RubickBase {
 			evtDeviceEvent.post(event)
 			ctx.res = { ok: true }
 		})
-	}
-
-	private getRandomNum(Min: number, Max: number) {
-		var Range = Max - Min
-		var Rand = Math.random()
-		return Min + Math.round(Rand * Range)
 	}
 
 	private validStarted() {

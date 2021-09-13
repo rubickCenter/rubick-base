@@ -12,7 +12,7 @@
 -   [x] 事件订阅模式
 -   [ ] 注册快捷键(装饰器风格)
 -   [ ] 获取应用列表(名称 图标 路径)
--   [ ] lzma-rs压缩解压
+-   [ ] lzma-rs 压缩解压
 -   [ ] 键盘事件模拟
 -   [ ] 鼠标事件模拟
 
@@ -63,6 +63,6 @@ npm install -g pnpm
 
 ## TODO
 
-- [x] 解决 jimp 依赖占用磁盘、CPU、内存的问题
-- [ ] 优化启动提示 ioio waitfor
-- [ ] 抽离 utils 函数
+-   [x] 解决 jimp 依赖占用磁盘、CPU、内存的问题
+-   [x] 抽离 utils 函数
+-   [ ] 优化启动提示 ioio waitfor

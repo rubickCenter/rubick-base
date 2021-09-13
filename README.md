@@ -69,3 +69,4 @@ npm install -g pnpm
 -   [x] 抽离 utils 函数
 -   [ ] 优化启动提示 ioio waitfor
 -   [ ] 使用 rust 进行屏幕取色 并防止超出边界
+-   [ ] 解决 hex16 转换bug

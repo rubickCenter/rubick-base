@@ -10,6 +10,7 @@
 -   [x] 获取鼠标位置 get cursor position
 -   [x] 获取鼠标像素颜色 pick color at cursor position
 -   [x] 事件订阅模式
+-   [ ] 截图获取某位置周围图像
 -   [ ] 注册快捷键(装饰器风格)
 -   [ ] 获取应用列表(名称 路径)
 -   [ ] lzma-rs 压缩解压
@@ -67,3 +68,4 @@ npm install -g pnpm
 -   [x] 解决 jimp 依赖占用磁盘、CPU、内存的问题
 -   [x] 抽离 utils 函数
 -   [ ] 优化启动提示 ioio waitfor
+-   [ ] 使用 rust 进行屏幕取色 并防止超出边界

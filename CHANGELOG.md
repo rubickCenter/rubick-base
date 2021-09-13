@@ -1,5 +1,36 @@
 # Changelog
 
+<a name="0.4.1"></a>
+## 0.4.1 (2021-09-13)
+
+### Changed
+
+- 🎨 event utils [[3f7f83d](https://github.com/SOVLOOKUP/rubickbase/commit/3f7f83dac197af19264abb1811e2fe69380f801a)]
+
+### Fixed
+
+- 🐛 fix color convert bug [[7c2f4d8](https://github.com/SOVLOOKUP/rubickbase/commit/7c2f4d8888fbba66975bd0fba65d9f10590d39bd)]
+- 🐛 fix black capture bug and hex16 bug [[06d7651](https://github.com/SOVLOOKUP/rubickbase/commit/06d7651e543a55bd399e19680be7206e21be4e87)]
+
+### Miscellaneous
+
+-  Update README.md [[c481c51](https://github.com/SOVLOOKUP/rubickbase/commit/c481c518331abfe3fde3fdbf720fff4e0da666cb)]
+    *  Update README.md ([44a1aba](https://github.com/SOVLOOKUP/rubickbase/commit/44a1aba02d3c4172d5ce9e79483893c0a3cfc006))
+    *  Update README.md ([1fdf761](https://github.com/SOVLOOKUP/rubickbase/commit/1fdf761a384282e289e02736ac4d82d07e4d9934))
+    *  Update README.md ([19fc5d8](https://github.com/SOVLOOKUP/rubickbase/commit/19fc5d8bd2826bc4cc8971ba700162d4cd219981))
+    *  Update README.md ([6126e81](https://github.com/SOVLOOKUP/rubickbase/commit/6126e8137226d4cc008386c383d0f3aee396b41d))
+    *  Update README.md ([ca11795](https://github.com/SOVLOOKUP/rubickbase/commit/ca11795478428c1523582e27abbe6c1a8f1d0a07))
+    *  Update README.md ([35679ce](https://github.com/SOVLOOKUP/rubickbase/commit/35679ce683753aebe5babf945fa7c856f5c385ac))
+    *  Update README.md ([7460b2b](https://github.com/SOVLOOKUP/rubickbase/commit/7460b2b3dc93aa643d5f8c2b1398691a794bb748))
+    *  Update README.md ([31ac1d5](https://github.com/SOVLOOKUP/rubickbase/commit/31ac1d5b785b08abe6456814ee2b214e2b11872b))
+    *  Update README.md ([cb12dff](https://github.com/SOVLOOKUP/rubickbase/commit/cb12dffbf2938fafb559ea62944290f629c56786))
+    *  Update README.md ([c671e94](https://github.com/SOVLOOKUP/rubickbase/commit/c671e94b93e6973d75160bae85a8627b17ccec69))
+    *  Update README.md ([990c5b3](https://github.com/SOVLOOKUP/rubickbase/commit/990c5b39a9a3b50ca383d2c59c8615c31f2d73df))
+    *  Update README.md ([0cdf5e9](https://github.com/SOVLOOKUP/rubickbase/commit/0cdf5e9ff620a5ec7b58431190a953a65ace2a1b))
+-  Update package.json [[143ce3a](https://github.com/SOVLOOKUP/rubickbase/commit/143ce3ae6e21e2a6dc748f29ef80b94f71640b51)]
+-  Update Cargo.toml [[5262b0b](https://github.com/SOVLOOKUP/rubickbase/commit/5262b0b5b848a9dc312817e2d81dee9d8cf1b517)]
+
+
 <a name="0.4.0"></a>
 ## 0.4.0 (2021-09-12)
 

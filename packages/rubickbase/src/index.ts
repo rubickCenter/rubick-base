@@ -1,7 +1,6 @@
 import os from 'os'
 import Mali from 'mali'
 import path from 'path'
-import signale from 'signale'
 import {
 	Logger,
 	RubickBaseSettings,
@@ -19,6 +18,7 @@ import { join } from 'path'
 import fs from 'fs'
 import { getRandomNum, rgbToHex } from './utils'
 import { evtDeviceEvent } from './event'
+import { defaultLogger } from './logger'
 
 export class RubickBase {
 	private server!: Mali<any>
@@ -33,7 +33,7 @@ export class RubickBase {
 		// settings
 		// if no port, gen a port from 50000-60000
 		this.port = (port || getRandomNum(50000, 60000)).toString()
-		this.logger = logger || signale
+		this.logger = logger || defaultLogger
 		this.tmpdir = tmpdir || os.tmpdir()
 		// values
 		this.started = false

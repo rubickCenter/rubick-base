@@ -3,15 +3,10 @@ extern crate scrap;
 use image::{GenericImageView, ImageError, Rgba};
 use scrap::{Capturer, Display};
 use std::io::ErrorKind::WouldBlock;
-use std::thread;
-use std::time::Duration;
 extern crate image;
 
 #[allow(dead_code)]
 pub fn screen_capture(path: String) {
-    let one_second = Duration::new(1, 0);
-    let one_frame = one_second / 60;
-
     let display = Display::primary().expect("Couldn't find primary display.");
     let mut capturer = Capturer::new(display).expect("Couldn't begin capture.");
     let (w, h) = (capturer.width(), capturer.height());
@@ -22,8 +17,6 @@ pub fn screen_capture(path: String) {
             Ok(buffer) => buffer,
             Err(error) => {
                 if error.kind() == WouldBlock {
-                    // Keep spinning.
-                    thread::sleep(one_frame);
                     continue;
                 } else {
                     panic!("Error: {}", error);

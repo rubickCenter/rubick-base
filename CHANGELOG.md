@@ -1,10 +1,12 @@
 # Changelog
 
-<a name="0.4.1"></a>
-## 0.4.1 (2021-09-13)
+<a name="0.5.0"></a>
+## 0.5.0 (2021-09-14)
 
 ### Changed
 
+- ⚡ fix picker boarder bug [[4bb95d4](https://github.com/SOVLOOKUP/rubickbase/commit/4bb95d48e950f09eb1c2c7d28e4e24b63567d304)]
+- ⚡ use rust to pick screen color [[817e78d](https://github.com/SOVLOOKUP/rubickbase/commit/817e78db2099b2313d460e2f5567d7b84156a2c0)]
 - 🎨 event utils [[3f7f83d](https://github.com/SOVLOOKUP/rubickbase/commit/3f7f83dac197af19264abb1811e2fe69380f801a)]
 
 ### Fixed
@@ -14,6 +16,7 @@
 
 ### Miscellaneous
 
+-  Release 0.4.1 [[8bede49](https://github.com/SOVLOOKUP/rubickbase/commit/8bede49d169bf6eb9aa1902eae6cfca770d7da00)]
 -  Update README.md [[c481c51](https://github.com/SOVLOOKUP/rubickbase/commit/c481c518331abfe3fde3fdbf720fff4e0da666cb)]
     *  Update README.md ([44a1aba](https://github.com/SOVLOOKUP/rubickbase/commit/44a1aba02d3c4172d5ce9e79483893c0a3cfc006))
     *  Update README.md ([1fdf761](https://github.com/SOVLOOKUP/rubickbase/commit/1fdf761a384282e289e02736ac4d82d07e4d9934))

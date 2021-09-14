@@ -70,10 +70,7 @@ export class RubickBase {
 	getAPI(): RubickAPI {
 		this.validStarted()
 
-		const tryBackend = async <T>(
-			func: () => Promise<Awaited<T>>,
-			errorReturn: T,
-		): Promise<Awaited<T>> => {
+		const tryBackend = async <T>(func: () => Promise<T>, errorReturn: T): Promise<T> => {
 			try {
 				return await func()
 			} catch (error) {

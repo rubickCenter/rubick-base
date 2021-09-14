@@ -5,6 +5,8 @@ export interface RustBackendAPI {
 	capture: (path: string) => Promise<undefined>
 	colorPicker: (path: string, position: Position) => Promise<RGBA>
 	screenColorPicker: (position: Position) => Promise<RGB>
+	compress: (fromPath: string, toPath: string) => Promise<undefined>
+	decompress: (fromPath: string, toPath: string) => Promise<undefined>
 }
 
 async function newRustBackend(): Promise<RustBackendAPI> {
@@ -21,6 +23,12 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		},
 		screenColorPicker: async (position: Position) => {
 			return await rustBackend.screen_color_picker_start(position.x, position.y)
+		},
+		compress: async (fromPath: string, toPath: string) => {
+			return await rustBackend.lzma_compress_start(fromPath, toPath)
+		},
+		decompress: async (fromPath: string, toPath: string) => {
+			return await rustBackend.lzma_decompress_start(fromPath, toPath)
 		},
 	}
 }

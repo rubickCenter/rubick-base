@@ -10,7 +10,7 @@
 -   [x] 获取鼠标位置 get cursor position
 -   [x] 获取鼠标像素颜色 pick color at cursor position
 -   [x] 事件订阅模式 event emitter
--   [ ] lzma-rs 压缩解压
+-   [x] lzma-rs 压缩解压
 -   [ ] 截图获取某位置周围图像
 -   [ ] 注册快捷键(装饰器风格)
 -   [ ] 获取应用列表(名称 路径)
@@ -69,3 +69,4 @@ npm install -g pnpm
 -   [x] 解决 hex16 转换 bug
 -   [x] 解决截图有黑屏的情况
 -   [x] 使用 rust 进行屏幕取色 并防止超出边界
+-   [ ] async task 模式

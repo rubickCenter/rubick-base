@@ -45,10 +45,9 @@ fn valid_border(point: u32, limit: u32) -> u32 {
 
 // capture primary screen
 #[allow(dead_code)]
-pub fn screen_capture(path: String) {
-    screen_capture_raw()
-        .save_with_format(path, image::ImageFormat::Png)
-        .expect("img save error!");
+pub fn screen_capture(path: String) -> Result<(), ImageError> {
+    screen_capture_raw().save_with_format(path, image::ImageFormat::Png)?;
+    Ok(())
 }
 
 // pick color from picture

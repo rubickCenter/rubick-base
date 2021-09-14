@@ -21,6 +21,14 @@ export interface RubickAPI extends RubickExtendAPI {
 	 * @return {Promise<Color>} 位置像素颜色
 	 */
 	getPicturePixelColor: (path: string, position: Position) => Promise<Color>
+
+	/** lzma压缩
+	 */
+	compress: (fromPath: string, toPath: string) => Promise<undefined>
+
+	/** lzma解压
+	 */
+	decompress: (fromPath: string, toPath: string) => Promise<undefined>
 }
 
 export interface RubickExtendAPI {}

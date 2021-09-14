@@ -1,7 +1,56 @@
+mod dataprocess;
 mod imgtools;
 mod ioio;
 use neon::prelude::*;
 use std::thread;
+
+// 开启键鼠事件侦测
+fn ioio_start(mut cx: FunctionContext) -> JsResult<JsBoolean> {
+    let port = cx.argument::<JsString>(0)?.value(&mut cx);
+    let channel = cx.channel();
+    thread::spawn(move || {
+        ioio::start(port.as_str()).expect("Rpc client start error!");
+        channel.send(move |mut _cx| Ok(()))
+    });
+    Ok(cx.boolean(true))
+}
+
+// 主屏幕截图
+fn capture_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let path = cx.argument::<JsString>(0)?.value(&mut cx);
+    let channel = cx.channel();
+    thread::spawn(move || {
+        imgtools::screen_capture(path).expect("screen capture error");
+        channel.send(move |mut _cx| Ok(()))
+    });
+    Ok(cx.undefined())
+}
+
+// 压缩
+fn lzma_compress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
+    let topath = cx.argument::<JsString>(0)?.value(&mut cx);
+    let channel = cx.channel();
+    thread::spawn(move || {
+        dataprocess::lzma_compress(frompath.as_str(), topath.as_str())
+            .expect("lzma_compress error!");
+        channel.send(move |mut _cx| Ok(()))
+    });
+    Ok(cx.undefined())
+}
+
+// 解压
+fn lzma_decompress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
+    let topath = cx.argument::<JsString>(0)?.value(&mut cx);
+    let channel = cx.channel();
+    thread::spawn(move || {
+        dataprocess::lzma_decompress(frompath.as_str(), topath.as_str())
+            .expect("lzma_decompress error!");
+        channel.send(move |mut _cx| Ok(()))
+    });
+    Ok(cx.undefined())
+}
 
 // 获取图片某位置像素颜色
 fn color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
@@ -21,20 +70,6 @@ fn color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
     Ok(obj)
 }
 
-// 主屏幕截图
-fn capture_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
-    let arg0 = cx.argument::<JsString>(0)?.value(&mut cx);
-    imgtools::screen_capture(arg0);
-    Ok(cx.undefined())
-}
-
-// 开启键鼠事件侦测
-fn ioio_start(mut cx: FunctionContext) -> JsResult<JsBoolean> {
-    let arg0 = cx.argument::<JsString>(0)?.value(&mut cx);
-    thread::spawn(move || ioio::start(arg0.as_str()).expect("Rpc client error!"));
-    Ok(cx.boolean(true))
-}
-
 // 从屏幕中取色
 fn screen_color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
     let x = cx.argument::<JsNumber>(0)?.value(&mut cx);
@@ -50,13 +85,16 @@ fn screen_color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
     Ok(obj)
 }
 
-// todo error handling
+// todo handle error
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
-    cx.export_function("ioio_start", ioio_start)?;
-    // todo async task
-    cx.export_function("capture_start", capture_start)?;
+    // todo async task return object
     cx.export_function("color_picker_start", color_picker_start)?;
     cx.export_function("screen_color_picker_start", screen_color_picker_start)?;
+    // async task
+    cx.export_function("capture_start", capture_start)?;
+    cx.export_function("ioio_start", ioio_start)?;
+    cx.export_function("lzma_compress_start", lzma_compress_start)?;
+    cx.export_function("lzma_decompress_start", lzma_decompress_start)?;
     Ok(())
 }

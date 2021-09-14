@@ -3,6 +3,8 @@ declare namespace rubick_backend {
 	function capture_start(path: string): Promise<undefined>
 	function color_picker_start(path: string, x: number, y: number): Promise<RGBA>
 	function screen_color_picker_start(x: number, y: number): Promise<RGB>
+	function lzma_compress_start(fromPath: string, toPath: string): Promise<undefined>
+	function lzma_decompress_start(fromPath: string, toPath: string): Promise<undefined>
 }
 
 interface RGBA {

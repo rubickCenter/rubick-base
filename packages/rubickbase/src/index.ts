@@ -68,8 +68,10 @@ export class RubickBase {
 	}
 
 	getAPI(): RubickAPI {
+		// valid start
 		this.validStarted()
 
+		// utils
 		const tryBackend = async <T>(func: () => Promise<T>, errorReturn: T): Promise<T> => {
 			try {
 				return await func()
@@ -79,23 +81,40 @@ export class RubickBase {
 			}
 		}
 
+		const validDirectoryAndTryBackend = async <T>(
+			path: string[] | string,
+			func: () => Promise<T>,
+			errorReturn: T,
+		): Promise<T> => {
+			if (typeof path === 'string') {
+				path = [path]
+			}
+			let v = path.map((path) => fs.existsSync(path) && fs.lstatSync(path).isDirectory())
+			if (!v.includes(false)) {
+				return await tryBackend(func, errorReturn)
+			} else {
+				this.logger.error('No such directory!')
+				return errorReturn
+			}
+		}
+
+		// API
 		const getCursorPosition = () => this.cursorPosition
 
 		const screenCapture = async (capturePath: string, captureName?: string) => {
-			if (fs.existsSync(capturePath) && fs.lstatSync(capturePath).isDirectory()) {
-				captureName = captureName || Date.now().toString() + '.png'
-				if (!captureName.endsWith('.png')) {
-					captureName = captureName + '.png'
-				}
-				const captureFilePath = join(capturePath, captureName)
-				return await tryBackend(async () => {
+			return await validDirectoryAndTryBackend(
+				capturePath,
+				async () => {
+					captureName = captureName || Date.now().toString() + '.png'
+					if (!captureName.endsWith('.png')) {
+						captureName = captureName + '.png'
+					}
+					const captureFilePath = join(capturePath, captureName)
 					await this.worker.capture(captureFilePath)
 					return path.resolve(captureFilePath)
-				}, 'error')
-			} else {
-				this.logger.error('No such directory!')
-				return 'error'
-			}
+				},
+				'error',
+			)
 		}
 
 		const getPicturePixelColor = async (path: string, position: Position) => {
@@ -142,7 +161,23 @@ export class RubickBase {
 			)
 		}
 
+		const compress = async (fromPath: string, toPath: string) =>
+			await validDirectoryAndTryBackend(
+				[fromPath, toPath],
+				async () => await this.worker.compress(fromPath, toPath),
+				undefined,
+			)
+
+		const decompress = async (fromPath: string, toPath: string) =>
+			await validDirectoryAndTryBackend(
+				[fromPath, toPath],
+				async () => await this.worker.decompress(fromPath, toPath),
+				undefined,
+			)
+
 		return {
+			compress,
+			decompress,
 			getPicturePixelColor,
 			getCursorPosition,
 			screenCapture,

@@ -1,11 +1,19 @@
 # Changelog
 
-<a name="0.5.1"></a>
-## 0.5.1 (2021-09-14)
+<a name="0.6.0"></a>
+## 0.6.0 (2021-09-14)
+
+### Added
+
+- ✨ lzma [[0be44d5](https://github.com/SOVLOOKUP/rubickbase/commit/0be44d577506ecb0795e49c8d8b9ae155a2ad149)]
 
 ### Fixed
 
 - 🐛 fix compile await bug [[5798aa1](https://github.com/SOVLOOKUP/rubickbase/commit/5798aa1756356ce232beb219d0258c7cdb03391f)]
+
+### Miscellaneous
+
+-  Release 0.5.1 [[b6a1b37](https://github.com/SOVLOOKUP/rubickbase/commit/b6a1b374d4bf5fec2cf29ab024b24615e2a15d6d)]
 
 
 <a name="0.5.0"></a>

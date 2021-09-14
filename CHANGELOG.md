@@ -1,5 +1,21 @@
 # Changelog
 
+<a name="0.6.1"></a>
+## 0.6.1 (2021-09-14)
+
+### Added
+
+- ✨ event register [[19fb28d](https://github.com/SOVLOOKUP/rubickbase/commit/19fb28d7674bee587cf875f1c8fd243baa0554e7)]
+
+### Fixed
+
+- 🐛 fix compress dic bug [[4f5b989](https://github.com/SOVLOOKUP/rubickbase/commit/4f5b989cf586b5b4035e260f86a0db12f5535264)]
+
+### Miscellaneous
+
+-  Update README.md [[e57aab8](https://github.com/SOVLOOKUP/rubickbase/commit/e57aab860f4378a69c1f3c05a6212944466d58eb)]
+
+
 <a name="0.6.0"></a>
 ## 0.6.0 (2021-09-14)
 

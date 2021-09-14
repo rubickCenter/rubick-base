@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.5.1"></a>
+## 0.5.1 (2021-09-14)
+
+### Fixed
+
+- 🐛 fix compile await bug [[5798aa1](https://github.com/SOVLOOKUP/rubickbase/commit/5798aa1756356ce232beb219d0258c7cdb03391f)]
+
+
 <a name="0.5.0"></a>
 ## 0.5.0 (2021-09-14)
 

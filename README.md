@@ -69,4 +69,4 @@ npm install -g pnpm
 -   [x] 抽离 utils 函数
 -   [x] 解决 hex16 转换 bug
 -   [x] 解决截图有黑屏的情况
--   [ ] 使用 rust 进行屏幕取色 并防止超出边界
+-   [x] 使用 rust 进行屏幕取色 并防止超出边界

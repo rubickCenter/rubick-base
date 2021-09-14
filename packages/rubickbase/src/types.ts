@@ -32,6 +32,12 @@ export interface RGBA {
 	a: number
 }
 
+export interface RGB {
+	r: number
+	g: number
+	b: number
+}
+
 export interface Color {
 	hex16: string
 	rgba: RGBA

@@ -52,6 +52,7 @@ impl Listen for Listener {
     }
 }
 
+// listen device send grpc event
 #[allow(dead_code)]
 async fn send_event(client: &mut RubickClient<Channel>) -> Result<(), Box<dyn std::error::Error>> {
     let (tx, rx) = mpsc::channel();
@@ -145,6 +146,7 @@ async fn send_event(client: &mut RubickClient<Channel>) -> Result<(), Box<dyn st
     Ok(())
 }
 
+// start grpc client
 #[tokio::main]
 pub async fn start(port: &str) -> Result<RubickClient<Channel>, Box<dyn std::error::Error>> {
     let mut client = RubickClient::connect(format!("https://127.0.0.1:{}", port)).await?;

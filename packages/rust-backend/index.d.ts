@@ -2,6 +2,7 @@ declare namespace rubick_backend {
 	function ioio_start(port: string): Promise<boolean>
 	function capture_start(path: string): Promise<undefined>
 	function color_picker_start(path: string, x: number, y: number): Promise<RGBA>
+	function screen_color_picker_start(x: number, y: number): Promise<RGB>
 }
 
 interface RGBA {
@@ -9,6 +10,12 @@ interface RGBA {
 	g: number
 	b: number
 	a: number
+}
+
+interface RGB {
+	r: number
+	g: number
+	b: number
 }
 
 export = rubick_backend

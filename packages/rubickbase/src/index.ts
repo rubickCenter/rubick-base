@@ -70,6 +70,18 @@ export class RubickBase {
 	getAPI(): RubickAPI {
 		this.validStarted()
 
+		const tryBackend = async <T>(
+			func: () => Promise<Awaited<T>>,
+			errorReturn: T,
+		): Promise<Awaited<T>> => {
+			try {
+				return await func()
+			} catch (error) {
+				this.logger.error(error)
+				return errorReturn
+			}
+		}
+
 		const getCursorPosition = () => this.cursorPosition
 
 		const screenCapture = async (capturePath: string, captureName?: string) => {
@@ -79,13 +91,10 @@ export class RubickBase {
 					captureName = captureName + '.png'
 				}
 				const captureFilePath = join(capturePath, captureName)
-				try {
+				return await tryBackend(async () => {
 					await this.worker.capture(captureFilePath)
 					return path.resolve(captureFilePath)
-				} catch (error) {
-					this.logger.error(error)
-					return 'error'
-				}
+				}, 'error')
 			} else {
 				this.logger.error('No such directory!')
 				return 'error'
@@ -93,12 +102,12 @@ export class RubickBase {
 		}
 
 		const getPicturePixelColor = async (path: string, position: Position) => {
-			try {
-				const rgba = await this.worker.colorPicker(path, position)
-				return { hex16: rgbToHex(rgba.r, rgba.g, rgba.b), rgba }
-			} catch (error) {
-				this.logger.error(error)
-				return {
+			return await tryBackend(
+				async () => {
+					const rgba = await this.worker.colorPicker(path, position)
+					return { hex16: rgbToHex(rgba.r, rgba.g, rgba.b, rgba.a), rgba }
+				},
+				{
 					hex16: 'error',
 					rgba: {
 						r: -1,
@@ -106,14 +115,34 @@ export class RubickBase {
 						b: -1,
 						a: -1,
 					},
-				}
-			}
+				},
+			)
 		}
 
 		const getCursorPositionPixelColor = async () => {
-			const captureTmpPath = path.resolve(this.tmpdir, 'capture')
-			const capturePath = await screenCapture(captureTmpPath)
-			return getPicturePixelColor(capturePath, getCursorPosition())
+			return await tryBackend(
+				async () => {
+					const rgb = await this.worker.screenColorPicker(getCursorPosition())
+					return {
+						hex16: rgbToHex(rgb.r, rgb.g, rgb.b),
+						rgba: {
+							r: rgb.r,
+							g: rgb.g,
+							b: rgb.b,
+							a: 255,
+						},
+					}
+				},
+				{
+					hex16: 'error',
+					rgba: {
+						r: -1,
+						g: -1,
+						b: -1,
+						a: -1,
+					},
+				},
+			)
 		}
 
 		return {

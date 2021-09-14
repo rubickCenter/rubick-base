@@ -71,7 +71,7 @@ export class RubickBase {
 		// valid start
 		this.validStarted()
 
-		// utils
+		// 调用 rust-backend 并捕捉异常
 		const tryBackend = async <T>(func: () => Promise<T>, errorReturn: T): Promise<T> => {
 			try {
 				return await func()
@@ -81,15 +81,22 @@ export class RubickBase {
 			}
 		}
 
-		const validDirectoryAndTryBackend = async <T>(
-			path: string[] | string,
+		// 检查目录和文件名是否合法
+		const validAndTryBackend = async <T>(
 			func: () => Promise<T>,
 			errorReturn: T,
+			dic: string[] | string = [],
+			file: string[] | string = [],
 		): Promise<T> => {
-			if (typeof path === 'string') {
-				path = [path]
+			if (typeof dic === 'string') {
+				dic = [dic]
 			}
-			let v = path.map((path) => fs.existsSync(path) && fs.lstatSync(path).isDirectory())
+			if (typeof file === 'string') {
+				file = [file]
+			}
+			let v1 = dic.map((dic) => fs.existsSync(dic) && fs.lstatSync(dic).isDirectory())
+			let v2 = file.map((path) => fs.existsSync(path) && fs.lstatSync(path).isFile())
+			let v = [...v1, ...v2]
 			if (!v.includes(false)) {
 				return await tryBackend(func, errorReturn)
 			} else {
@@ -99,13 +106,16 @@ export class RubickBase {
 		}
 
 		// API
+		// 获取鼠标位置
 		const getCursorPosition = () => this.cursorPosition
 
-		const screenCapture = async (capturePath: string, captureName?: string) => {
-			return await validDirectoryAndTryBackend(
-				capturePath,
+		// 截屏
+		const screenCapture = async (capturePath: string, captureName?: string) =>
+			await validAndTryBackend(
 				async () => {
+					// 默认名称为时间戳
 					captureName = captureName || Date.now().toString() + '.png'
+					// 检查 png 后辍
 					if (!captureName.endsWith('.png')) {
 						captureName = captureName + '.png'
 					}
@@ -114,11 +124,12 @@ export class RubickBase {
 					return path.resolve(captureFilePath)
 				},
 				'error',
+				capturePath,
 			)
-		}
 
-		const getPicturePixelColor = async (path: string, position: Position) => {
-			return await tryBackend(
+		// 获取图片位置像素
+		const getPicturePixelColor = async (path: string, position: Position) =>
+			await tryBackend(
 				async () => {
 					const rgba = await this.worker.colorPicker(path, position)
 					return { hex16: rgbToHex(rgba.r, rgba.g, rgba.b, rgba.a), rgba }
@@ -133,10 +144,10 @@ export class RubickBase {
 					},
 				},
 			)
-		}
 
-		const getCursorPositionPixelColor = async () => {
-			return await tryBackend(
+		// 获取光标位置像素
+		const getCursorPositionPixelColor = async () =>
+			await tryBackend(
 				async () => {
 					const rgb = await this.worker.screenColorPicker(getCursorPosition())
 					return {
@@ -159,20 +170,23 @@ export class RubickBase {
 					},
 				},
 			)
-		}
 
+		// lzma2 压缩文件
 		const compress = async (fromPath: string, toPath: string) =>
-			await validDirectoryAndTryBackend(
-				[fromPath, toPath],
+			await validAndTryBackend(
 				async () => await this.worker.compress(fromPath, toPath),
 				undefined,
+				[],
+				[fromPath, toPath],
 			)
 
+		// lzma2 解压文件
 		const decompress = async (fromPath: string, toPath: string) =>
-			await validDirectoryAndTryBackend(
-				[fromPath, toPath],
+			await validAndTryBackend(
 				async () => await this.worker.decompress(fromPath, toPath),
 				undefined,
+				[],
+				[fromPath, toPath],
 			)
 
 		return {

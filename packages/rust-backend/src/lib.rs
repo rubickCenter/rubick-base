@@ -88,7 +88,7 @@ fn screen_color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
 // todo handle error
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
-    // todo async task return object
+    // sync task
     cx.export_function("color_picker_start", color_picker_start)?;
     cx.export_function("screen_color_picker_start", screen_color_picker_start)?;
     // async task

@@ -8,6 +8,7 @@ import {
 	RubickExtendAPI,
 	Position,
 	RubickAPI,
+	ButtonEvent,
 } from './types'
 import newRustBackend, { RustBackendAPI } from './worker'
 import extendAPI from './extendAPI'
@@ -19,14 +20,16 @@ import fs from 'fs'
 import { getRandomNum, rgbToHex } from './utils'
 import { evtDeviceEvent } from './event'
 import { defaultLogger } from './logger'
+import { Ctx, Evt } from 'evt'
 
 export class RubickBase {
 	private server!: Mali<any>
 	private worker!: RustBackendAPI
 	private port: string
-	private cursorPosition: Position
-	private started: boolean
 	private tmpdir: string
+	private cursorPosition: Position = { x: 0, y: 0 }
+	private started: boolean = false
+	private eventChannels: Map<string, Ctx<void>> = new Map()
 	logger: Logger
 	constructor(settings: RubickBaseSettings) {
 		const { port, logger, tmpdir, ioEventCallback } = settings
@@ -35,16 +38,24 @@ export class RubickBase {
 		this.port = (port || getRandomNum(50000, 60000)).toString()
 		this.logger = logger || defaultLogger
 		this.tmpdir = tmpdir || os.tmpdir()
-		// values
-		this.started = false
-		this.cursorPosition = { x: 0, y: 0 }
+
 		// base init
 		this.initBuiltinService()
-		// create capture tmp path
-		const captureTmpPath = path.resolve(this.tmpdir, 'capture')
-		if (!fs.existsSync(captureTmpPath)) {
-			fs.mkdirSync(captureTmpPath)
+
+		// create tmp path
+		if (!fs.existsSync(this.tmpdir)) {
+			fs.mkdirSync(this.tmpdir)
 		}
+
+		// event attach/detach annotations
+		evtDeviceEvent.evtAttach.attach((handler) => {
+			this.logger.info(`${handler.callback?.name} attached`)
+		})
+
+		evtDeviceEvent.evtDetach.attach((handler) => {
+			this.logger.info(`${handler.callback?.name} attached`)
+		})
+
 		// listen event
 		evtDeviceEvent.attachExtract(async (event) => {
 			if (ioEventCallback) await ioEventCallback(event)
@@ -253,6 +264,40 @@ export class RubickBase {
 			proto = './proto/rubick.proto'
 		}
 		return proto
+	}
+
+	private register(name: string, bindEvent: ButtonEvent) {
+		// todo 多个条件 (同时多个键保持按下的状态)
+		// todo 设置延迟触发时间 (一个键被按下的时间)
+		bindEvent.time = bindEvent.time || 0
+
+		const eventChannel = new Evt<DeviceEvent>()
+		const ctx = Evt.newCtx()
+
+		// 创建一个隧道并在注册表中记录
+		this.eventChannels.set(name, ctx)
+
+		// 让全局事件监听器在键名和操作都匹配的情况下向这个隧道发送消息
+		evtDeviceEvent.attach(
+			(deviceEvent) =>
+				deviceEvent.info === bindEvent.name && deviceEvent.action === bindEvent.action,
+			ctx,
+			(deviceEvent) => {
+				eventChannel.post(deviceEvent)
+			},
+		)
+
+		// todo 拓展 Evt 类型 实现全局事件注册管理器
+		const deleteChannel = () => {
+			// 删除全局事件的监听挂钩
+			const ctx = this.eventChannels.get(name)
+			if (ctx) evtDeviceEvent.detach(ctx)
+			// 删除注册表中的隧道
+			this.eventChannels.delete(name)
+		}
+
+		// 返回这个隧道
+		return { eventChannel, deleteChannel }
 	}
 }
 

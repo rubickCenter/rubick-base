@@ -208,3 +208,9 @@ export interface Logger {
 	success: Function
 	warn: Function
 }
+
+export interface ButtonEvent {
+	name: string
+	action: 'Press' | 'Release'
+	time?: number
+}

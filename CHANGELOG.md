@@ -1,11 +1,12 @@
 # Changelog
 
-<a name="0.6.1"></a>
-## 0.6.1 (2021-09-14)
+<a name="0.7.0"></a>
+## 0.7.0 (2021-09-15)
 
 ### Added
 
-- ✨ event register [[19fb28d](https://github.com/SOVLOOKUP/rubickbase/commit/19fb28d7674bee587cf875f1c8fd243baa0554e7)]
+- ✨ event hook register [[27da8d3](https://github.com/SOVLOOKUP/rubickbase/commit/27da8d3e47fff3fbd439d9b9688e6d96fb51b3f5)]
+    * ✨ event register ([19fb28d](https://github.com/SOVLOOKUP/rubickbase/commit/19fb28d7674bee587cf875f1c8fd243baa0554e7))
 
 ### Fixed
 
@@ -13,7 +14,10 @@
 
 ### Miscellaneous
 
--  Update README.md [[e57aab8](https://github.com/SOVLOOKUP/rubickbase/commit/e57aab860f4378a69c1f3c05a6212944466d58eb)]
+- 📝 add example [[214a93c](https://github.com/SOVLOOKUP/rubickbase/commit/214a93c8ff26599d69ef0954f0c01f1f7a9cba64)]
+-  Update README.md [[7c488ba](https://github.com/SOVLOOKUP/rubickbase/commit/7c488bade213737425bb864de2f7e609652ccaa8)]
+    *  Update README.md ([e57aab8](https://github.com/SOVLOOKUP/rubickbase/commit/e57aab860f4378a69c1f3c05a6212944466d58eb))
+-  Release 0.6.1 [[b154803](https://github.com/SOVLOOKUP/rubickbase/commit/b154803403b90f1dc99244e095491ddc0288dcd3)]
 
 
 <a name="0.6.0"></a>

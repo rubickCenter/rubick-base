@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.8.0"></a>
+## 0.8.0 (2021-09-15)
+
+### Added
+
+- ✨ capture around point [[c25f308](https://github.com/SOVLOOKUP/rubickbase/commit/c25f308eb88cb899c902a23e15dc25d44dc9c867)]
+
+
 <a name="0.7.0"></a>
 ## 0.7.0 (2021-09-15)
 

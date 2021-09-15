@@ -18,11 +18,7 @@ fn ioio_start(mut cx: FunctionContext) -> JsResult<JsBoolean> {
 // 主屏幕截图
 fn capture_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     let path = cx.argument::<JsString>(0)?.value(&mut cx);
-    let channel = cx.channel();
-    thread::spawn(move || {
-        imgtools::screen_capture(path).expect("screen capture error");
-        channel.send(move |mut _cx| Ok(()))
-    });
+    imgtools::screen_capture(path).expect("screen capture error");
     Ok(cx.undefined())
 }
 
@@ -70,6 +66,18 @@ fn color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
     Ok(obj)
 }
 
+// 获取图片某位置像素颜色
+fn screen_capture_rect_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let x = cx.argument::<JsNumber>(0)?.value(&mut cx);
+    let y = cx.argument::<JsNumber>(1)?.value(&mut cx);
+    let width = cx.argument::<JsNumber>(2)?.value(&mut cx);
+    let height = cx.argument::<JsNumber>(3)?.value(&mut cx);
+    let path = cx.argument::<JsString>(4)?.value(&mut cx);
+    imgtools::screen_capture_rect(x as u32, y as u32, width as u32, height as u32, path)
+        .expect("screen capture rect error");
+    Ok(cx.undefined())
+}
+
 // 从屏幕中取色
 fn screen_color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
     let x = cx.argument::<JsNumber>(0)?.value(&mut cx);
@@ -91,8 +99,9 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     // sync task
     cx.export_function("color_picker_start", color_picker_start)?;
     cx.export_function("screen_color_picker_start", screen_color_picker_start)?;
-    // async task
     cx.export_function("capture_start", capture_start)?;
+    cx.export_function("screen_capture_rect_start", screen_capture_rect_start)?;
+    // async task
     cx.export_function("ioio_start", ioio_start)?;
     cx.export_function("lzma_compress_start", lzma_compress_start)?;
     cx.export_function("lzma_decompress_start", lzma_decompress_start)?;

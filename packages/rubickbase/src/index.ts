@@ -15,10 +15,11 @@ import { loadPackageDefinition } from '@grpc/grpc-js'
 import { fromJSON } from '@grpc/proto-loader'
 import { INamespace } from 'protobufjs'
 import { join } from 'path'
-import fs from 'fs'
+import fs from 'fs-extra'
 import { eventEqual, getRandomNum, rgbToHex } from './utils'
 import { defaultLogger } from './logger'
 import { deviceEventEmitter, EventChannelMap } from './event'
+import { newImage } from './image'
 
 export class RubickBase {
 	private server!: Mali<any>
@@ -26,6 +27,7 @@ export class RubickBase {
 	private port: string
 	private tmpdir: string
 	private eventChannels: EventChannelMap
+	private captureTmpPath: string
 	private cursorPosition: Position = { x: 0, y: 0 }
 	private started: boolean = false
 	logger: Logger
@@ -37,6 +39,7 @@ export class RubickBase {
 		this.logger = logger || defaultLogger
 		this.tmpdir = tmpdir || os.tmpdir()
 		this.eventChannels = new EventChannelMap(this.logger)
+		this.captureTmpPath = path.join(this.tmpdir, 'capture')
 
 		// base init
 		this.initBuiltinService()
@@ -44,6 +47,10 @@ export class RubickBase {
 		// create tmp path
 		if (!fs.existsSync(this.tmpdir)) {
 			fs.mkdirSync(this.tmpdir)
+		}
+
+		if (!fs.existsSync(this.captureTmpPath)) {
+			fs.mkdirSync(this.captureTmpPath)
 		}
 
 		deviceEventEmitter.on('error', (err) => {
@@ -128,9 +135,9 @@ export class RubickBase {
 					}
 					const captureFilePath = join(capturePath, captureName)
 					await this.worker.capture(captureFilePath)
-					return path.resolve(captureFilePath)
+					return newImage(path.resolve(captureFilePath))
 				},
-				'error',
+				newImage('error'),
 				capturePath,
 			)
 
@@ -196,7 +203,20 @@ export class RubickBase {
 				[fromPath, toPath],
 			)
 
+		const screenCaptureAroundPosition = async (
+			position: Position,
+			width: number,
+			height: number,
+		) => {
+			return await tryBackend(async () => {
+				const capturePath = path.join(this.captureTmpPath, Date.now().toString() + '.png')
+				await this.worker.screenCaptureAroundPosition(position, width, height, capturePath)
+				return newImage(path.resolve(capturePath))
+			}, newImage('error'))
+		}
+
 		return {
+			screenCaptureAroundPosition,
 			compress,
 			decompress,
 			getPicturePixelColor,

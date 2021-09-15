@@ -7,6 +7,12 @@ export interface RustBackendAPI {
 	screenColorPicker: (position: Position) => Promise<RGB>
 	compress: (fromPath: string, toPath: string) => Promise<undefined>
 	decompress: (fromPath: string, toPath: string) => Promise<undefined>
+	screenCaptureAroundPosition: (
+		position: Position,
+		width: number,
+		height: number,
+		path: string,
+	) => Promise<undefined>
 }
 
 async function newRustBackend(): Promise<RustBackendAPI> {
@@ -29,6 +35,20 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		},
 		decompress: async (fromPath: string, toPath: string) => {
 			return await rustBackend.lzma_decompress_start(fromPath, toPath)
+		},
+		screenCaptureAroundPosition: async (
+			position: Position,
+			width: number,
+			height: number,
+			path: string,
+		) => {
+			return await rustBackend.screen_capture_rect_start(
+				position.x,
+				position.y,
+				width,
+				height,
+				path,
+			)
 		},
 	}
 }

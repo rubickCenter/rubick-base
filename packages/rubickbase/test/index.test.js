@@ -12,9 +12,12 @@ async function main() {
 
 	// cursor Position
 	let task = setInterval(async () => {
-		console.log("Now cursor at ", api.getCursorPosition())
+		const position = api.getCursorPosition()
+		console.log("Now cursor at ", position)
+		// screen around cursor
+		const img = await api.screenCaptureAroundPosition(position, 100, 100)
+		console.log(await img.toBase64())
 	}, 2000)
-
 
 	// hook device event
 	const { registerHook } = rubickBase.setEventChannel({

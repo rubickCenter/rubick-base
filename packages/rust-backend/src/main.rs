@@ -2,6 +2,6 @@ mod imgtools;
 
 fn main() {
     // imgtools::screen_capture("./cap.png".to_string());
-    let a = imgtools::color_picker("./cap.png".to_string(), 44, 44).unwrap();
-    println!("{:?}", a);
+    let _a = imgtools::screen_capture_rect(10, 30, 60, 60, "./c.png".to_string());
+    // println!("{:?}", a);
 }

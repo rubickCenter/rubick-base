@@ -42,10 +42,13 @@
 	"dependencies": {
 		"@grpc/grpc-js": "^1.3.7",
 		"@grpc/proto-loader": "^0.6.5",
+		"fs-extra": "^10.0.0",
 		"mali": "^0.44.3",
+		"mime-types": "^2.1.32",
 		"signale": "^1.4.0"
 	},
 	"devDependencies": {
+		"@types/mime-types": "^2.1.1",
 		"protobufjs": "^6.11.2"
 	},
 	"files": [

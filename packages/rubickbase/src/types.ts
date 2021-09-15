@@ -1,19 +1,22 @@
-export interface RubickAPI extends RubickExtendAPI {
-	/** get cursor position
-	 * @returns {Position} 鼠标位置
-	 */
-	getCursorPosition: () => Position
+import { Image } from './image'
 
+export interface RubickAPI extends RubickExtendAPI {
 	/** capture screen and save file to path
 	 * @param capturePath 截屏文件存放的文件路径
 	 * @param captureName 截屏文件存放的文件名称 默认时间戳
 	 */
-	screenCapture: (capturePath: string, captureName?: string) => Promise<string>
+	screenCapture: (capturePath: string, captureName?: string) => Promise<Image>
 
-	/** get pixel color at cursor position
-	 * @return {Promise<Color>} 鼠标位置像素颜色
+	/** capture screen return the area around position
+	 * @param position 中心点位置
+	 * @param width 宽
+	 * @param height 高
 	 */
-	getCursorPositionPixelColor: () => Promise<Color>
+	screenCaptureAroundPosition: (
+		position: Position,
+		width: number,
+		height: number,
+	) => Promise<Image>
 
 	/** get pixel color at picture position
 	 * @param path 图片存放的文件路径
@@ -22,11 +25,21 @@ export interface RubickAPI extends RubickExtendAPI {
 	 */
 	getPicturePixelColor: (path: string, position: Position) => Promise<Color>
 
-	/** lzma压缩
+	/** get cursor position
+	 * @returns {Position} 鼠标位置
+	 */
+	getCursorPosition: () => Position
+
+	/** get pixel color at cursor position
+	 * @return {Promise<Color>} 鼠标位置像素颜色
+	 */
+	getCursorPositionPixelColor: () => Promise<Color>
+
+	/** lzma compress
 	 */
 	compress: (fromPath: string, toPath: string) => Promise<undefined>
 
-	/** lzma解压
+	/** lzma decompress
 	 */
 	decompress: (fromPath: string, toPath: string) => Promise<undefined>
 }

@@ -71,5 +71,5 @@ npm install -g pnpm
 -   [x] 事件订阅模式 event emitter
 -   [x] api 调用 async 模式
 -   [ ] 使用 arraybuffer 向 js 传输图片
--   [ ] 对每个 API 进行测试
 -   [ ] 完善文档
+-   [ ] 对每个 API 进行测试

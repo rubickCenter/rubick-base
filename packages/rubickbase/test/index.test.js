@@ -8,7 +8,7 @@ async function main() {
 	const api = rubickBase.getAPI()
 
 	// screen capture
-	await api.screenCapture('./capture.png')
+	await api.screenCapture('./')
 
 	// cursor Position
 	let task = setInterval(async () => {

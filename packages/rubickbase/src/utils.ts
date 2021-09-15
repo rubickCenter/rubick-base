@@ -1,4 +1,5 @@
 import { defaultLogger } from './logger'
+import { DeviceEvent, Position } from './types'
 
 // MIT LICENSE https://github.com/sindresorhus/rgb-hex
 const rgbToHex = (red: number, green: number, blue: number, alpha?: number) => {
@@ -26,4 +27,14 @@ const getRandomNum = (Min: number, Max: number) => {
 	return Min + Math.round(Rand * Range)
 }
 
-export { rgbToHex, getRandomNum }
+const infoEqual = (a: string | Position | number, b: string | Position | number) =>
+	typeof a === 'string' || typeof b === 'string' || typeof a === 'number' || typeof b === 'number'
+		? a === b
+		: a.x === b.x && a.y === b.y
+
+const eventEqual = (deviceEvent: DeviceEvent, bindEvent: DeviceEvent) =>
+	deviceEvent.action === bindEvent.action &&
+	deviceEvent.device === bindEvent.device &&
+	infoEqual(deviceEvent.info, bindEvent.info)
+
+export { rgbToHex, getRandomNum, eventEqual }

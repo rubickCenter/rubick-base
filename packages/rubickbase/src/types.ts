@@ -197,7 +197,7 @@ export interface RubickBaseSettings {
 	logger?: Logger
 	// tmpdir for file storage
 	tmpdir?: string
-	// event callback
+	// event callback will execute before all event
 	ioEventCallback?: (event: DeviceEvent) => void | Promise<void>
 }
 
@@ -207,10 +207,4 @@ export interface Logger {
 	info: Function
 	success: Function
 	warn: Function
-}
-
-export interface ButtonEvent {
-	name: string
-	action: 'Press' | 'Release'
-	time?: number
 }

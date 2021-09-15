@@ -10,7 +10,7 @@
 -   [x] 获取鼠标位置 get cursor position
 -   [x] 获取鼠标像素颜色 pick color at cursor position
 -   [x] lzma-rs 压缩解压
--   [ ] 注册快捷键事件隧道
+-   [x] 注册快捷键事件
 -   [ ] 截图获取某位置周围图像
 -   [ ] 获取应用列表(名称 路径)
 -   [ ] 键盘事件模拟

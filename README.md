@@ -70,4 +70,5 @@ npm install -g pnpm
 -   [x] 使用 rust 进行屏幕取色 并防止超出边界
 -   [x] 事件订阅模式 event emitter
 -   [x] api 调用 async 模式
+-   [ ] 使用 arraybuffer 向 js 传输图片
 -   [ ] 对每个 API 进行测试

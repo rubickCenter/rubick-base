@@ -1,11 +1,15 @@
 # Changelog
 
-<a name="0.8.4-0"></a>
-## 0.8.4-0 (2021-09-16)
+<a name="0.8.4-1"></a>
+## 0.8.4-1 (2021-09-16)
 
 ### Added
 
 - ✨ event indistinct match [[a715d00](https://github.com/SOVLOOKUP/rubickbase/commit/a715d00e26461ce10a1a1cc09f86580fa7512106)]
+
+### Changed
+
+- 🎨  [[de3a712](https://github.com/SOVLOOKUP/rubickbase/commit/de3a7128868436619e5dfb5d7774cecfe7033b4c)]
 
 ### Miscellaneous
 

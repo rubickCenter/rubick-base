@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.8.3"></a>
+## 0.8.3 (2021-09-16)
+
+### Fixed
+
+- 🐛 fix a bug [[4a6893b](https://github.com/SOVLOOKUP/rubickbase/commit/4a6893b66d86e7e8c4dfc176ca81459b8f051f74)]
+
+
 <a name="0.8.2"></a>
 ## 0.8.2 (2021-09-16)
 

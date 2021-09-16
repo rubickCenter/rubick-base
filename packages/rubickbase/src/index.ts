@@ -76,7 +76,6 @@ export class RubickBase {
 		if (!this.started) {
 			throw new Error('Rubick has not started! Start it first!')
 		}
-
 		// error color return
 		const errorColor = () => ({
 			hex16: 'error',
@@ -135,13 +134,6 @@ export class RubickBase {
 				return newImageFromBase64(imgBase64)
 			}, errorImage)
 
-		// 获取图片位置像素
-		const getPicturePixelColor = async (path: string, position: Position) =>
-			await tryBackend(async () => {
-				const rgba = await this.worker.colorPicker(path, position)
-				return { hex16: rgbToHex(rgba.r, rgba.g, rgba.b, rgba.a), rgba }
-			}, errorColor)
-
 		// 获取光标位置像素
 		const getCursorPositionPixelColor = async () =>
 			await tryBackend(async () => {
@@ -195,7 +187,6 @@ export class RubickBase {
 			screenCaptureAroundPosition,
 			compress,
 			decompress,
-			getPicturePixelColor,
 			getCursorPosition,
 			screenCapture,
 			getCursorPositionPixelColor,

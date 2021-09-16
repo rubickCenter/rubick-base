@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import { PhotonImage, resize } from '@silvia-odwyer/photon-node'
-import { Position } from './types'
+import { Color, Position } from './types'
+import { rgbToHex } from './utils'
 
 class Image {
 	private photonImage: PhotonImage
@@ -26,8 +27,13 @@ class Image {
 		await fs.writeFile(path, output_data, { encoding: 'base64' })
 	}
 
-	// sampling_filter - 最邻近差值算法 = 1, 二值寻找算法 = 2, CatmullRom插值算法 = 3, 高斯算法 = 4, 插值算法 = 5
-	resize(width: number, height: number, sampling_filter?: number) {
+	/** resize the image
+	 * @param width
+	 * @param height
+	 * @param sampling_filter 最邻近差值算法 = 1, 二值寻找算法 = 2, CatmullRom插值算法 = 3, 高斯算法 = 4, 插值算法 = 5
+	 * @returns {Image}
+	 */
+	resize(width: number, height: number, sampling_filter?: number): Image {
 		sampling_filter = sampling_filter || 1
 		const img = resize(this.photonImage, width, height, sampling_filter)
 		return new Image(img)
@@ -37,19 +43,28 @@ class Image {
 		return this.photonImage.get_raw_pixels()
 	}
 
-	colorAt(position: Position) {
+	/** get pixel color at picture position
+	 * @param position 取色位置
+	 * @return {Color} 位置像素颜色
+	 */
+	colorAt(position: Position): Color {
 		if (
 			0 < position.x &&
-			position.x < this.width() &&
+			position.x <= this.width() &&
 			0 < position.y &&
-			position.y < this.height()
+			position.y <= this.height()
 		) {
-			const strip = this.width() * position.y - position.y + position.x
-			const rawPixel = this.getRawPixel()
-			// todo
-			let color = rawPixel.slice(strip + 2, strip + 6)
-
-			return color
+			const strip = 4 * (this.width() * (position.y - 1) + position.x)
+			const color = this.getRawPixel().slice(strip - 4, strip)
+			return <Color>{
+				hex16: rgbToHex(color[0], color[1], color[2], color[3]),
+				rgba: {
+					r: color[0],
+					g: color[1],
+					b: color[2],
+					a: color[3],
+				},
+			}
 		} else {
 			throw new Error('position out of bounds!')
 		}

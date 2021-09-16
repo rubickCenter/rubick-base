@@ -38,7 +38,7 @@ async function main() {
 	await api.screenCapture('./capture.png')
 	// cursor Position
 	let task = setInterval(async () => {
-		console.log(await api.getCursorPositionPixelColor())
+		console.log(await api.getCursorPosition())
 	}, 1000)
 	// close rubickbase
 	setTimeout(async () => {
@@ -71,5 +71,6 @@ npm install -g pnpm
 -   [x] 事件订阅模式 event emitter
 -   [x] api 调用 async 模式
 -   [x] 使用 base64 向 js 传输图片
+-   [ ] 完善 README 每个功能给个例子
 -   [ ] 完善文档
 -   [ ] 对每个 API 进行测试

@@ -1,29 +1,20 @@
 import { Image } from './image'
 
 export interface RubickAPI extends RubickExtendAPI {
-	/** capture screen and save file to path
-	 * @param capturePath 截屏文件存放的文件路径
-	 * @param captureName 截屏文件存放的文件名称 默认时间戳
+	/** capture screen and return image object
 	 */
 	screenCapture: () => Promise<Image>
 
 	/** capture screen return the area around position
-	 * @param position 中心点位置
-	 * @param width 宽
-	 * @param height 高
+	 * @param position center of the image
+	 * @param width
+	 * @param height
 	 */
 	screenCaptureAroundPosition: (
 		position: Position,
 		width: number,
 		height: number,
 	) => Promise<Image>
-
-	/** get pixel color at picture position
-	 * @param path 图片存放的文件路径
-	 * @param position 取色位置
-	 * @return {Promise<Color>} 位置像素颜色
-	 */
-	getPicturePixelColor: (path: string, position: Position) => Promise<Color>
 
 	/** get cursor position
 	 * @returns {Position} 鼠标位置
@@ -36,10 +27,14 @@ export interface RubickAPI extends RubickExtendAPI {
 	getCursorPositionPixelColor: () => Promise<Color>
 
 	/** lzma compress
+	 * @param fromPath
+	 * @param toPath
 	 */
 	compress: (fromPath: string, toPath: string) => Promise<undefined>
 
 	/** lzma decompress
+	 * @param fromPath
+	 * @param toPath
 	 */
 	decompress: (fromPath: string, toPath: string) => Promise<undefined>
 }

@@ -2,23 +2,24 @@ import { Position, RGB, RGBA } from './types'
 
 export interface RustBackendAPI {
 	ioioStart: (port: string) => Promise<boolean>
-	// capture: (path: string) => Promise<undefined>
 	captureToBase64: () => Promise<string>
-	colorPicker: (path: string, position: Position) => Promise<RGBA>
 	screenColorPicker: (position: Position) => Promise<RGB>
 	compress: (fromPath: string, toPath: string) => Promise<undefined>
 	decompress: (fromPath: string, toPath: string) => Promise<undefined>
+	screenCaptureAroundPositionToBase64: (
+		position: Position,
+		width: number,
+		height: number,
+	) => Promise<string>
+	// Deprecated
+	// capture: (path: string) => Promise<undefined>
+	// colorPicker: (path: string, position: Position) => Promise<RGBA>
 	// screenCaptureAroundPosition: (
 	// 	position: Position,
 	// 	width: number,
 	// 	height: number,
 	// 	path: string,
 	// ) => Promise<undefined>
-	screenCaptureAroundPositionToBase64: (
-		position: Position,
-		width: number,
-		height: number,
-	) => Promise<string>
 }
 
 async function newRustBackend(): Promise<RustBackendAPI> {
@@ -27,14 +28,8 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		ioioStart: async (port: string) => {
 			return await rustBackend.ioio_start(port)
 		},
-		// capture: async (path: string) => {
-		// 	return await rustBackend.capture_start(path)
-		// },
 		captureToBase64: async () => {
 			return await rustBackend.capture_base64_start()
-		},
-		colorPicker: async (path: string, position: Position) => {
-			return await rustBackend.color_picker_start(path, position.x, position.y)
 		},
 		screenColorPicker: async (position: Position) => {
 			return await rustBackend.screen_color_picker_start(position.x, position.y)
@@ -45,6 +40,25 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		decompress: async (fromPath: string, toPath: string) => {
 			return await rustBackend.lzma_decompress_start(fromPath, toPath)
 		},
+		screenCaptureAroundPositionToBase64: async (
+			position: Position,
+			width: number,
+			height: number,
+		) => {
+			return await rustBackend.screen_capture_rect_base64_start(
+				position.x,
+				position.y,
+				width,
+				height,
+			)
+		},
+		// Deprecated
+		// capture: async (path: string) => {
+		// 	return await rustBackend.capture_start(path)
+		// },
+		// colorPicker: async (path: string, position: Position) => {
+		// 	return await rustBackend.color_picker_start(path, position.x, position.y)
+		// },
 		// screenCaptureAroundPosition: async (
 		// 	position: Position,
 		// 	width: number,
@@ -59,18 +73,6 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		// 		path,
 		// 	)
 		// },
-		screenCaptureAroundPositionToBase64: async (
-			position: Position,
-			width: number,
-			height: number,
-		) => {
-			return await rustBackend.screen_capture_rect_base64_start(
-				position.x,
-				position.y,
-				width,
-				height,
-			)
-		},
 	}
 }
 

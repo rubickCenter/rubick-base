@@ -8,15 +8,16 @@ async function main() {
 	const api = rubickBase.getAPI()
 
 	// screen capture
-	await api.screenCapture('./')
+	await api.screenCapture()
 
 	// cursor Position
 	let task = setInterval(async () => {
 		const position = api.getCursorPosition()
 		console.log("Now cursor at ", position)
 		// screen around cursor
-		const img = await api.screenCaptureAroundPosition(position, 100, 100)
-		console.log(await img.toBase64())
+		const img = await api.screenCaptureAroundPosition(position, 2, 2)
+		console.log(img.colorAt({ x: 1, y: 2 }))
+		console.log(await img.resize(800, 800).save('./a.png'))
 	}, 2000)
 
 	// hook device event
@@ -33,6 +34,5 @@ async function main() {
 		clearInterval(task)
 	}, 10000)
 }
-
 
 main()

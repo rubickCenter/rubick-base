@@ -1,4 +1,3 @@
-const { await } = require('signale')
 const { newRubickBase } = require('../dist')
 
 const rubickBase = newRubickBase()
@@ -17,9 +16,8 @@ async function main() {
 		console.log("Now cursor at ", position)
 		// screen around cursor
 		const img = await api.screenCaptureAroundPosition(position, 2, 2)
-
-		console.log(await api.getCursorPositionPixelColor(), img.colorAt({ x: 2, y: 2 }))
-		// console.log(await img.resize(800, 800).save('./a.png'))
+		console.log(img.colorAt({ x: 1, y: 2 }))
+		console.log(await img.resize(800, 800).save('./a.png'))
 	}, 2000)
 
 	// hook device event

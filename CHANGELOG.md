@@ -1,14 +1,16 @@
 # Changelog
 
-<a name="0.8.1"></a>
-## 0.8.1 (2021-09-16)
+<a name="0.8.2"></a>
+## 0.8.2 (2021-09-16)
 
 ### Added
 
+- ✨ image resize and color pick [[0a60f77](https://github.com/SOVLOOKUP/rubickbase/commit/0a60f77bb3e1b466d266a0e2880caff12ed7fd01)]
 - ✨ image process [[ecc63e2](https://github.com/SOVLOOKUP/rubickbase/commit/ecc63e2e7c4082b6a4fc7a91723b2e8b1f436686)]
 
 ### Miscellaneous
 
+-  Release 0.8.1 [[207de7f](https://github.com/SOVLOOKUP/rubickbase/commit/207de7f2cd4f210e2daa774ca7bf30c52aee64c4)]
 -  Update README.md [[8ced2d6](https://github.com/SOVLOOKUP/rubickbase/commit/8ced2d6db16fcd3d59fd22e383dcbae0e4cc053d)]
     *  Update README.md ([641f4cd](https://github.com/SOVLOOKUP/rubickbase/commit/641f4cd491633a4bac622ac4e2762475a3f82432))
     *  Update README.md ([3a2f906](https://github.com/SOVLOOKUP/rubickbase/commit/3a2f906b7ae4bed7a6b1372046fdac05302966f2))

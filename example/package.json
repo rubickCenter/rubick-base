@@ -6,6 +6,6 @@
 	"author": "sovlookup",
 	"license": "MIT",
 	"devDependencies": {
-		"rubickbase": "^0.8.2"
+		"rubickbase": "^0.8.3"
 	}
 }

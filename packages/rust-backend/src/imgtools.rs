@@ -41,7 +41,7 @@ fn valid_border(point: u32, limit: u32) -> u32 {
     if 0 < point && point < limit {
         point
     } else {
-        if point = 0 {
+        if point == 0 {
             1
         } else {
             limit - 1

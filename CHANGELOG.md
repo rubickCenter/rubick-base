@@ -1,5 +1,19 @@
 # Changelog
 
+<a name="0.8.1"></a>
+## 0.8.1 (2021-09-16)
+
+### Added
+
+- ✨ image process [[ecc63e2](https://github.com/SOVLOOKUP/rubickbase/commit/ecc63e2e7c4082b6a4fc7a91723b2e8b1f436686)]
+
+### Miscellaneous
+
+-  Update README.md [[8ced2d6](https://github.com/SOVLOOKUP/rubickbase/commit/8ced2d6db16fcd3d59fd22e383dcbae0e4cc053d)]
+    *  Update README.md ([641f4cd](https://github.com/SOVLOOKUP/rubickbase/commit/641f4cd491633a4bac622ac4e2762475a3f82432))
+    *  Update README.md ([3a2f906](https://github.com/SOVLOOKUP/rubickbase/commit/3a2f906b7ae4bed7a6b1372046fdac05302966f2))
+
+
 <a name="0.8.0"></a>
 ## 0.8.0 (2021-09-15)
 

@@ -8,7 +8,7 @@
 		"target": "ESNext" /* 指定ECMAScript目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
 		"outDir": "dist" /* 将输出结构重定向到目录。 */,
 		"rootDir": ".",
-		"lib": ["esnext"] /* 指定要包含在编译中的库文件。 */,
+		"lib": ["esnext", "DOM"] /* 指定要包含在编译中的库文件。 */,
 		"esModuleInterop": true /* 支持CommonJS和ES模块之间的互操作性。 */,
 		"removeComments": true /* 输出清除注释。 */,
 		"noEmitOnError": true /* 报错时不生成输出文件 */,

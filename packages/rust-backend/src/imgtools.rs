@@ -1,5 +1,7 @@
 extern crate scrap;
 
+use base64::encode;
+use image::DynamicImage;
 use image::{imageops, GenericImageView, ImageBuffer, ImageError, Rgb, Rgba};
 use scrap::{Capturer, Display};
 use std::io::ErrorKind::WouldBlock;
@@ -36,18 +38,66 @@ fn screen_capture_raw() -> ImageBuffer<Rgb<u8>, Vec<u8>> {
 }
 
 fn valid_border(point: u32, limit: u32) -> u32 {
-    if 0 < point && point <= limit {
+    if 0 < point && point < limit {
         point
     } else {
-        limit
+        if point = 0 {
+            1
+        } else {
+            limit - 1
+        }
     }
+}
+
+fn screen_capture_rect_raw(
+    x: u32,
+    y: u32,
+    width: u32,
+    height: u32,
+) -> Result<ImageBuffer<Rgb<u8>, Vec<u8>>, ImageError> {
+    let mut img = screen_capture_raw();
+    let halfw = width / 2;
+    let halfh = height / 2;
+
+    // valid top_left
+    let top_left_x = if halfw >= x { 1 } else { x - halfw };
+    let top_left_y = if halfh >= y { 1 } else { y - halfh };
+    let bottom_right_x = x + halfw;
+    let bottom_right_y = y + halfw;
+
+    // valid bottom_right
+    let bottom_right_x = if img.width() <= bottom_right_x {
+        img.width() - 1
+    } else {
+        bottom_right_x
+    };
+    let bottom_right_y = if img.height() <= bottom_right_y {
+        img.height() - 1
+    } else {
+        bottom_right_y
+    };
+
+    let width = bottom_right_x - top_left_x;
+    let height = bottom_right_y - top_left_y;
+
+    let img = imageops::crop(&mut img, top_left_x, top_left_y, width, height);
+
+    Ok(img.to_image())
 }
 
 // capture primary screen
 #[allow(dead_code)]
 pub fn screen_capture(path: String) -> Result<(), ImageError> {
-    screen_capture_raw().save_with_format(path, image::ImageFormat::Png)?;
+    screen_capture_raw().save_with_format(&path, image::ImageFormat::Png)?;
     Ok(())
+}
+
+#[allow(dead_code)]
+pub fn screen_capture_base64() -> Result<String, ImageError> {
+    let img_rgb = DynamicImage::ImageRgb8(screen_capture_raw());
+    let mut buf = vec![];
+    img_rgb.write_to(&mut buf, image::ImageOutputFormat::Png)?;
+    Ok(encode(&buf))
 }
 
 #[allow(dead_code)]
@@ -58,37 +108,22 @@ pub fn screen_capture_rect(
     height: u32,
     path: String,
 ) -> Result<(), ImageError> {
-    let mut img = screen_capture_raw();
-    let halfw = width / 2;
-    let halfh = height / 2;
-
-    // valid top_left
-    let top_left_x = if halfw > x { 0 } else { x - halfw };
-    let top_left_y = if halfh > y { 0 } else { y - halfh };
-    let bottom_right_x = x + halfw;
-    let bottom_right_y = y + halfw;
-
-    // valid bottom_right
-    let bottom_right_x = if img.width() < bottom_right_x {
-        img.width()
-    } else {
-        bottom_right_x
-    };
-    let bottom_right_y = if img.height() < bottom_right_y {
-        img.height()
-    } else {
-        bottom_right_y
-    };
-
-    let width = bottom_right_x - top_left_x;
-    let height = bottom_right_y - top_left_y;
-
-    let img = imageops::crop(&mut img, top_left_x, top_left_y, width, height);
-    let _a = img
-        .to_image()
+    screen_capture_rect_raw(x, y, width, height)?
         .save_with_format(path, image::ImageFormat::Png)?;
-
     Ok(())
+}
+
+#[allow(dead_code)]
+pub fn screen_capture_rect_base64(
+    x: u32,
+    y: u32,
+    width: u32,
+    height: u32,
+) -> Result<String, ImageError> {
+    let img_rgb = DynamicImage::ImageRgb8(screen_capture_rect_raw(x, y, width, height)?);
+    let mut buf = vec![];
+    img_rgb.write_to(&mut buf, image::ImageOutputFormat::Png)?;
+    Ok(encode(&buf))
 }
 
 // pick color from picture

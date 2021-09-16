@@ -2,6 +2,8 @@ mod imgtools;
 
 fn main() {
     // imgtools::screen_capture("./cap.png".to_string());
-    let _a = imgtools::screen_capture_rect(10, 30, 60, 60, "./c.png".to_string());
-    // println!("{:?}", a);
+    let a = imgtools::screen_capture_rect_base64(1, 1, 60, 60).unwrap();
+    let _s = imgtools::screen_capture_rect(1, 1, 60, 60, "./a.png".to_string()).unwrap();
+
+    println!("{:?}", a);
 }

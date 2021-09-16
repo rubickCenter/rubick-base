@@ -1,6 +1,7 @@
 declare namespace rubick_backend {
 	function ioio_start(port: string): Promise<boolean>
 	function capture_start(path: string): Promise<undefined>
+	function capture_base64_start(): Promise<string>
 	function color_picker_start(path: string, x: number, y: number): Promise<RGBA>
 	function screen_color_picker_start(x: number, y: number): Promise<RGB>
 	function lzma_compress_start(fromPath: string, toPath: string): Promise<undefined>
@@ -12,6 +13,12 @@ declare namespace rubick_backend {
 		height: number,
 		path: string,
 	): Promise<undefined>
+	function screen_capture_rect_base64_start(
+		x: number,
+		y: number,
+		width: number,
+		height: number,
+	): Promise<string>
 }
 
 interface RGBA {

@@ -5,7 +5,7 @@ export interface RubickAPI extends RubickExtendAPI {
 	 * @param capturePath 截屏文件存放的文件路径
 	 * @param captureName 截屏文件存放的文件名称 默认时间戳
 	 */
-	screenCapture: (capturePath: string, captureName?: string) => Promise<Image>
+	screenCapture: () => Promise<Image>
 
 	/** capture screen return the area around position
 	 * @param position 中心点位置

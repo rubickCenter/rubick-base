@@ -1,6 +1,5 @@
 import os from 'os'
 import Mali from 'mali'
-import path from 'path'
 import {
 	Logger,
 	RubickBaseSettings,
@@ -14,12 +13,11 @@ import extendAPI from './extendAPI'
 import { loadPackageDefinition } from '@grpc/grpc-js'
 import { fromJSON } from '@grpc/proto-loader'
 import { INamespace } from 'protobufjs'
-import { join } from 'path'
 import fs from 'fs-extra'
 import { eventEqual, getRandomNum, rgbToHex } from './utils'
 import { defaultLogger } from './logger'
 import { deviceEventEmitter, EventChannelMap } from './event'
-import { newImage } from './image'
+import { newImageFromBase64 } from './image'
 
 export class RubickBase {
 	private server!: Mali<any>
@@ -27,8 +25,7 @@ export class RubickBase {
 	private port: string
 	private tmpdir: string
 	private eventChannels: EventChannelMap
-	private captureTmpPath: string
-	private cursorPosition: Position = { x: 0, y: 0 }
+	private cursorPosition: Position = { x: 1, y: 1 }
 	private started: boolean = false
 	logger: Logger
 	constructor(settings: RubickBaseSettings) {
@@ -39,7 +36,6 @@ export class RubickBase {
 		this.logger = logger || defaultLogger
 		this.tmpdir = tmpdir || os.tmpdir()
 		this.eventChannels = new EventChannelMap(this.logger)
-		this.captureTmpPath = path.join(this.tmpdir, 'capture')
 
 		// base init
 		this.initBuiltinService()
@@ -47,10 +43,6 @@ export class RubickBase {
 		// create tmp path
 		if (!fs.existsSync(this.tmpdir)) {
 			fs.mkdirSync(this.tmpdir)
-		}
-
-		if (!fs.existsSync(this.captureTmpPath)) {
-			fs.mkdirSync(this.captureTmpPath)
 		}
 
 		deviceEventEmitter.on('error', (err) => {
@@ -85,20 +77,33 @@ export class RubickBase {
 			throw new Error('Rubick has not started! Start it first!')
 		}
 
+		// error color return
+		const errorColor = () => ({
+			hex16: 'error',
+			rgba: {
+				r: -1,
+				g: -1,
+				b: -1,
+				a: -1,
+			},
+		})
+		// error image return
+		const errorImage = () => newImageFromBase64('error')
+
 		// 调用 rust-backend 并捕捉异常
-		const tryBackend = async <T>(func: () => Promise<T>, errorReturn: T): Promise<T> => {
+		const tryBackend = async <T>(func: () => Promise<T>, errorReturn: () => T): Promise<T> => {
 			try {
 				return await func()
 			} catch (error) {
 				this.logger.error(error)
-				return errorReturn
+				return errorReturn()
 			}
 		}
 
 		// 检查目录和文件名是否合法
 		const validAndTryBackend = async <T>(
 			func: () => Promise<T>,
-			errorReturn: T,
+			errorReturn: () => T,
 			dic: string[] | string = [],
 			file: string[] | string = [],
 		): Promise<T> => {
@@ -115,7 +120,7 @@ export class RubickBase {
 				return await tryBackend(func, errorReturn)
 			} else {
 				this.logger.error('No such directory!')
-				return errorReturn
+				return errorReturn()
 			}
 		}
 
@@ -124,72 +129,39 @@ export class RubickBase {
 		const getCursorPosition = () => this.cursorPosition
 
 		// 截屏
-		const screenCapture = async (capturePath: string, captureName?: string) =>
-			await validAndTryBackend(
-				async () => {
-					// 默认名称为时间戳
-					captureName = captureName || Date.now().toString() + '.png'
-					// 检查 png 后辍
-					if (!captureName.endsWith('.png')) {
-						captureName = captureName + '.png'
-					}
-					const captureFilePath = join(capturePath, captureName)
-					await this.worker.capture(captureFilePath)
-					return newImage(path.resolve(captureFilePath))
-				},
-				newImage('error'),
-				capturePath,
-			)
+		const screenCapture = async () =>
+			await tryBackend(async () => {
+				const imgBase64 = await this.worker.captureToBase64()
+				return newImageFromBase64(imgBase64)
+			}, errorImage)
 
 		// 获取图片位置像素
 		const getPicturePixelColor = async (path: string, position: Position) =>
-			await tryBackend(
-				async () => {
-					const rgba = await this.worker.colorPicker(path, position)
-					return { hex16: rgbToHex(rgba.r, rgba.g, rgba.b, rgba.a), rgba }
-				},
-				{
-					hex16: 'error',
-					rgba: {
-						r: -1,
-						g: -1,
-						b: -1,
-						a: -1,
-					},
-				},
-			)
+			await tryBackend(async () => {
+				const rgba = await this.worker.colorPicker(path, position)
+				return { hex16: rgbToHex(rgba.r, rgba.g, rgba.b, rgba.a), rgba }
+			}, errorColor)
 
 		// 获取光标位置像素
 		const getCursorPositionPixelColor = async () =>
-			await tryBackend(
-				async () => {
-					const rgb = await this.worker.screenColorPicker(getCursorPosition())
-					return {
-						hex16: rgbToHex(rgb.r, rgb.g, rgb.b),
-						rgba: {
-							r: rgb.r,
-							g: rgb.g,
-							b: rgb.b,
-							a: 255,
-						},
-					}
-				},
-				{
-					hex16: 'error',
+			await tryBackend(async () => {
+				const rgb = await this.worker.screenColorPicker(getCursorPosition())
+				return {
+					hex16: rgbToHex(rgb.r, rgb.g, rgb.b),
 					rgba: {
-						r: -1,
-						g: -1,
-						b: -1,
-						a: -1,
+						r: rgb.r,
+						g: rgb.g,
+						b: rgb.b,
+						a: 255,
 					},
-				},
-			)
+				}
+			}, errorColor)
 
 		// lzma2 压缩文件
 		const compress = async (fromPath: string, toPath: string) =>
 			await validAndTryBackend(
 				async () => await this.worker.compress(fromPath, toPath),
-				undefined,
+				() => undefined,
 				[],
 				[fromPath, toPath],
 			)
@@ -198,21 +170,25 @@ export class RubickBase {
 		const decompress = async (fromPath: string, toPath: string) =>
 			await validAndTryBackend(
 				async () => await this.worker.decompress(fromPath, toPath),
-				undefined,
+				() => undefined,
 				[],
 				[fromPath, toPath],
 			)
 
+		// 鼠标周围图像
 		const screenCaptureAroundPosition = async (
 			position: Position,
 			width: number,
 			height: number,
 		) => {
 			return await tryBackend(async () => {
-				const capturePath = path.join(this.captureTmpPath, Date.now().toString() + '.png')
-				await this.worker.screenCaptureAroundPosition(position, width, height, capturePath)
-				return newImage(path.resolve(capturePath))
-			}, newImage('error'))
+				const imgBase64 = await this.worker.screenCaptureAroundPositionToBase64(
+					position,
+					width,
+					height,
+				)
+				return newImageFromBase64(imgBase64)
+			}, errorImage)
 		}
 
 		return {

@@ -22,6 +22,12 @@ fn capture_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     Ok(cx.undefined())
 }
 
+// 主屏幕截图 base64
+fn capture_base64_start(mut cx: FunctionContext) -> JsResult<JsString> {
+    let res = imgtools::screen_capture_base64().expect("screen capture error");
+    Ok(cx.string(res))
+}
+
 // 压缩
 fn lzma_compress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
@@ -66,7 +72,7 @@ fn color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
     Ok(obj)
 }
 
-// 获取图片某位置像素颜色
+// 获取屏幕矩形区域截图
 fn screen_capture_rect_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     let x = cx.argument::<JsNumber>(0)?.value(&mut cx);
     let y = cx.argument::<JsNumber>(1)?.value(&mut cx);
@@ -76,6 +82,17 @@ fn screen_capture_rect_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     imgtools::screen_capture_rect(x as u32, y as u32, width as u32, height as u32, path)
         .expect("screen capture rect error");
     Ok(cx.undefined())
+}
+
+// 获取屏幕矩形区域截图 base64
+fn screen_capture_rect_base64_start(mut cx: FunctionContext) -> JsResult<JsString> {
+    let x = cx.argument::<JsNumber>(0)?.value(&mut cx);
+    let y = cx.argument::<JsNumber>(1)?.value(&mut cx);
+    let width = cx.argument::<JsNumber>(2)?.value(&mut cx);
+    let height = cx.argument::<JsNumber>(3)?.value(&mut cx);
+    let res = imgtools::screen_capture_rect_base64(x as u32, y as u32, width as u32, height as u32)
+        .expect("screen capture rect error");
+    Ok(cx.string(res))
 }
 
 // 从屏幕中取色
@@ -93,15 +110,19 @@ fn screen_color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
     Ok(obj)
 }
 
-// todo handle error
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
-    // sync task
+    // async task
     cx.export_function("color_picker_start", color_picker_start)?;
     cx.export_function("screen_color_picker_start", screen_color_picker_start)?;
     cx.export_function("capture_start", capture_start)?;
+    cx.export_function("capture_base64_start", capture_base64_start)?;
     cx.export_function("screen_capture_rect_start", screen_capture_rect_start)?;
-    // async task
+    cx.export_function(
+        "screen_capture_rect_base64_start",
+        screen_capture_rect_base64_start,
+    )?;
+    // mutithread task
     cx.export_function("ioio_start", ioio_start)?;
     cx.export_function("lzma_compress_start", lzma_compress_start)?;
     cx.export_function("lzma_decompress_start", lzma_decompress_start)?;

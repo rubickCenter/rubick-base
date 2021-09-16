@@ -32,10 +32,9 @@ importers:
     specifiers:
       '@grpc/grpc-js': ^1.3.7
       '@grpc/proto-loader': ^0.6.5
-      '@types/mime-types': ^2.1.1
+      '@silvia-odwyer/photon-node': ^0.3.1
       fs-extra: ^10.0.0
       mali: ^0.44.3
-      mime-types: ^2.1.32
       protobufjs: ^6.11.2
       rubick_backend-darwin: '*'
       rubick_backend-linux: '*'
@@ -44,16 +43,15 @@ importers:
     dependencies:
       '@grpc/grpc-js': 1.3.7
       '@grpc/proto-loader': 0.6.5
+      '@silvia-odwyer/photon-node': 0.3.1
       fs-extra: 10.0.0
       mali: 0.44.3_97e3a62cde213291c22632a336ff8906
-      mime-types: 2.1.32
       signale: 1.4.0
     optionalDependencies:
       rubick_backend-darwin: 0.3.0
       rubick_backend-linux: 0.3.0
       rubick_backend-win32: 0.3.0
     devDependencies:
-      '@types/mime-types': 2.1.1
       protobufjs: 6.11.2
 
   packages/rust-backend:
@@ -403,6 +401,10 @@ packages:
       picomatch: 2.3.0
     dev: true
 
+  /@silvia-odwyer/photon-node/0.3.1:
+    resolution: {integrity: sha512-Q4SRhdupqOiDQKZZbQy4P5GqePUcS+Zv6SB3YD5ZTQVKZ9BLXasSG76dPccK3wZ9aU0vEUEypCalLy41Q7sVDA==}
+    dev: false
+
   /@sindresorhus/is/0.14.0:
     resolution: {integrity: sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==}
     engines: {node: '>=6'}
@@ -474,10 +476,6 @@ packages:
 
   /@types/long/4.0.1:
     resolution: {integrity: sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==}
-
-  /@types/mime-types/2.1.1:
-    resolution: {integrity: sha512-vXOTGVSLR2jMw440moWTC7H19iUyLtP3Z1YTj7cSsubOICinjMxFeb/V57v9QdyyPGbbWolUFSSmSiRSn94tFw==}
-    dev: true
 
   /@types/minimatch/3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
@@ -3564,12 +3562,14 @@ packages:
   /mime-db/1.49.0:
     resolution: {integrity: sha512-CIc8j9URtOVApSFCQIF+VBkX1RwXp/oMMOrqdyXSBXq5RWNEsRfyj1kiRnQgmNXmHxPoFIxOroKA3zcU9P+nAA==}
     engines: {node: '>= 0.6'}
+    dev: true
 
   /mime-types/2.1.32:
     resolution: {integrity: sha512-hJGaVS4G4c9TSMYh2n6SQAGrC4RnfU+daP8G7cSCmaqNjiOoUY0VHCMS42pxnQmVF1GWwFhbHWn3RIxCqTmZ9A==}
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.49.0
+    dev: true
 
   /mimic-fn/1.2.0:
     resolution: {integrity: sha512-jf84uxzwiuiIVKiOLpfYk7N46TSy8ubTonmneY9vrpHNAnp0QBt2BxWV9dO3/j+BoVAb+a5G6YDPW3M5HOdMWQ==}

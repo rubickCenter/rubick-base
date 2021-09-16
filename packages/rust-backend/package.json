@@ -30,6 +30,7 @@
 	},
 	"files": [
 		"index.node",
-		"index.d.ts"
+		"index.d.ts",
+		"README.md"
 	]
 }

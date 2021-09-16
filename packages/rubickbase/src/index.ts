@@ -246,7 +246,7 @@ export class RubickBase {
 		const register = (name: string) => {
 			return (hook: (deviceEvent: DeviceEvent) => Promise<void>) => {
 				const listener = async (deviceEvent: DeviceEvent) => {
-					if (eventEqual(bindEvent, deviceEvent)) await hook(deviceEvent)
+					if (eventEqual(deviceEvent, bindEvent)) await hook(deviceEvent)
 				}
 
 				// 在注册表中记录

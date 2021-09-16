@@ -27,14 +27,14 @@ const getRandomNum = (Min: number, Max: number) => {
 	return Min + Math.round(Rand * Range)
 }
 
-const infoEqual = (a: string | Position | number, b: string | Position | number) =>
+const infoEqual = (a: string | Position | number | undefined, b: string | Position | number) =>
 	typeof a === 'string' || typeof b === 'string' || typeof a === 'number' || typeof b === 'number'
 		? a === b
-		: a.x === b.x && a.y === b.y
+		: a?.x === b.x && a?.y === b.y
 
 const eventEqual = (deviceEvent: DeviceEvent, bindEvent: DeviceEvent) =>
-	deviceEvent.action === bindEvent.action &&
-	deviceEvent.device === bindEvent.device &&
-	infoEqual(deviceEvent.info, bindEvent.info)
+	(bindEvent.device ? deviceEvent.device === bindEvent.device : true) &&
+	(bindEvent.action ? deviceEvent.action === bindEvent.action : true) &&
+	(bindEvent.info ? infoEqual(deviceEvent.info, bindEvent.info) : true)
 
 export { rgbToHex, getRandomNum, eventEqual }

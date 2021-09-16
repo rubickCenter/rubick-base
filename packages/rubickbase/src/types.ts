@@ -62,9 +62,9 @@ export interface Color {
 export type DeviceEvent = MouseEvent | KeyBoardEvent
 
 export interface KeyBoardEvent {
-	device: 'KeyBoard'
-	action: 'Press' | 'Release'
-	info:
+	device?: 'KeyBoard'
+	action?: 'Press' | 'Release'
+	info?:
 		| 'Alt'
 		| 'AltGr'
 		| 'Backspace'
@@ -176,21 +176,21 @@ export interface KeyBoardEvent {
 export type MouseEvent = MouseClickEvent | MouseMoveEvent | MouseWheelEvent
 
 export interface MouseClickEvent {
-	device: 'Mouse'
-	action: 'Press' | 'Release'
-	info: 'Left' | 'Right' | 'Middle' | number
+	device?: 'Mouse'
+	action?: 'Press' | 'Release'
+	info?: 'Left' | 'Right' | 'Middle' | number
 }
 
 export interface MouseWheelEvent {
-	device: 'Mouse'
-	action: 'Wheel'
-	info: 'Up' | 'Down'
+	device?: 'Mouse'
+	action?: 'Wheel'
+	info?: 'Up' | 'Down'
 }
 
 export interface MouseMoveEvent {
-	device: 'Mouse'
-	action: 'Move'
-	info: Position
+	device?: 'Mouse'
+	action?: 'Move'
+	info?: Position
 }
 
 export interface Position {

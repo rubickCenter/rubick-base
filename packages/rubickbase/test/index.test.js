@@ -17,14 +17,13 @@ async function main() {
 		// screen around cursor
 		const img = await api.screenCaptureAroundPosition(position, 2, 2)
 		console.log(img.colorAt({ x: 1, y: 2 }))
-		console.log(await img.resize(800, 800).save('./a.png'))
+		// console.log(await img.resize(800, 800).save('./a.png'))
 	}, 2000)
 
 	// hook device event
 	const { registerHook } = rubickBase.setEventChannel({
 		device: 'Mouse',
 		action: 'Press',
-		info: 'Left',
 	})
 	console.log(rubickBase.allEventChannels())
 	registerHook('myeventchannel', async (e) => { console.log(e) })

@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.8.5"></a>
+## 0.8.5 (2021-09-17)
+
+### Miscellaneous
+
+- 📝 add doc [[b2d39df](https://github.com/SOVLOOKUP/rubickbase/commit/b2d39dfda54c532a356d720385f08a7a8100e39b)]
+
+
 <a name="0.8.4"></a>
 ## 0.8.4 (2021-09-17)
 

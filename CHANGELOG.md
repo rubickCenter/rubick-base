@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.9.1"></a>
+## 0.9.1 (2021-09-17)
+
+### Miscellaneous
+
+- 📝 update spilt runner doc [[8c5577a](https://github.com/SOVLOOKUP/rubickbase/commit/8c5577a9f38be0ae840fdca8bfbaea28dc9f4bbd)]
+
+
 <a name="0.9.0"></a>
 ## 0.9.0 (2021-09-17)
 

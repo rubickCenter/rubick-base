@@ -1,11 +1,19 @@
 # Changelog
 
-<a name="0.9.3"></a>
-## 0.9.3 (2021-09-17)
+<a name="0.9.4"></a>
+## 0.9.4 (2021-09-17)
 
 ### Changed
 
 - 🎨 add started worker [[b6c2362](https://github.com/SOVLOOKUP/rubickbase/commit/b6c2362af009a84d27e65af6781aea6fc1aa9468)]
+
+### Fixed
+
+- 🐛 fix context this bug [[23b235c](https://github.com/SOVLOOKUP/rubickbase/commit/23b235c4912f728f482fa0ac5dc8cf65fc13c35d)]
+
+### Miscellaneous
+
+-  Release 0.9.3 [[c67a0a3](https://github.com/SOVLOOKUP/rubickbase/commit/c67a0a39a3a143dcd805ba5b235f6a5b5dc736ff)]
 
 
 <a name="0.9.2"></a>

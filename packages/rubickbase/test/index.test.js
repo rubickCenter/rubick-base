@@ -22,8 +22,7 @@ async function main() {
 
 	// hook device event
 	const { registerHook } = rubickBase.setEventChannel({
-		device: 'Mouse',
-		action: 'Press',
+
 	})
 	console.log(rubickBase.allEventChannels())
 	registerHook('myeventchannel', async (e) => { console.log(e) })

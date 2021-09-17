@@ -21,14 +21,18 @@ async function main() {
 	}, 2000)
 
 	// hook device event
-	const { registerHook } = rubickBase.setEventChannel({
+	const { registerHook } = api.setEventChannel({
 		device: 'Mouse',
 		action: 'Press',
 		info: 'Left',
 	})
+
+
+
 	console.log(rubickBase.allEventChannels())
 	registerHook('myeventchannel', async (e) => { console.log(e) })
 	console.log(rubickBase.allEventChannels())
+
 	setTimeout(async () => {
 		await rubickBase.close()
 		clearInterval(task)

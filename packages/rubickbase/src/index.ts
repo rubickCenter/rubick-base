@@ -36,10 +36,8 @@ export class RubickBase {
 	// ******************************* life cycle *******************************
 	async start() {
 		// start buitin service
-		if (this.rustBackend) this.rustBackend = await newRustBackend()
-		if (this.server) this.server = new Mali(await this.loadProto(), 'Rubick')
-
-		await this.server.start(`127.0.0.1:${this.port}`)
+		this.rustBackend = await newRustBackend()
+		this.server = new Mali(await this.loadProto(), 'Rubick')
 
 		this.server.use('ioio', async (ctx: any) => {
 			const event: DeviceEvent = ctx.request.req
@@ -69,6 +67,7 @@ export class RubickBase {
 			}
 		})
 
+		await this.server.start(`127.0.0.1:${this.port}`)
 		// bootstrap worker with rubickbase
 		if (this.workerBoot) {
 			await newRubickWorker({

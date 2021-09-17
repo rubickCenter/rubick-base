@@ -148,27 +148,145 @@ export class RubickBase {
 
 	// ******************************* expose APIs *******************************
 	getAPI() {
-		// get cursor position
-		const getCursorPosition = this.getCursorPosition
+		/** get cursor position
+		 *
+		 * @returns {Position}
+		 */
+		const getCursorPosition = (): Position => this.cursorPosition
 
-		// get pixel color at cursor position
-		const getCursorPositionPixelColor = this.getCursorPositionPixelColor
+		/** get pixel color at cursor position
+		 *
+		 * @return {Promise<Color>} color object
+		 */
+		const getCursorPositionPixelColor = async (): Promise<Color> =>
+			await this.tryBackend(async () => {
+				const rgb = await this.rustBackend.screenColorPicker(getCursorPosition())
+				return {
+					hex16: rgbToHex(rgb.r, rgb.g, rgb.b),
+					rgba: {
+						r: rgb.r,
+						g: rgb.g,
+						b: rgb.b,
+						a: 255,
+					},
+				}
+			}, this.colorError)
 
-		// screen capture
-		const screenCapture = this.screenCapture
+		/** capture primary screen
+		 *
+		 * @returns {Promise<Image>} image object
+		 */
+		const screenCapture = async (): Promise<Image> =>
+			await this.tryBackend(async () => {
+				const imgBase64 = await this.rustBackend.captureToBase64()
+				return newImageFromBase64(imgBase64)
+			}, this.imageError)
 
-		// capture screen around position
-		const screenCaptureAroundPosition = this.screenCaptureAroundPosition
+		/** capture screen return the area around position
+		 *
+		 * @param position center of the image
+		 * @param width width
+		 * @param height height
+		 * @returns {Promise<Image>} image object
+		 */
+		const screenCaptureAroundPosition = async (
+			position: Position,
+			width: number,
+			height: number,
+		): Promise<Image> =>
+			await this.tryBackend(async () => {
+				const imgBase64 = await this.rustBackend.screenCaptureAroundPositionToBase64(
+					position,
+					width,
+					height,
+				)
+				return newImageFromBase64(imgBase64)
+			}, this.imageError)
 
-		// lzma2 compress/decompress
-		const compress = this.compress
-		const decompress = this.decompress
+		/** lzma compress
+		 * @param fromPath from file
+		 * @param toPath to file
+		 */
+		const compress = async (fromPath: string, toPath: string) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.compress(fromPath, toPath),
+				() => undefined,
+				[],
+				[fromPath, toPath],
+			)
 
-		// event channel life cycle
-		const setEventChannel = this.setEventChannel
-		const allEventChannels = this.allEventChannels
-		const hasEventChannel = this.hasEventChannel
-		const delEventChannel = this.delEventChannel
+		/** lzma decompress
+		 * @param fromPath from file
+		 * @param toPath to file
+		 */
+		const decompress = async (fromPath: string, toPath: string) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.decompress(fromPath, toPath),
+				() => undefined,
+				[],
+				[fromPath, toPath],
+			)
+
+		/** set a channel and get register
+		 *
+		 * @param bindEvent
+		 * @returns register - Decorator register; registerHook - Function hook register
+		 */
+		const setEventChannel = (bindEvent: DeviceEvent) => {
+			// Decorator
+			const register = (name: string) => {
+				return (hook: EventCallback) => {
+					const listener = async (deviceEvent: DeviceEvent) => {
+						if (eventEqual(deviceEvent, bindEvent)) await hook(deviceEvent)
+					}
+
+					// register in map
+					this.eventChannels.set(name, listener)
+
+					// hook callback
+					deviceEventEmitter.on('deviceEvent', listener)
+				}
+			}
+
+			const registerHook = (name: string, hook: EventCallback) => {
+				register(name)(hook)
+			}
+
+			// return register
+			return { register, registerHook }
+		}
+
+		/** get all channels
+		 *
+		 * @returns {IterableIterator<string>} channels name
+		 */
+		const allEventChannels = (): IterableIterator<string> => {
+			return this.eventChannels.keys()
+		}
+
+		/** has channel or not
+		 *
+		 * @param name channel name
+		 * @returns {boolean}
+		 */
+		const hasEventChannel = (name: string): boolean => {
+			return this.eventChannels.has(name)
+		}
+
+		/** del a channel
+		 *
+		 */
+		const delEventChannel = (name: string) => {
+			if (this.eventChannels.has(name)) {
+				// remove listener
+				const listener = this.eventChannels.get(name)
+				if (listener) deviceEventEmitter.removeListener('deviceEvent', listener)
+				// remove register item
+				this.eventChannels.delete(name)
+			} else {
+				this.logger.error(`no such handler: ${name}`)
+			}
+		}
 
 		return {
 			getCursorPosition,
@@ -181,155 +299,6 @@ export class RubickBase {
 			allEventChannels,
 			hasEventChannel,
 			delEventChannel,
-		}
-	}
-
-	// ******************************* define APIs *******************************
-
-	/** capture primary screen
-	 *
-	 * @returns {Promise<Image>} image object
-	 */
-	private async screenCapture(): Promise<Image> {
-		return await this.tryBackend(async () => {
-			const imgBase64 = await this.rustBackend.captureToBase64()
-			return newImageFromBase64(imgBase64)
-		}, this.imageError)
-	}
-
-	/** capture screen return the area around position
-	 *
-	 * @param position center of the image
-	 * @param width width
-	 * @param height height
-	 * @returns {Promise<Image>} image object
-	 */
-	private async screenCaptureAroundPosition(
-		position: Position,
-		width: number,
-		height: number,
-	): Promise<Image> {
-		return await this.tryBackend(async () => {
-			const imgBase64 = await this.rustBackend.screenCaptureAroundPositionToBase64(
-				position,
-				width,
-				height,
-			)
-			return newImageFromBase64(imgBase64)
-		}, this.imageError)
-	}
-
-	/** get cursor position
-	 *
-	 * @returns {Position}
-	 */
-	private getCursorPosition(): Position {
-		return this.cursorPosition
-	}
-
-	/** get pixel color at cursor position
-	 *
-	 * @return {Promise<Color>} color object
-	 */
-	private async getCursorPositionPixelColor(): Promise<Color> {
-		return await this.tryBackend(async () => {
-			const rgb = await this.rustBackend.screenColorPicker(this.getCursorPosition())
-			return {
-				hex16: rgbToHex(rgb.r, rgb.g, rgb.b),
-				rgba: {
-					r: rgb.r,
-					g: rgb.g,
-					b: rgb.b,
-					a: 255,
-				},
-			}
-		}, this.colorError)
-	}
-
-	/** lzma compress
-	 * @param fromPath from file
-	 * @param toPath to file
-	 */
-	private async compress(fromPath: string, toPath: string) {
-		return await this.validAndTryBackend(
-			async () => await this.rustBackend.compress(fromPath, toPath),
-			() => undefined,
-			[],
-			[fromPath, toPath],
-		)
-	}
-
-	/** lzma decompress
-	 * @param fromPath from file
-	 * @param toPath to file
-	 */
-	private async decompress(fromPath: string, toPath: string) {
-		return await this.validAndTryBackend(
-			async () => await this.rustBackend.decompress(fromPath, toPath),
-			() => undefined,
-			[],
-			[fromPath, toPath],
-		)
-	}
-
-	/** set a channel and get register
-	 *
-	 * @param bindEvent
-	 * @returns register - Decorator register; registerHook - Function hook register
-	 */
-	private setEventChannel(bindEvent: DeviceEvent) {
-		// Decorator
-		const register = (name: string) => {
-			return (hook: EventCallback) => {
-				const listener = async (deviceEvent: DeviceEvent) => {
-					if (eventEqual(deviceEvent, bindEvent)) await hook(deviceEvent)
-				}
-
-				// register in map
-				this.eventChannels.set(name, listener)
-
-				// hook callback
-				deviceEventEmitter.on('deviceEvent', listener)
-			}
-		}
-
-		const registerHook = (name: string, hook: EventCallback) => {
-			register(name)(hook)
-		}
-
-		// return register
-		return { register, registerHook }
-	}
-
-	/** get all channels
-	 *
-	 * @returns {IterableIterator<string>} channels name
-	 */
-	private allEventChannels(): IterableIterator<string> {
-		return this.eventChannels.keys()
-	}
-
-	/** has channel or not
-	 *
-	 * @param name channel name
-	 * @returns {boolean}
-	 */
-	private hasEventChannel(name: string): boolean {
-		return this.eventChannels.has(name)
-	}
-
-	/** del a channel
-	 *
-	 */
-	private delEventChannel(name: string) {
-		if (this.eventChannels.has(name)) {
-			// remove listener
-			const listener = this.eventChannels.get(name)
-			if (listener) deviceEventEmitter.removeListener('deviceEvent', listener)
-			// remove register item
-			this.eventChannels.delete(name)
-		} else {
-			this.logger.error(`no such handler: ${name}`)
 		}
 	}
 }

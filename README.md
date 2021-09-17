@@ -90,12 +90,50 @@ main()
 <details>
 <summary>rubickbase 可选初始化参数</summary>
 
-| 参数名称        | 参数意义          | 类型          |
-| --------------- | ----------------- | ------------- |
-| port            | GRPC 服务器的端口 | number        |
-| logger          | 日志器            | Logger        |
-| tmpdir          | 临时文件目录      | string        |
-| ioEventCallback | 侦听所有设备事件  | EventCallback |
+| 参数名称        | 参数意义               | 类型          |
+| --------------- | ---------------------- | ------------- |
+| port            | GRPC 服务器的端口      | number        |
+| logger          | 日志器                 | Logger        |
+| tmpdir          | 临时文件目录           | string        |
+| workerBoot      | 是否将 worker 一起启动 | boolean       |
+| ioEventCallback | 侦听所有设备事件       | EventCallback |
+
+</details>
+
+<details>
+<summary>rubickbase 分离工作模式</summary>
+
+rubickbase 由 GRPC 服务器 master 与多个提供不同功能的 worker 组合运行
+
+如果你需要在不同的地方或不同的时间运行他们, 可以依据需要分别启动
+
+首先你需要在 master 启动时选择不启动 workers
+
+```js
+// init rubickbase
+const rubickBase = newRubickBase({ workerBoot: false })
+rubickBase.start()
+```
+
+然后在需要的地方手动启动 workers
+
+```js
+const worker = newRubickWorker()
+newRubickWorker().start()
+```
+
+注意, worker 的生命周期(存在时间)必须比 master 要短, 否则 worker 中的 GRPC client 会抛出找不到服务端的异常
+
+并且如果你在启动 master 时更改了端口, 那么也要把端口传递给 worker
+
+```js
+// init rubickbase
+const rubickBase = newRubickBase({ port: 8001, workerBoot: false })
+rubickBase.start()
+// then
+const worker = newRubickWorker({ port: 8001 })
+newRubickWorker().start()
+```
 
 </details>
 
@@ -263,3 +301,4 @@ npm install -g pnpm
 -   [ ] 压缩解压的回调函数
 -   [ ] 完善文档
 -   [ ] 对每个 API 进行测试
+-   [ ] worker 关闭

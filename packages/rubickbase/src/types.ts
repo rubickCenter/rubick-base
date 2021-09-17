@@ -1,45 +1,4 @@
-import { Image } from './image'
-
-export interface RubickAPI extends RubickExtendAPI {
-	/** capture screen and return image object
-	 */
-	screenCapture: () => Promise<Image>
-
-	/** capture screen return the area around position
-	 * @param position center of the image
-	 * @param width
-	 * @param height
-	 */
-	screenCaptureAroundPosition: (
-		position: Position,
-		width: number,
-		height: number,
-	) => Promise<Image>
-
-	/** get cursor position
-	 * @returns {Position} 鼠标位置
-	 */
-	getCursorPosition: () => Position
-
-	/** get pixel color at cursor position
-	 * @return {Promise<Color>} 鼠标位置像素颜色
-	 */
-	getCursorPositionPixelColor: () => Promise<Color>
-
-	/** lzma compress
-	 * @param fromPath
-	 * @param toPath
-	 */
-	compress: (fromPath: string, toPath: string) => Promise<undefined>
-
-	/** lzma decompress
-	 * @param fromPath
-	 * @param toPath
-	 */
-	decompress: (fromPath: string, toPath: string) => Promise<undefined>
-}
-
-export interface RubickExtendAPI {}
+import { EventCallback } from './event'
 
 export interface RGBA {
 	r: number
@@ -206,7 +165,7 @@ export interface RubickBaseSettings {
 	// tmpdir for file storage
 	tmpdir?: string
 	// event callback will execute before all event
-	ioEventCallback?: (event: DeviceEvent) => void | Promise<void>
+	ioEventCallback?: EventCallback
 }
 
 export interface Logger {

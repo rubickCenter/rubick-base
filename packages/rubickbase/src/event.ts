@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events'
 import { DeviceEvent, Logger } from './types'
 
-type EventCallback = (deviceEvent: DeviceEvent) => Promise<void>
+type EventCallback = (deviceEvent: DeviceEvent) => Promise<void> | void
 
 class DeviceEventEmitter extends EventEmitter {}
 
@@ -24,3 +24,4 @@ class EventChannelMap extends Map<string, EventCallback> {
 const deviceEventEmitter = new DeviceEventEmitter({ captureRejections: true })
 
 export { deviceEventEmitter, EventChannelMap }
+export type { EventCallback }

@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.9.3"></a>
+## 0.9.3 (2021-09-17)
+
+### Changed
+
+- 🎨 add started worker [[b6c2362](https://github.com/SOVLOOKUP/rubickbase/commit/b6c2362af009a84d27e65af6781aea6fc1aa9468)]
+
+
 <a name="0.9.2"></a>
 ## 0.9.2 (2021-09-17)
 

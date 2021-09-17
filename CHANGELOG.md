@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.9.5"></a>
+## 0.9.5 (2021-09-17)
+
+### Fixed
+
+- 🐛 fix undefined bug [[7887036](https://github.com/SOVLOOKUP/rubickbase/commit/78870366359ae50597509d0ae075a597eb338eff)]
+
+
 <a name="0.9.4"></a>
 ## 0.9.4 (2021-09-17)
 

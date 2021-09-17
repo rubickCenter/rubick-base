@@ -48,7 +48,7 @@ v13.x, **v14.x** ,v15.x ,16.x
 
 ## Getting start
 
-#### 引入依赖
+### 引入依赖
 
 rubickbase 支持 cjs 和 esm 两种规范，当然你也可以在 TypeScript 中使用它
 
@@ -59,7 +59,7 @@ const { newRubickBase } = require('rubickbase')
 import { newRubickBase } from 'rubickbase'
 ```
 
-#### 基本使用
+### 基本使用
 
 在这个例子中，你通过 `newRubickbase` 获得了 rubickbase 服务实例，并通过 `start` 函数启动了服务，rubickbase 启动后会在后台进行服务侦听，你可以通过 `getAPI` 获取到 rubickbase 所有功能
 
@@ -99,7 +99,7 @@ main()
 
 </details>
 
-#### 设备输入事件侦听
+### 设备输入事件侦听
 
 通过 `setEventChannel` API 设置目标事件频道, 获取对应事件的订阅器
 
@@ -157,7 +157,7 @@ function myCallback(event: DeviceEvent) {
 
 </details>
 
-#### 事件模糊匹配
+### 事件模糊匹配
 
 一个设备事件有 `device` `action` `info` 三个约束条件, 你可以去掉其中的任何条件来完成事件模糊匹配
 
@@ -187,7 +187,7 @@ api.setEventChannel({
 })
 ```
 
-#### 图像处理
+### 图像处理
 
 rubickbase 基于 [Photon](https://silvia-odwyer.github.io/photon/) 的高性能 WASM 模块进行图像处理
 
@@ -217,6 +217,26 @@ const newImg = img.resize(100, 100, 1)
 ```
 
 </details>
+
+### 功能一览
+
+1. lzma 压缩
+   compress: (fromPath: string, toPath: string) => Promise<undefined>
+
+2. lzma 解压
+   decompress: (fromPath: string, toPath: string) => Promise<undefined>
+
+3. 获取鼠标当前座标
+   getCursorPosition: () => Position
+
+4. 获取鼠标当前座标的像素值
+   getCursorPositionPixelColor: () => Promise<Color>
+
+5. 主屏幕截屏
+   screenCapture: () => Promise<Image>
+
+6. 获取鼠标周围图像
+   screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise<Image>
 
 ## Contribute
 

@@ -1,10 +1,15 @@
 # Changelog
 
-<a name="0.9.1"></a>
-## 0.9.1 (2021-09-17)
+<a name="0.9.2"></a>
+## 0.9.2 (2021-09-17)
+
+### Fixed
+
+- 🐛 fix start bug [[6422827](https://github.com/SOVLOOKUP/rubickbase/commit/6422827731cdbe309b723b4bb21af07bdc914cf6)]
 
 ### Miscellaneous
 
+-  Release 0.9.1 [[04d13e7](https://github.com/SOVLOOKUP/rubickbase/commit/04d13e72931a68763508d56018b3d13f377aa248)]
 - 📝 update spilt runner doc [[8c5577a](https://github.com/SOVLOOKUP/rubickbase/commit/8c5577a9f38be0ae840fdca8bfbaea28dc9f4bbd)]
 
 

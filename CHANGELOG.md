@@ -1,7 +1,7 @@
 # Changelog
 
-<a name="0.8.4-1"></a>
-## 0.8.4-1 (2021-09-16)
+<a name="0.8.4"></a>
+## 0.8.4 (2021-09-17)
 
 ### Added
 
@@ -9,10 +9,13 @@
 
 ### Changed
 
+- 🎨 事件模糊匹配 优化API结构 [[f6251df](https://github.com/SOVLOOKUP/rubickbase/commit/f6251dfdb9b68af39139745b9076b8e70c23269d)]
 - 🎨  [[de3a712](https://github.com/SOVLOOKUP/rubickbase/commit/de3a7128868436619e5dfb5d7774cecfe7033b4c)]
 
 ### Miscellaneous
 
+-  Update README.md [[6401440](https://github.com/SOVLOOKUP/rubickbase/commit/6401440033316b078f61d2d18027624a5092ebbd)]
+-  Release 0.8.4-1 [[0a473e7](https://github.com/SOVLOOKUP/rubickbase/commit/0a473e782e054719c7aa2cba4462dc19275b8192)]
 - 📝 update example [[a890259](https://github.com/SOVLOOKUP/rubickbase/commit/a8902597d4830fdd3f60c8a5976ad5c91a79b2c8)]
 -  Update package.json [[b9abf7d](https://github.com/SOVLOOKUP/rubickbase/commit/b9abf7d302c401f2afd2815b371c69b033803614)]
 

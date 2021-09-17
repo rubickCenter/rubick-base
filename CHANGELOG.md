@@ -1,10 +1,12 @@
 # Changelog
 
-<a name="0.8.5"></a>
-## 0.8.5 (2021-09-17)
+<a name="0.8.6"></a>
+## 0.8.6 (2021-09-17)
 
 ### Miscellaneous
 
+- 📝 readme doc [[d940f58](https://github.com/SOVLOOKUP/rubickbase/commit/d940f58c6133459acbfa1726dddacbaa9b99a8c7)]
+-  Release 0.8.5 [[746f885](https://github.com/SOVLOOKUP/rubickbase/commit/746f8855a2e6168555c5cc75fde021409593f4fe)]
 - 📝 add doc [[b2d39df](https://github.com/SOVLOOKUP/rubickbase/commit/b2d39dfda54c532a356d720385f08a7a8100e39b)]
 
 

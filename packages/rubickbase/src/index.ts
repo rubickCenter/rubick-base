@@ -29,7 +29,7 @@ export class RubickBase {
 		this.logger = logger || defaultLogger
 		this.tmpdir = tmpdir || os.tmpdir()
 		this.eventChannels = new EventChannelMap(this.logger)
-		this.workerBoot = workerBoot || true
+		this.workerBoot = workerBoot !== undefined ? workerBoot : true
 		this.ioEventCallback = ioEventCallback || ((_) => {})
 	}
 

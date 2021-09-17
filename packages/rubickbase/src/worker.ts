@@ -25,6 +25,7 @@ export class RubickWorker {
 	async start(workerName?: Workers) {
 		if (!this.started) {
 			this.rustBackend = await newRustBackend()
+			this.started = true
 		}
 		if (workerName) {
 			switch (workerName) {

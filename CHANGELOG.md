@@ -1,12 +1,19 @@
 # Changelog
 
-<a name="0.8.6"></a>
-## 0.8.6 (2021-09-17)
+<a name="0.9.0"></a>
+## 0.9.0 (2021-09-17)
+
+### Added
+
+- ✨ master / worker split [[ff6b67e](https://github.com/SOVLOOKUP/rubickbase/commit/ff6b67eea08d62a2a6ce67b5a86f79fbd1229e36)]
 
 ### Miscellaneous
 
+-  Update README.md [[a7b3367](https://github.com/SOVLOOKUP/rubickbase/commit/a7b336764c76f08753fb7c9a5953f857b0be492f)]
+    *  Update README.md ([a2c5d57](https://github.com/SOVLOOKUP/rubickbase/commit/a2c5d5742a3299d987ba93d873a06f4d71c28be9))
+-  Release 0.8.6 [[5cdd226](https://github.com/SOVLOOKUP/rubickbase/commit/5cdd2263bda9413019134374277de6d260472d72)]
+    *  Release 0.8.5 ([746f885](https://github.com/SOVLOOKUP/rubickbase/commit/746f8855a2e6168555c5cc75fde021409593f4fe))
 - 📝 readme doc [[d940f58](https://github.com/SOVLOOKUP/rubickbase/commit/d940f58c6133459acbfa1726dddacbaa9b99a8c7)]
--  Release 0.8.5 [[746f885](https://github.com/SOVLOOKUP/rubickbase/commit/746f8855a2e6168555c5cc75fde021409593f4fe)]
 - 📝 add doc [[b2d39df](https://github.com/SOVLOOKUP/rubickbase/commit/b2d39dfda54c532a356d720385f08a7a8100e39b)]
 
 

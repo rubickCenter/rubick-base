@@ -221,22 +221,22 @@ const newImg = img.resize(100, 100, 1)
 ### 功能一览
 
 1. lzma 压缩
-   compress: (fromPath: string, toPath: string) => Promise<undefined>
+   compress: (fromPath: string, toPath: string) => Promise< undefined >
 
 2. lzma 解压
-   decompress: (fromPath: string, toPath: string) => Promise<undefined>
+   decompress: (fromPath: string, toPath: string) => Promise< undefined >
 
 3. 获取鼠标当前座标
    getCursorPosition: () => Position
 
 4. 获取鼠标当前座标的像素值
-   getCursorPositionPixelColor: () => Promise<Color>
+   getCursorPositionPixelColor: () => Promise< Color >
 
 5. 主屏幕截屏
-   screenCapture: () => Promise<Image>
+   screenCapture: () => Promise< Image >
 
 6. 获取鼠标周围图像
-   screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise<Image>
+   screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image >
 
 ## Contribute
 

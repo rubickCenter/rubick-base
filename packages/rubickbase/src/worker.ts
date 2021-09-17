@@ -1,79 +1,39 @@
-import { Position, RGB, RGBA } from './types'
+import newRustBackend, { RustBackendAPI } from './backend'
+import { defaultLogger } from './logger'
+import { Logger, WorkerSettings, Workers } from './types'
 
-export interface RustBackendAPI {
-	ioioStart: (port: string) => Promise<boolean>
-	captureToBase64: () => Promise<string>
-	screenColorPicker: (position: Position) => Promise<RGB>
-	compress: (fromPath: string, toPath: string) => Promise<undefined>
-	decompress: (fromPath: string, toPath: string) => Promise<undefined>
-	screenCaptureAroundPositionToBase64: (
-		position: Position,
-		width: number,
-		height: number,
-	) => Promise<string>
-	// Deprecated
-	// capture: (path: string) => Promise<undefined>
-	// colorPicker: (path: string, position: Position) => Promise<RGBA>
-	// screenCaptureAroundPosition: (
-	// 	position: Position,
-	// 	width: number,
-	// 	height: number,
-	// 	path: string,
-	// ) => Promise<undefined>
-}
+export class RubickWorker {
+	rustBackend!: RustBackendAPI
+	logger: Logger
+	port: string
+	started: boolean
+	constructor(workerSettings: WorkerSettings) {
+		const { port, logger } = workerSettings
+		this.port = port?.toString() || '50068'
+		this.logger = logger || defaultLogger
+		this.started = false
+	}
 
-async function newRustBackend(): Promise<RustBackendAPI> {
-	const rustBackend = await import(`rubick_backend-${process.platform}`)
-	return {
-		ioioStart: async (port: string) => {
-			return await rustBackend.ioio_start(port)
-		},
-		captureToBase64: async () => {
-			return await rustBackend.capture_base64_start()
-		},
-		screenColorPicker: async (position: Position) => {
-			return await rustBackend.screen_color_picker_start(position.x, position.y)
-		},
-		compress: async (fromPath: string, toPath: string) => {
-			return await rustBackend.lzma_compress_start(fromPath, toPath)
-		},
-		decompress: async (fromPath: string, toPath: string) => {
-			return await rustBackend.lzma_decompress_start(fromPath, toPath)
-		},
-		screenCaptureAroundPositionToBase64: async (
-			position: Position,
-			width: number,
-			height: number,
-		) => {
-			return await rustBackend.screen_capture_rect_base64_start(
-				position.x,
-				position.y,
-				width,
-				height,
-			)
-		},
-		// Deprecated
-		// capture: async (path: string) => {
-		// 	return await rustBackend.capture_start(path)
-		// },
-		// colorPicker: async (path: string, position: Position) => {
-		// 	return await rustBackend.color_picker_start(path, position.x, position.y)
-		// },
-		// screenCaptureAroundPosition: async (
-		// 	position: Position,
-		// 	width: number,
-		// 	height: number,
-		// 	path: string,
-		// ) => {
-		// 	return await rustBackend.screen_capture_rect_start(
-		// 		position.x,
-		// 		position.y,
-		// 		width,
-		// 		height,
-		// 		path,
-		// 	)
-		// },
+	private log = (success: boolean, name: string) => {
+		if (success) {
+			this.logger.success(`Start ${name} worker`)
+		} else {
+			this.logger.error(`Start ${name} worker`)
+		}
+	}
+
+	async start(workerName?: Workers) {
+		if (!this.started) {
+			this.rustBackend = await newRustBackend()
+		}
+		if (workerName) {
+			switch (workerName) {
+				case 'ioio':
+					this.log(await this.rustBackend?.ioioStart(this.port), 'ioio')
+					break
+			}
+		} else {
+			this.log(await this.rustBackend?.ioioStart(this.port), 'ioio')
+		}
 	}
 }
-
-export default newRustBackend

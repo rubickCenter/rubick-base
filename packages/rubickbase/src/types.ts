@@ -159,13 +159,24 @@ export interface Position {
 
 export interface RubickBaseSettings {
 	// grpc server port
-	port?: number
+	port?: string | number
 	// custom logger
 	logger?: Logger
 	// tmpdir for file storage
 	tmpdir?: string
+	// boot worker with rubickbase start
+	workerBoot?: boolean
 	// event callback will execute before all event
 	ioEventCallback?: EventCallback
+}
+
+export type Workers = 'ioio'
+
+export interface WorkerSettings {
+	// grpc server port
+	port?: string | number
+	// custom logger
+	logger?: Logger
 }
 
 export interface Logger {

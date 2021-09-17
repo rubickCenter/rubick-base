@@ -1,68 +1,46 @@
 import os from 'os'
 import Mali from 'mali'
-import { Logger, RubickBaseSettings, DeviceEvent, Position, Color } from './types'
-import newRustBackend, { RustBackendAPI } from './worker'
+import { Logger, RubickBaseSettings, DeviceEvent, Position, Color, WorkerSettings } from './types'
+import newRustBackend, { RustBackendAPI } from './backend'
 import { loadPackageDefinition } from '@grpc/grpc-js'
 import { fromJSON } from '@grpc/proto-loader'
 import { INamespace } from 'protobufjs'
 import fs from 'fs-extra'
-import { eventEqual, getRandomNum, rgbToHex } from './utils'
+import { eventEqual, rgbToHex } from './utils'
 import { defaultLogger } from './logger'
 import { deviceEventEmitter, EventCallback, EventChannelMap } from './event'
 import { newImageFromBase64, Image } from './image'
+import { RubickWorker } from './worker'
 
 export class RubickBase {
 	private server!: Mali<any>
-	private worker!: RustBackendAPI
+	private rustBackend!: RustBackendAPI
 	private port: string
 	private tmpdir: string
 	private eventChannels: EventChannelMap
 	private cursorPosition: Position = { x: 1, y: 1 }
-	private started: boolean = false
+	private workerBoot: boolean
+	private ioEventCallback: EventCallback
 	logger: Logger
 	constructor(settings: RubickBaseSettings) {
-		const { port, logger, tmpdir, ioEventCallback } = settings
+		const { port, logger, tmpdir, workerBoot, ioEventCallback } = settings
 		// settings
-		// if no port, gen a port from 50000-60000
-		this.port = (port || getRandomNum(50000, 60000)).toString()
+		this.port = port?.toString() || '50068'
 		this.logger = logger || defaultLogger
 		this.tmpdir = tmpdir || os.tmpdir()
 		this.eventChannels = new EventChannelMap(this.logger)
-
-		// start buitin service
-		this.initBuiltinService(ioEventCallback || ((_) => {}))
+		this.workerBoot = workerBoot || true
+		this.ioEventCallback = ioEventCallback || ((_) => {})
 	}
 
 	// ******************************* life cycle *******************************
 	async start() {
-		this.worker = await newRustBackend()
+		// start buitin service
+		if (this.rustBackend) this.rustBackend = await newRustBackend()
+		if (this.server) this.server = new Mali(await this.loadProto(), 'Rubick')
+
 		await this.server.start(`127.0.0.1:${this.port}`)
-		await this.afterStart()
-		this.started = true
-	}
 
-	async close() {
-		deviceEventEmitter.removeAllListeners()
-		await this.server.close()
-		this.started = false
-	}
-
-	// start workers
-	private async afterStart() {
-		const log = (success: boolean, name: string) => {
-			if (success) {
-				this.logger.success(`Start ${name} worker`)
-			} else {
-				this.logger.error(`Start ${name} worker`)
-			}
-		}
-		// start workers
-		log(await this.worker?.ioioStart(this.port), 'ioio')
-	}
-
-	// registe builtin RPC services
-	private async initBuiltinService(eventCallback: EventCallback) {
-		this.server = new Mali(await this.loadProto(), 'Rubick')
 		this.server.use('ioio', async (ctx: any) => {
 			const event: DeviceEvent = ctx.request.req
 			// mousemove info is still string here, need convert to Position object
@@ -85,11 +63,24 @@ export class RubickBase {
 
 		// global listen event
 		deviceEventEmitter.on('deviceEvent', async (event) => {
-			if (eventCallback) await eventCallback(event)
+			if (this.ioEventCallback) await this.ioEventCallback(event)
 			if (event.device === 'Mouse' && event.action === 'Move') {
 				this.cursorPosition = event.info
 			}
 		})
+
+		// bootstrap worker with rubickbase
+		if (this.workerBoot) {
+			await newRubickWorker({
+				port: this.port,
+				logger: this.logger,
+			}).start()
+		}
+	}
+
+	async close() {
+		deviceEventEmitter.removeAllListeners()
+		await this.server.close()
 	}
 
 	// ******************************* Utils *******************************
@@ -158,11 +149,6 @@ export class RubickBase {
 
 	// ******************************* expose APIs *******************************
 	getAPI() {
-		// valid start
-		if (!this.started) {
-			throw new Error('Rubick has not started! Start it first!')
-		}
-
 		// get cursor position
 		const getCursorPosition = this.getCursorPosition
 
@@ -207,7 +193,7 @@ export class RubickBase {
 	 */
 	private async screenCapture(): Promise<Image> {
 		return await this.tryBackend(async () => {
-			const imgBase64 = await this.worker.captureToBase64()
+			const imgBase64 = await this.rustBackend.captureToBase64()
 			return newImageFromBase64(imgBase64)
 		}, this.imageError)
 	}
@@ -225,7 +211,7 @@ export class RubickBase {
 		height: number,
 	): Promise<Image> {
 		return await this.tryBackend(async () => {
-			const imgBase64 = await this.worker.screenCaptureAroundPositionToBase64(
+			const imgBase64 = await this.rustBackend.screenCaptureAroundPositionToBase64(
 				position,
 				width,
 				height,
@@ -248,7 +234,7 @@ export class RubickBase {
 	 */
 	private async getCursorPositionPixelColor(): Promise<Color> {
 		return await this.tryBackend(async () => {
-			const rgb = await this.worker.screenColorPicker(this.getCursorPosition())
+			const rgb = await this.rustBackend.screenColorPicker(this.getCursorPosition())
 			return {
 				hex16: rgbToHex(rgb.r, rgb.g, rgb.b),
 				rgba: {
@@ -267,7 +253,7 @@ export class RubickBase {
 	 */
 	private async compress(fromPath: string, toPath: string) {
 		return await this.validAndTryBackend(
-			async () => await this.worker.compress(fromPath, toPath),
+			async () => await this.rustBackend.compress(fromPath, toPath),
 			() => undefined,
 			[],
 			[fromPath, toPath],
@@ -280,7 +266,7 @@ export class RubickBase {
 	 */
 	private async decompress(fromPath: string, toPath: string) {
 		return await this.validAndTryBackend(
-			async () => await this.worker.decompress(fromPath, toPath),
+			async () => await this.rustBackend.decompress(fromPath, toPath),
 			() => undefined,
 			[],
 			[fromPath, toPath],
@@ -356,4 +342,13 @@ export class RubickBase {
  */
 export const newRubickBase = (settings?: RubickBaseSettings): RubickBase => {
 	return new RubickBase(settings || {})
+}
+
+/** A new rubickworker client
+ *
+ * @param settings WorkerSettings
+ * @returns {RubickBase}
+ */
+export const newRubickWorker = (settings?: WorkerSettings): RubickWorker => {
+	return new RubickWorker(settings || {})
 }

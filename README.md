@@ -50,7 +50,7 @@ v13.x, **v14.x** ,v15.x ,16.x
 
 ### 引入依赖
 
-rubickbase 支持 cjs 和 esm 两种规范，当然你也可以在 TypeScript 中使用它
+rubickbase 支持 cjs 和 esm 两种规范，当然你可以并且推荐在 TypeScript 中使用它
 
 ```js
 // cjs

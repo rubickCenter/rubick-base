@@ -281,7 +281,11 @@ const newImg = img.resize(100, 100, 1)
 
 欢迎任何形式的贡献与开源协作！
 
-npm install -g pnpm
+项目依赖 `pnpm` 包管理器, 你需要先安装它
+
+`npm install -g pnpm`
+
+项目采用全自动化的代码检查与构建, 使用以下命令进行开发即可
 
 | Action  | Command          |
 | ------- | ---------------- |
@@ -289,6 +293,7 @@ npm install -g pnpm
 | Build   | · `pnpm build`   |
 | Commit  | · `pnpm commit`  |
 | Release | · `pnpm release` |
+
 
 ## LICENSE
 

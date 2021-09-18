@@ -279,6 +279,8 @@ const newImg = img.resize(100, 100, 1)
 
 ## Contribute
 
+欢迎任何形式的贡献与开源协作！
+
 npm install -g pnpm
 
 | Action  | Command          |
@@ -287,6 +289,12 @@ npm install -g pnpm
 | Build   | · `pnpm build`   |
 | Commit  | · `pnpm commit`  |
 | Release | · `pnpm release` |
+
+## LICENSE
+
+本项目为开源项目, 遵守 MPLv2 协议
+
+如需闭源形式的修改与商用, 请联系我获得授权
 
 ## TODO
 

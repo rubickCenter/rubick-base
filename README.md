@@ -118,8 +118,8 @@ rubickBase.start()
 然后在需要的地方手动启动 workers
 
 ```js
-const worker = newRubickWorker()
-worker.start()
+const rubickWorker = newRubickWorker()
+rubickWorker.start()
 ```
 
 注意, worker 的生命周期(存在时间)必须比 master 要短, 否则 worker 中的 GRPC client 会抛出找不到服务端的异常
@@ -131,8 +131,8 @@ worker.start()
 const rubickBase = newRubickBase({ port: 8001, workerBoot: false })
 rubickBase.start()
 // then
-const worker = newRubickWorker({ port: 8001 })
-newRubickWorker().start()
+const rubickWorker = newRubickWorker({ port: 8001 })
+rubickWorker.start()
 ```
 
 </details>

@@ -1,6 +1,7 @@
 mod dataprocess;
 mod imgtools;
 mod ioio;
+mod sysapp;
 use neon::prelude::*;
 use std::thread;
 

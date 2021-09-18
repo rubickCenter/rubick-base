@@ -119,7 +119,7 @@ rubickBase.start()
 
 ```js
 const worker = newRubickWorker()
-newRubickWorker().start()
+worker.start()
 ```
 
 注意, worker 的生命周期(存在时间)必须比 master 要短, 否则 worker 中的 GRPC client 会抛出找不到服务端的异常

@@ -141,16 +141,6 @@ rubickWorker.start()
 
 通过 `setEventChannel` API 设置目标事件频道, 获取对应事件的订阅器
 
-<details>
-<summary> 检索和关闭频道 </summary>
-
-`allEventChannels` 可以获得目前所有已存在的事件频道
-
-`hasEventChannel` 可以判断是否有某个名字的频道
-
-`delEventChannel` 可以删除设置的事件频道
-
-</details>
 
 ```js
 // 这里设置了鼠标左键监听
@@ -173,6 +163,17 @@ api.delEventChannel('myeventchannel')
 
 console.log(api.hasEventChannel('myeventchannel'), api.allEventChannels())
 ```
+
+<details>
+<summary> 检索和关闭频道 </summary>
+
+`allEventChannels` 可以获得目前所有已存在的事件频道
+
+`hasEventChannel` 可以判断是否有某个名字的频道
+
+`delEventChannel` 可以删除设置的事件频道
+
+</details>
 
 <details>
 <summary>TypeScript用法</summary>

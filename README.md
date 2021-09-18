@@ -18,6 +18,8 @@
 
 ## Install
 
+与 iohook 与 robotjs 不同, 你不需要针对不同版本进行繁琐的重新编译, 一切开箱即用
+
 无论你是在 node 中还是在 electron 中，都可以用你喜欢的包管理器直接安装:
 
 ```
@@ -43,8 +45,6 @@ Electron 环境推荐以下版本
 v13.x, **v14.x** ,v15.x ,16.x
 
 </details>
-
-与 iohook 与 robotjs 不同, 你不需要针对不同版本进行繁琐的重新编译, 一切开箱即用
 
 ## Getting start
 

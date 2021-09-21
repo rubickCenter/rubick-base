@@ -139,18 +139,18 @@ rubickWorker.start()
 
 ### 设备输入事件侦听
 
-通过 `setEventChannel` API 设置目标事件频道, 获取对应事件的订阅器
+通过 `setEventChannel` API 创建目标事件频道, 获取对应事件的订阅器
 
 
 ```js
-// 这里设置了鼠标左键监听
+// 这里创建了监听鼠标左键的频道
 const { registerHook } = api.setEventChannel({
 	device: 'Mouse',
 	action: 'Press',
 	info: 'Left',
 })
 
-// 查看目前所有的事件频道
+// 查看目前所有已创建的事件频道
 console.log(api.allEventChannels())
 
 // 通过 `registerHook` 注册打印函数
@@ -158,7 +158,7 @@ registerHook('myeventchannel', async (e) => {
 	console.log(e)
 })
 
-// 删除设置的事件频道
+// 删除事件频道
 api.delEventChannel('myeventchannel')
 
 console.log(api.hasEventChannel('myeventchannel'), api.allEventChannels())
@@ -171,7 +171,7 @@ console.log(api.hasEventChannel('myeventchannel'), api.allEventChannels())
 
 `hasEventChannel` 可以判断是否有某个名字的频道
 
-`delEventChannel` 可以删除设置的事件频道
+`delEventChannel` 可以删除创建的事件频道
 
 </details>
 
@@ -181,7 +181,7 @@ console.log(api.hasEventChannel('myeventchannel'), api.allEventChannels())
 **<summary>你可以在 TypeScript 中使用装饰器来进行事件订阅注册**
 
 ```ts
-// 这里设置了鼠标左键监听
+// 这里创建了监听鼠标左键的频道
 const { register } = api.setEventChannel({
 	device: 'Mouse',
 	action: 'Press',

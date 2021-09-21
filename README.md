@@ -312,7 +312,8 @@ const newImg = img.resize(100, 100, 1)
 -   [x] api 调用 async 模式
 -   [x] 使用 base64 向 js 传输图片
 -   [x] 完善 README 每个功能给个例子
+-   [x] 完善文档
 -   [ ] 压缩解压的回调函数
--   [ ] 完善文档
+-   [ ] 使用 consola 作为日志器
 -   [ ] 对每个 API 进行测试
 -   [ ] worker 关闭

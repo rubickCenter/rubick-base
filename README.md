@@ -88,7 +88,7 @@ main()
 ```
 
 <details>
-<summary>rubickbase 可选初始化参数</summary>
+<summary> 可选初始化参数 </summary>
 
 | 参数名称        | 参数意义               | 类型          |
 | --------------- | ---------------------- | ------------- |
@@ -101,7 +101,7 @@ main()
 </details>
 
 <details>
-<summary>rubickbase 分离工作模式</summary>
+<summary> 分离工作模式 </summary>
 
 rubickbase 由 GRPC 服务器 master 与多个提供不同功能的 worker 组合运行
 
@@ -245,7 +245,7 @@ const newImg = img.resize(100, 100)
 ```
 
 <details>
-<summary>可选缩放算法</summary>
+<summary> 可选缩放算法 </summary>
 
 默认最邻近差值算法，其他的算法的图像结果边缘更光滑，可以根据自己的需要进行选择
 

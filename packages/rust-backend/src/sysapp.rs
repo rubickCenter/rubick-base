@@ -4,7 +4,7 @@ mod linux;
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SearchResult {
     pub name: String,
-    pub icon_path: Option<String>,
+    pub icon_path: Option<Vec<String>>,
     pub description: String,
     pub command: String,
     pub desktop_entry_path: Option<String>,

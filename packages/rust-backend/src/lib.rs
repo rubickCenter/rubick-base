@@ -1,3 +1,4 @@
+#![feature(path_try_exists)]
 mod dataprocess;
 mod imgtools;
 mod ioio;

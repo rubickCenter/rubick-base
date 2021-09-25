@@ -280,8 +280,8 @@ const newImg = img.resize(100, 100, 1)
 7.  获取系统内已安装的应用列表  
     getInstalledApps: (getDetailInfo: boolean = false, extraDirs?: Array< string >) => Promise< string >
 
-    getDetailInfo 是否获取应用详细信息 默认否 (目前只有 Linux 有效)  
-    extraDirs 额外要扫描的目录  
+    `getDetailInfo` 是否获取应用详细信息 默认否 (目前只有 Linux 有效)  
+    `extraDirs` 额外要扫描的目录  
     return JSON 格式的快捷方式路径列表 如果 getDetailInfo 为 true, 那么返回应用详细信息列表
 
     <details>

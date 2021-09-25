@@ -13,7 +13,7 @@
 -   [x] 注册快捷键事件 register global hotkey
 -   [x] 截图获取某位置周围图像 capture the screen around cursor
 -   [x] 获取已安装的应用列表(linux✅/macos✅/windows✅) get installed app list
--   [x] 获取已安装应用的详细信息(linux✅) get installed app info details
+-   [x] 获取已安装应用的详细信息(linux✅) get installed app detail info 
 -   [ ] 键盘事件模拟
 -   [ ] 鼠标事件模拟
 

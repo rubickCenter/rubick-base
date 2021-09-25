@@ -1,6 +1,5 @@
 #![allow(dead_code)]
-
-// MIT https://github.com/Psykopear/fuzzle
+#![cfg(target_os = "linux")]
 use crate::sysapp::SearchResult;
 use ini::Ini;
 use std::collections::HashMap;
@@ -191,24 +190,46 @@ impl AppParser {
 
 /// Search all applications and collect them in a Vec of SearchResult
 /// This should be the only public api in this module.
-pub fn find_apps_linux() -> Vec<SearchResult> {
-    let app_parser = AppParser::new_parser();
-    let mut results: Vec<SearchResult> = Vec::new();
+pub fn find_apps_linux(detail_json: bool, extra_dirs: Vec<String>) -> Vec<String> {
+    let mut extra_dirs = extra_dirs.into_iter().map(|d| PathBuf::from(d)).collect();
+    let mut apps: Vec<String> = Vec::new();
+    let mut app_parser = AppParser {
+        icon_map: HashMap::new(),
+        lang: None,
+    };
 
-    // Build SearchResults for all desktop files we can find
-    for mut data_dir in get_appdirs() {
-        data_dir.push("applications");
-        if let Ok(data_dir) = fs::read_dir(data_dir) {
-            results.append(
-                &mut data_dir
-                    .filter_map(|path| {
-                        app_parser.searchresult_from_desktopentry(&path.unwrap().path())
-                    })
-                    .collect(),
-            );
-        }
+    if detail_json {
+        app_parser = AppParser::new_parser();
     }
 
+    let mut app_dirs = get_appdirs();
+    app_dirs.append(&mut extra_dirs);
+
+    // Build SearchResults for all desktop files we can find
+    for mut app_dir in app_dirs {
+        app_dir.push("applications");
+        if fs::try_exists(&app_dir).unwrap() {
+            for entry in WalkDir::new(app_dir).into_iter() {
+                let entry = entry.unwrap();
+                let app_path = entry.path();
+                let valid = if let Some(ext) = app_path.extension() {
+                    ext == "desktop"
+                } else {
+                    false
+                };
+
+                if valid {
+                    if detail_json {
+                        if let Some(res) = app_parser.searchresult_from_desktopentry(app_path) {
+                            apps.push(serde_json::to_string(&res).unwrap());
+                        };
+                    } else {
+                        apps.push(String::from(app_path.to_str().unwrap()));
+                    }
+                }
+            }
+        }
+    }
     // Now build SearchResults for all binaries we can find
     // let key = "PATH";
     // match env::var_os(key) {
@@ -226,5 +247,5 @@ pub fn find_apps_linux() -> Vec<SearchResult> {
     //     None => println!("{} is not defined in the environment.", key),
     // }
     // That's it, return
-    results
+    apps
 }

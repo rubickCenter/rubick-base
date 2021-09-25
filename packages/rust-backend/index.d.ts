@@ -1,4 +1,5 @@
 declare namespace rubick_backend {
+	function find_apps_start(detail_json: boolean, extra_dirs?: Array<string>): Promise<string>
 	function ioio_start(port: string): Promise<boolean>
 	function capture_base64_start(): Promise<string>
 	function screen_color_picker_start(x: number, y: number): Promise<RGB>
@@ -22,12 +23,12 @@ declare namespace rubick_backend {
 	// ): Promise<undefined>
 }
 
-interface RGBA {
-	r: number
-	g: number
-	b: number
-	a: number
-}
+// interface RGBA {
+// 	r: number
+// 	g: number
+// 	b: number
+// 	a: number
+// }
 
 interface RGB {
 	r: number

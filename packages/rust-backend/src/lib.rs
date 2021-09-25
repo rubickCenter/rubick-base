@@ -75,9 +75,33 @@ fn screen_color_picker_start(mut cx: FunctionContext) -> JsResult<JsObject> {
     Ok(obj)
 }
 
+// 获取已安装的系统应用 输出JSON格式
+fn find_apps_start(mut cx: FunctionContext) -> JsResult<JsString> {
+    let detail_json = cx.argument::<JsBoolean>(0)?.value(&mut cx);
+    let extra_dirs = if let Some(extra_dirs) = cx.argument_opt(1) {
+        let dirs: Handle<JsArray> = extra_dirs.downcast_or_throw(&mut cx)?;
+        let dirs: Vec<String> = dirs
+            .to_vec(&mut cx)?
+            .into_iter()
+            .map(|dir| {
+                let dir: Handle<JsString> = dir.downcast_or_throw(&mut cx).unwrap();
+                dir.value(&mut cx)
+            })
+            .collect();
+        Some(dirs)
+    } else {
+        None
+    };
+
+    let res = sysapp::find_apps(detail_json, extra_dirs);
+    let apps = cx.string(serde_json::to_string(&res).unwrap());
+    Ok(apps)
+}
+
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     // async task
+    cx.export_function("find_apps_start", find_apps_start)?;
     cx.export_function("screen_color_picker_start", screen_color_picker_start)?;
     cx.export_function("capture_base64_start", capture_base64_start)?;
     cx.export_function(

@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.10.2"></a>
+## 0.10.2 (2021-09-25)
+
+### Fixed
+
+- 🐛 fix get app info array bug [[bef950e](https://github.com/SOVLOOKUP/rubickbase/commit/bef950e77fac21df6df6e9c372ea6b9845e73fef)]
+
+
 <a name="0.10.1"></a>
 ## 0.10.1 (2021-09-25)
 

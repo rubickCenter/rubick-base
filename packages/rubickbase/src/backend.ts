@@ -54,7 +54,7 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 			)
 		},
 		getInstalledApps: async (getDetailInfo: boolean, extraDirs?: Array<string>) => {
-			return await rustBackend.find_apps_start(getDetailInfo, extraDirs)
+			return await rustBackend.find_apps_start(getDetailInfo, extraDirs || [])
 		},
 		// Deprecated
 		// capture: async (path: string) => {

@@ -21,6 +21,7 @@ export class RubickBase {
 	private cursorPosition: Position = { x: 1, y: 1 }
 	private workerBoot: boolean
 	private ioEventCallback: EventCallback
+	private started: boolean = false
 	logger: Logger
 	constructor(settings: RubickBaseSettings) {
 		const { port, logger, tmpdir, workerBoot, ioEventCallback } = settings
@@ -75,10 +76,12 @@ export class RubickBase {
 				logger: this.logger,
 			}).start()
 		}
+		this.started = true
 	}
 
 	async close() {
 		deviceEventEmitter.removeAllListeners()
+		this.started = false
 		await this.server.close()
 	}
 
@@ -150,6 +153,10 @@ export class RubickBase {
 
 	// ******************************* expose APIs *******************************
 	getAPI() {
+		if (!this.started) {
+			this.start()
+		}
+
 		/** get cursor position
 		 *
 		 * @returns {Position}
@@ -290,10 +297,16 @@ export class RubickBase {
 			}
 		}
 
+		/** get installed app or app detail info
+		 *
+		 * @param getDetailInfo get app detail info rather than app entry default false
+		 * @param extraDirs extra dirs to scan
+		 * @returns {Promise<string | undefined>}
+		 */
 		const getInstalledApps = async (
 			getDetailInfo: boolean = false,
 			extraDirs?: Array<string>,
-		) =>
+		): Promise<string | undefined> =>
 			await this.validAndTryBackend(
 				async () => await this.rustBackend.getInstalledApps(getDetailInfo, extraDirs),
 				this.appSearchError,

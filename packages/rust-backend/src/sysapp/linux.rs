@@ -63,11 +63,6 @@ impl AppParser {
                     match icon_map.get_mut(&file_name) {
                         Some(v) => {
                             v.push(file_path);
-                            // todo: update vec directly
-                            // let mut nv = v.clone();
-                            // nv.push(file_path);
-                            // icon_map.remove(&file_name);
-                            // icon_map.insert(file_name, nv);
                         }
                         None => {
                             icon_map.insert(file_name, vec![file_path]);
@@ -99,7 +94,9 @@ impl AppParser {
         }
 
         if let Some(icon) = self.icon_map.get(&icon.to_string()) {
-            return Some(icon.to_vec());
+            let mut icon_list = icon.to_vec();
+            icon_list.sort();
+            return Some(icon_list);
         }
 
         None

@@ -1,5 +1,18 @@
 # Changelog
 
+<a name="0.10.1"></a>
+## 0.10.1 (2021-09-25)
+
+### Fixed
+
+- 💚 fix nightly build [[7381350](https://github.com/SOVLOOKUP/rubickbase/commit/7381350a604bc2c15b93e0c17e0c1283b2e6ad51)]
+
+### Miscellaneous
+
+-  Update README.md [[2b0f31d](https://github.com/SOVLOOKUP/rubickbase/commit/2b0f31d13e1e5652e55b2c2e27da0067789735ce)]
+    *  Update README.md ([7d8269d](https://github.com/SOVLOOKUP/rubickbase/commit/7d8269df4764462ff90b147779c31b2098272c28))
+
+
 <a name="0.10.0"></a>
 ## 0.10.0 (2021-09-25)
 

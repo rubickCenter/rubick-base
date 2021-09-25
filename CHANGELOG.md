@@ -1,10 +1,11 @@
 # Changelog
 
-<a name="0.9.8-1"></a>
-## 0.9.8-1 (2021-09-25)
+<a name="0.9.8-2"></a>
+## 0.9.8-2 (2021-09-25)
 
 ### Added
 
+- ✨ sort linux app [[4214762](https://github.com/SOVLOOKUP/rubickbase/commit/421476223c25e75299f4c01aee1101bcc9069470)]
 - ✨ linux app get ok [[ee42ab2](https://github.com/SOVLOOKUP/rubickbase/commit/ee42ab2c80e2955d1f1e48f22f03c92eb16fcf7c)]
 - ✨ linux app search [[741c9fa](https://github.com/SOVLOOKUP/rubickbase/commit/741c9fa3585a7bbf21eabe37ec4a414bfd2d807e)]
 - ✨ linux app [[c4f4f75](https://github.com/SOVLOOKUP/rubickbase/commit/c4f4f750e6766963c2e46b41816ef9db37cb59e8)]
@@ -16,7 +17,8 @@
 
 ### Miscellaneous
 
--  Release 0.9.8-0 [[370dd98](https://github.com/SOVLOOKUP/rubickbase/commit/370dd9878fbeaa1a2f7e668733be7cbec5542e23)]
+-  Release 0.9.8-1 [[42ee3fc](https://github.com/SOVLOOKUP/rubickbase/commit/42ee3fc79b551ece428b009f06c8dae8444ecd4c)]
+    *  Release 0.9.8-0 ([370dd98](https://github.com/SOVLOOKUP/rubickbase/commit/370dd9878fbeaa1a2f7e668733be7cbec5542e23))
     *  Release 0.9.7 ([9757581](https://github.com/SOVLOOKUP/rubickbase/commit/9757581d7df7c215a42166baa8c77f731456efca))
     *  Release 0.9.6 ([77abd7e](https://github.com/SOVLOOKUP/rubickbase/commit/77abd7e27ae8c75eca772576dde5f4e1b091fa91))
 -  Update README.md [[64283cb](https://github.com/SOVLOOKUP/rubickbase/commit/64283cb77b2ffa50c180fcdc96f3adbb7175da29)]

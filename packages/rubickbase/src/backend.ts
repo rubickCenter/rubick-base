@@ -11,6 +11,7 @@ export interface RustBackendAPI {
 		width: number,
 		height: number,
 	) => Promise<string>
+	getInstalledApps: (getDetailInfo: boolean, extraDirs?: Array<string>) => Promise<string>
 	// Deprecated
 	// capture: (path: string) => Promise<undefined>
 	// colorPicker: (path: string, position: Position) => Promise<RGBA>
@@ -51,6 +52,9 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 				width,
 				height,
 			)
+		},
+		getInstalledApps: async (getDetailInfo: boolean, extraDirs?: Array<string>) => {
+			return await rustBackend.find_apps_start(getDetailInfo, extraDirs)
 		},
 		// Deprecated
 		// capture: async (path: string) => {

@@ -129,21 +129,23 @@ export class RubickBase {
 
 	// ******************************* errors *******************************
 	private colorError() {
-		this.logger.error('Got an color error!')
-		return {
-			hex16: 'error',
-			rgba: {
-				r: -1,
-				g: -1,
-				b: -1,
-				a: -1,
-			},
-		}
+		this.logger.error('Got an api color error!')
+		return undefined
 	}
 
 	private imageError() {
-		this.logger.error('Got an image error!')
-		return newImageFromBase64('error')
+		this.logger.error('Got an api image error!')
+		return undefined
+	}
+
+	private lzmaError() {
+		this.logger.error('Got an api lzma error!')
+		return undefined
+	}
+
+	private appSearchError() {
+		this.logger.error('Got an api app search error!')
+		return undefined
 	}
 
 	// ******************************* expose APIs *******************************
@@ -156,9 +158,9 @@ export class RubickBase {
 
 		/** get pixel color at cursor position
 		 *
-		 * @return {Promise<Color>} color object
+		 * @return {Promise<Color | undefined>} color object
 		 */
-		const getCursorPositionPixelColor = async (): Promise<Color> =>
+		const getCursorPositionPixelColor = async (): Promise<Color | undefined> =>
 			await this.tryBackend(async () => {
 				const rgb = await this.rustBackend.screenColorPicker(getCursorPosition())
 				return {
@@ -174,9 +176,9 @@ export class RubickBase {
 
 		/** capture primary screen
 		 *
-		 * @returns {Promise<Image>} image object
+		 * @returns {Promise<Image | undefined>} image object
 		 */
-		const screenCapture = async (): Promise<Image> =>
+		const screenCapture = async (): Promise<Image | undefined> =>
 			await this.tryBackend(async () => {
 				const imgBase64 = await this.rustBackend.captureToBase64()
 				return newImageFromBase64(imgBase64)
@@ -187,13 +189,13 @@ export class RubickBase {
 		 * @param position center of the image
 		 * @param width width
 		 * @param height height
-		 * @returns {Promise<Image>} image object
+		 * @returns {Promise<Image | undefined>} image object
 		 */
 		const screenCaptureAroundPosition = async (
 			position: Position,
 			width: number,
 			height: number,
-		): Promise<Image> =>
+		): Promise<Image | undefined> =>
 			await this.tryBackend(async () => {
 				const imgBase64 = await this.rustBackend.screenCaptureAroundPositionToBase64(
 					position,
@@ -210,7 +212,7 @@ export class RubickBase {
 		const compress = async (fromPath: string, toPath: string) =>
 			await this.validAndTryBackend(
 				async () => await this.rustBackend.compress(fromPath, toPath),
-				() => undefined,
+				this.lzmaError,
 				[],
 				[fromPath, toPath],
 			)
@@ -222,7 +224,7 @@ export class RubickBase {
 		const decompress = async (fromPath: string, toPath: string) =>
 			await this.validAndTryBackend(
 				async () => await this.rustBackend.decompress(fromPath, toPath),
-				() => undefined,
+				this.lzmaError,
 				[],
 				[fromPath, toPath],
 			)
@@ -288,13 +290,26 @@ export class RubickBase {
 			}
 		}
 
+		const getInstalledApps = async (
+			getDetailInfo: boolean = false,
+			extraDirs?: Array<string>,
+		) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.getInstalledApps(getDetailInfo, extraDirs),
+				this.appSearchError,
+				extraDirs,
+			)
+
 		return {
-			getCursorPosition,
-			getCursorPositionPixelColor,
+			// use whenever you want
+			getInstalledApps,
 			screenCapture,
 			screenCaptureAroundPosition,
 			compress,
 			decompress,
+			// must use after `ioio` worker start
+			getCursorPosition,
+			getCursorPositionPixelColor,
 			setEventChannel,
 			allEventChannels,
 			hasEventChannel,

@@ -9,10 +9,11 @@
 -   [x] 图片取色 pixel color picker
 -   [x] 获取鼠标位置 get cursor position
 -   [x] 获取鼠标像素颜色 pick color at cursor position
--   [x] lzma2 压缩解压
--   [x] 注册快捷键事件
--   [x] 截图获取某位置周围图像
--   [ ] 获取应用列表(名称 图标 路径)
+-   [x] lzma2 压缩解压 lzma2 (de)compress
+-   [x] 注册快捷键事件 register global hotkey
+-   [x] 截图获取某位置周围图像 capture the screen around cursor
+-   [x] 获取已安装的应用列表(linux✅/macos✅/windows✅) get installed app list
+-   [x] 获取已安装应用的详细信息(linux✅) get installed app info details
 -   [ ] 键盘事件模拟
 -   [ ] 鼠标事件模拟
 
@@ -141,7 +142,6 @@ rubickWorker.start()
 
 通过 `setEventChannel` API 创建目标事件频道, 获取对应事件的订阅器
 
-
 ```js
 // 这里创建了监听鼠标左键的频道
 const { registerHook } = api.setEventChannel({
@@ -259,23 +259,54 @@ const newImg = img.resize(100, 100, 1)
 
 ### 功能一览
 
-1. lzma 压缩
-   compress: (fromPath: string, toPath: string) => Promise< undefined >
+1.  lzma 压缩  
+    compress: (fromPath: string, toPath: string) => Promise< undefined >
 
-2. lzma 解压
-   decompress: (fromPath: string, toPath: string) => Promise< undefined >
+2.  lzma 解压  
+    decompress: (fromPath: string, toPath: string) => Promise< undefined >
 
-3. 获取鼠标当前座标
-   getCursorPosition: () => Position
+3.  获取鼠标当前座标  
+    getCursorPosition: () => Position
 
-4. 获取鼠标当前座标的像素值
-   getCursorPositionPixelColor: () => Promise< Color >
+4.  获取鼠标当前座标的像素值  
+    getCursorPositionPixelColor: () => Promise< Color >
 
-5. 主屏幕截屏
-   screenCapture: () => Promise< Image >
+5.  主屏幕截屏  
+    screenCapture: () => Promise< Image >
 
-6. 获取鼠标周围图像
-   screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image >
+6.  获取鼠标周围图像  
+    screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image >
+
+7.  获取系统内已安装的应用列表  
+    getInstalledApps: (getDetailInfo: boolean = false, extraDirs?: Array< string >) => Promise< string >
+
+    getDetailInfo 是否获取应用详细信息 默认否 (目前只有 Linux 有效)  
+    extraDirs 额外要扫描的目录  
+    return JSON 格式的快捷方式路径列表 如果 getDetailInfo 为 true, 那么返回应用详细信息列表
+
+    <details>
+    <summary> 应用详细信息字段解释 </summary>
+
+    name: 名称  
+    icon_path: 各个尺寸的图标列表  
+    description: 应用描述  
+    command: 应用启动命令  
+    desktop_entry_path: 快捷方式路径
+
+    </details>
+
+    <details>
+    <summary> 扫描原理 </summary>
+
+    扫描系统存放快捷方式的目录来获取所有系统内安装的应用, 包含的扫描格式:
+
+    | 平台    | 后辍名       |
+    | ------- | ------------ |
+    | linux   | desktop      |
+    | macos   | app,prefPane |
+    | windows | lnk          |
+
+    </details>
 
 ## Contribute
 
@@ -293,7 +324,6 @@ const newImg = img.resize(100, 100, 1)
 | Build   | · `pnpm build`   |
 | Commit  | · `pnpm commit`  |
 | Release | · `pnpm release` |
-
 
 ## LICENSE
 

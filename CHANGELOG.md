@@ -1,7 +1,7 @@
 # Changelog
 
-<a name="0.9.8-0"></a>
-## 0.9.8-0 (2021-09-25)
+<a name="0.9.8-1"></a>
+## 0.9.8-1 (2021-09-25)
 
 ### Added
 
@@ -11,11 +11,13 @@
 
 ### Changed
 
+- ⬆️ esbuild [[c94dd7f](https://github.com/SOVLOOKUP/rubickbase/commit/c94dd7f90bc0db8e24df4c09c70f25f14a21d139)]
 - ⬆️ update [[0c85261](https://github.com/SOVLOOKUP/rubickbase/commit/0c852614c22b8f30d7d32328a0fe622a9b105b61)]
 
 ### Miscellaneous
 
--  Release 0.9.7 [[9757581](https://github.com/SOVLOOKUP/rubickbase/commit/9757581d7df7c215a42166baa8c77f731456efca)]
+-  Release 0.9.8-0 [[370dd98](https://github.com/SOVLOOKUP/rubickbase/commit/370dd9878fbeaa1a2f7e668733be7cbec5542e23)]
+    *  Release 0.9.7 ([9757581](https://github.com/SOVLOOKUP/rubickbase/commit/9757581d7df7c215a42166baa8c77f731456efca))
     *  Release 0.9.6 ([77abd7e](https://github.com/SOVLOOKUP/rubickbase/commit/77abd7e27ae8c75eca772576dde5f4e1b091fa91))
 -  Update README.md [[64283cb](https://github.com/SOVLOOKUP/rubickbase/commit/64283cb77b2ffa50c180fcdc96f3adbb7175da29)]
     *  Update README.md ([f27f001](https://github.com/SOVLOOKUP/rubickbase/commit/f27f001947176d7a480107fbfd2543558d26c2b7))

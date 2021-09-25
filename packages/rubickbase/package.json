@@ -1,6 +1,6 @@
 {
 	"name": "rubickbase",
-	"version": "0.9.8-3",
+	"version": "0.10.0",
 	"os": [
 		"linux",
 		"win32",

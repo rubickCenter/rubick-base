@@ -1,10 +1,11 @@
 # Changelog
 
-<a name="0.9.8-3"></a>
-## 0.9.8-3 (2021-09-25)
+<a name="0.10.0"></a>
+## 0.10.0 (2021-09-25)
 
 ### Added
 
+- ✨ add get installed app api [[29021e3](https://github.com/SOVLOOKUP/rubickbase/commit/29021e3dd39d77990061292bc96ec205c2e66627)]
 - ✨ find apps rust-backend [[8da5f6d](https://github.com/SOVLOOKUP/rubickbase/commit/8da5f6d59cc55764cb89fa5e307683ff5b320d10)]
 - ✨ sort linux app [[4214762](https://github.com/SOVLOOKUP/rubickbase/commit/421476223c25e75299f4c01aee1101bcc9069470)]
 - ✨ linux app get ok [[ee42ab2](https://github.com/SOVLOOKUP/rubickbase/commit/ee42ab2c80e2955d1f1e48f22f03c92eb16fcf7c)]
@@ -19,12 +20,13 @@
 
 ### Miscellaneous
 
--  Create windows.rs [[8f26630](https://github.com/SOVLOOKUP/rubickbase/commit/8f266300824027916655c8a612aac674340c184d)]
--  Release 0.9.8-2 [[470c9c0](https://github.com/SOVLOOKUP/rubickbase/commit/470c9c0de620871932fb44e85eace4848988e5a8)]
+-  Release 0.9.8-3 [[2b14126](https://github.com/SOVLOOKUP/rubickbase/commit/2b141268fb8346f2d07bfaea2366b380bc832944)]
+    *  Release 0.9.8-2 ([470c9c0](https://github.com/SOVLOOKUP/rubickbase/commit/470c9c0de620871932fb44e85eace4848988e5a8))
     *  Release 0.9.8-1 ([42ee3fc](https://github.com/SOVLOOKUP/rubickbase/commit/42ee3fc79b551ece428b009f06c8dae8444ecd4c))
     *  Release 0.9.8-0 ([370dd98](https://github.com/SOVLOOKUP/rubickbase/commit/370dd9878fbeaa1a2f7e668733be7cbec5542e23))
     *  Release 0.9.7 ([9757581](https://github.com/SOVLOOKUP/rubickbase/commit/9757581d7df7c215a42166baa8c77f731456efca))
     *  Release 0.9.6 ([77abd7e](https://github.com/SOVLOOKUP/rubickbase/commit/77abd7e27ae8c75eca772576dde5f4e1b091fa91))
+-  Create windows.rs [[8f26630](https://github.com/SOVLOOKUP/rubickbase/commit/8f266300824027916655c8a612aac674340c184d)]
 -  Update README.md [[64283cb](https://github.com/SOVLOOKUP/rubickbase/commit/64283cb77b2ffa50c180fcdc96f3adbb7175da29)]
     *  Update README.md ([f27f001](https://github.com/SOVLOOKUP/rubickbase/commit/f27f001947176d7a480107fbfd2543558d26c2b7))
     *  Update README.md ([9eec135](https://github.com/SOVLOOKUP/rubickbase/commit/9eec1357876d0365ac62cd833268a4c7ba4a80bc))

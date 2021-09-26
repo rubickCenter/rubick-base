@@ -142,7 +142,7 @@ rubickWorker.start()
 
 模拟鼠标键盘输入事件非常简单，只要调用 `sendEvent` 即可
 
-由于 rubickbase 是用 TypeScript 书写，所以不用查阅鼠标键盘事件或按键的名称来书写 Event, 编辑器会自动提示你
+由于 rubickbase 是用 TypeScript 书写，所以不用查阅鼠标键盘事件或按键的名称来书写 Event, 编辑器会自动提示
 
 ```js
 // 这里将会模拟按下 F1 键

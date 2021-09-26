@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.10.3-0"></a>
+## 0.10.3-0 (2021-09-26)
+
+### Fixed
+
+- 🐛 fix start in getAPI bug [[28156ff](https://github.com/SOVLOOKUP/rubickbase/commit/28156ff708dc337e5c98c7339b47c328fc606d1d)]
+
+
 <a name="0.10.2"></a>
 ## 0.10.2 (2021-09-25)
 

@@ -1,4 +1,4 @@
-import { Position, RGB } from './types'
+import { DeviceEvent, Position, RGB } from './types'
 
 export interface RustBackendAPI {
 	ioioStart: (port: string) => Promise<boolean>
@@ -12,6 +12,7 @@ export interface RustBackendAPI {
 		height: number,
 	) => Promise<string>
 	getInstalledApps: (getDetailInfo: boolean, extraDirs?: Array<string>) => Promise<string>
+	sendEvent: (event: DeviceEvent) => Promise<undefined>
 	// Deprecated
 	// capture: (path: string) => Promise<undefined>
 	// colorPicker: (path: string, position: Position) => Promise<RGBA>
@@ -55,6 +56,12 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		},
 		getInstalledApps: async (getDetailInfo: boolean, extraDirs?: Array<string>) => {
 			return await rustBackend.find_apps_start(getDetailInfo, extraDirs || [])
+		},
+		sendEvent: async (event: DeviceEvent) => {
+			if (!event.device || !event.action || !event.info) {
+				throw new Error('Not valid event!')
+			}
+			return await rustBackend.send_event_start(event.device, event.action, event.info)
 		},
 		// Deprecated
 		// capture: async (path: string) => {

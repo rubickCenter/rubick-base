@@ -29,6 +29,7 @@
 		"zx": "^4.2.0"
 	},
 	"files": [
+		"index.js",
 		"index.node",
 		"index.d.ts",
 		"README.md"

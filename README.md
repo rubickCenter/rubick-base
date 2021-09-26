@@ -13,9 +13,9 @@
 -   [x] 注册快捷键事件 register global hotkey
 -   [x] 截图获取某位置周围图像 capture the screen around cursor
 -   [x] 获取已安装的应用列表(linux✅/macos✅/windows✅) get installed app list
--   [x] 获取已安装应用的详细信息(linux✅) get installed app detail info 
--   [ ] 键盘事件模拟
--   [ ] 鼠标事件模拟
+-   [x] 获取已安装应用的详细信息(linux✅) get installed app detail info
+-   [x] 键盘事件模拟 keyboard input event simulation
+-   [x] 鼠标事件模拟 mouse input event simulation
 
 ## Install
 
@@ -343,8 +343,8 @@ const newImg = img.resize(100, 100, 1)
 -   [x] 使用 base64 向 js 传输图片
 -   [x] 完善 README 每个功能给个例子
 -   [x] 完善文档
+-   [x] 使用 consola 作为日志器
+-   [ ] 更多图像操作
 -   [ ] 压缩解压的回调函数
--   [ ] 使用 consola 作为日志器
 -   [ ] 对每个 API 进行测试
 -   [ ] worker 关闭
--   [ ] 拓展更多图像算法操作

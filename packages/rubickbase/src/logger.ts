@@ -1,4 +1,7 @@
-import signale from 'signale'
 import { Logger } from './types'
+import consola from 'consola'
 
-export const defaultLogger: Logger = signale
+// Globally redirect all outputs to consola.
+consola.wrapAll()
+
+export const defaultLogger: Logger = consola

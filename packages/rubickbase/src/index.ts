@@ -151,6 +151,11 @@ export class RubickBase {
 		return undefined
 	}
 
+	private simulationError() {
+		this.logger.error('Got an api simulation error!')
+		return undefined
+	}
+
 	// ******************************* expose APIs *******************************
 	getAPI() {
 		if (!this.started) {
@@ -313,7 +318,19 @@ export class RubickBase {
 				extraDirs,
 			)
 
+		/** input simulation
+		 *
+		 * @param event device event to send
+		 * @returns {Promise<undefined>}
+		 */
+		const sendEvent = async (event: DeviceEvent): Promise<undefined> =>
+			await this.tryBackend(
+				async () => await this.rustBackend.sendEvent(event),
+				this.simulationError,
+			)
+
 		return {
+			sendEvent,
 			getInstalledApps,
 			screenCapture,
 			screenCaptureAroundPosition,

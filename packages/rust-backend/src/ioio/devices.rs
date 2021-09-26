@@ -4,7 +4,16 @@ pub mod keyboard;
 pub mod mouse;
 use keyboard::{KeyBoardEvent, KeyBoardKey};
 use mouse::{MouseEvent, MouseKey, MouseMove, MouseWheel};
-use rdev::Event;
+use rdev::{simulate, Button, Event, EventType, Key};
+
+fn send(event: &EventType) {
+    // let delay = time::Duration::from_millis(20);
+    if let Err(_) = simulate(event) {
+        println!("We could not send {:?}", event);
+    }
+    // Let ths OS catchup (at least MacOS)
+    // thread::sleep(delay);
+}
 
 #[derive(Debug)]
 pub enum DeviceEvent {
@@ -13,11 +22,7 @@ pub enum DeviceEvent {
 }
 
 impl DeviceEvent {
-    // pub fn json(&self) -> String {
-    //     serde_json::to_string(self).expect("Serialize error!")
-    // }
-
-    pub fn receive_from_keyboard_mouse_event(event: &Event) -> DeviceEvent {
+    pub fn receive_from_keyboard_mouse_event(event: &Event) -> Self {
         let device_event = match event.event_type {
             // keyboard
             rdev::EventType::KeyPress(key) => match key {
@@ -677,5 +682,259 @@ impl DeviceEvent {
         };
 
         device_event
+    }
+
+    pub fn send_keyboard_mouse_event(&self) {
+        match self {
+            DeviceEvent::KeyBoardEvent(event) => match event {
+                KeyBoardEvent::Press(key) => match key {
+                    KeyBoardKey::Alt => send(&EventType::KeyPress(Key::Alt)),
+                    KeyBoardKey::AltGr => send(&EventType::KeyPress(Key::AltGr)),
+                    KeyBoardKey::Backspace => send(&EventType::KeyPress(Key::Backspace)),
+                    KeyBoardKey::CapsLock => send(&EventType::KeyPress(Key::CapsLock)),
+                    KeyBoardKey::ControlLeft => send(&EventType::KeyPress(Key::ControlLeft)),
+                    KeyBoardKey::ControlRight => send(&EventType::KeyPress(Key::ControlRight)),
+                    KeyBoardKey::Delete => send(&EventType::KeyPress(Key::Delete)),
+                    KeyBoardKey::DownArrow => send(&EventType::KeyPress(Key::DownArrow)),
+                    KeyBoardKey::End => send(&EventType::KeyPress(Key::End)),
+                    KeyBoardKey::Escape => send(&EventType::KeyPress(Key::Escape)),
+                    KeyBoardKey::F1 => send(&EventType::KeyPress(Key::F1)),
+                    KeyBoardKey::F10 => send(&EventType::KeyPress(Key::F10)),
+                    KeyBoardKey::F11 => send(&EventType::KeyPress(Key::F11)),
+                    KeyBoardKey::F12 => send(&EventType::KeyPress(Key::F12)),
+                    KeyBoardKey::F2 => send(&EventType::KeyPress(Key::F2)),
+                    KeyBoardKey::F3 => send(&EventType::KeyPress(Key::F3)),
+                    KeyBoardKey::F4 => send(&EventType::KeyPress(Key::F4)),
+                    KeyBoardKey::F5 => send(&EventType::KeyPress(Key::F5)),
+                    KeyBoardKey::F6 => send(&EventType::KeyPress(Key::F6)),
+                    KeyBoardKey::F7 => send(&EventType::KeyPress(Key::F7)),
+                    KeyBoardKey::F8 => send(&EventType::KeyPress(Key::F8)),
+                    KeyBoardKey::F9 => send(&EventType::KeyPress(Key::F9)),
+                    KeyBoardKey::Home => send(&EventType::KeyPress(Key::Home)),
+                    KeyBoardKey::LeftArrow => send(&EventType::KeyPress(Key::LeftArrow)),
+                    KeyBoardKey::MetaLeft => send(&EventType::KeyPress(Key::MetaLeft)),
+                    KeyBoardKey::MetaRight => send(&EventType::KeyPress(Key::MetaRight)),
+                    KeyBoardKey::PageDown => send(&EventType::KeyPress(Key::PageDown)),
+                    KeyBoardKey::PageUp => send(&EventType::KeyPress(Key::PageUp)),
+                    KeyBoardKey::Return => send(&EventType::KeyPress(Key::Return)),
+                    KeyBoardKey::RightArrow => send(&EventType::KeyPress(Key::RightArrow)),
+                    KeyBoardKey::ShiftLeft => send(&EventType::KeyPress(Key::ShiftLeft)),
+                    KeyBoardKey::ShiftRight => send(&EventType::KeyPress(Key::ShiftRight)),
+                    KeyBoardKey::Space => send(&EventType::KeyPress(Key::Space)),
+                    KeyBoardKey::Tab => send(&EventType::KeyPress(Key::Tab)),
+                    KeyBoardKey::UpArrow => send(&EventType::KeyPress(Key::UpArrow)),
+                    KeyBoardKey::PrintScreen => send(&EventType::KeyPress(Key::PrintScreen)),
+                    KeyBoardKey::ScrollLock => send(&EventType::KeyPress(Key::ScrollLock)),
+                    KeyBoardKey::Pause => send(&EventType::KeyPress(Key::Pause)),
+                    KeyBoardKey::NumLock => send(&EventType::KeyPress(Key::NumLock)),
+                    KeyBoardKey::BackQuote => send(&EventType::KeyPress(Key::BackQuote)),
+                    KeyBoardKey::Num1 => send(&EventType::KeyPress(Key::Num1)),
+                    KeyBoardKey::Num2 => send(&EventType::KeyPress(Key::Num2)),
+                    KeyBoardKey::Num3 => send(&EventType::KeyPress(Key::Num3)),
+                    KeyBoardKey::Num4 => send(&EventType::KeyPress(Key::Num4)),
+                    KeyBoardKey::Num5 => send(&EventType::KeyPress(Key::Num5)),
+                    KeyBoardKey::Num6 => send(&EventType::KeyPress(Key::Num6)),
+                    KeyBoardKey::Num7 => send(&EventType::KeyPress(Key::Num7)),
+                    KeyBoardKey::Num8 => send(&EventType::KeyPress(Key::Num8)),
+                    KeyBoardKey::Num9 => send(&EventType::KeyPress(Key::Num9)),
+                    KeyBoardKey::Num0 => send(&EventType::KeyPress(Key::Num0)),
+                    KeyBoardKey::Minus => send(&EventType::KeyPress(Key::Minus)),
+                    KeyBoardKey::Equal => send(&EventType::KeyPress(Key::Equal)),
+                    KeyBoardKey::KeyQ => send(&EventType::KeyPress(Key::KeyQ)),
+                    KeyBoardKey::KeyW => send(&EventType::KeyPress(Key::KeyW)),
+                    KeyBoardKey::KeyE => send(&EventType::KeyPress(Key::KeyE)),
+                    KeyBoardKey::KeyR => send(&EventType::KeyPress(Key::KeyR)),
+                    KeyBoardKey::KeyT => send(&EventType::KeyPress(Key::KeyT)),
+                    KeyBoardKey::KeyY => send(&EventType::KeyPress(Key::KeyY)),
+                    KeyBoardKey::KeyU => send(&EventType::KeyPress(Key::KeyU)),
+                    KeyBoardKey::KeyI => send(&EventType::KeyPress(Key::KeyI)),
+                    KeyBoardKey::KeyO => send(&EventType::KeyPress(Key::KeyO)),
+                    KeyBoardKey::KeyP => send(&EventType::KeyPress(Key::KeyP)),
+                    KeyBoardKey::LeftBracket => send(&EventType::KeyPress(Key::LeftBracket)),
+                    KeyBoardKey::RightBracket => send(&EventType::KeyPress(Key::RightBracket)),
+                    KeyBoardKey::KeyA => send(&EventType::KeyPress(Key::KeyA)),
+                    KeyBoardKey::KeyS => send(&EventType::KeyPress(Key::KeyS)),
+                    KeyBoardKey::KeyD => send(&EventType::KeyPress(Key::KeyD)),
+                    KeyBoardKey::KeyF => send(&EventType::KeyPress(Key::KeyF)),
+                    KeyBoardKey::KeyG => send(&EventType::KeyPress(Key::KeyG)),
+                    KeyBoardKey::KeyH => send(&EventType::KeyPress(Key::KeyH)),
+                    KeyBoardKey::KeyJ => send(&EventType::KeyPress(Key::KeyJ)),
+                    KeyBoardKey::KeyK => send(&EventType::KeyPress(Key::KeyK)),
+                    KeyBoardKey::KeyL => send(&EventType::KeyPress(Key::KeyL)),
+                    KeyBoardKey::SemiColon => send(&EventType::KeyPress(Key::SemiColon)),
+                    KeyBoardKey::Quote => send(&EventType::KeyPress(Key::Quote)),
+                    KeyBoardKey::BackSlash => send(&EventType::KeyPress(Key::BackSlash)),
+                    KeyBoardKey::IntlBackslash => send(&EventType::KeyPress(Key::IntlBackslash)),
+                    KeyBoardKey::KeyZ => send(&EventType::KeyPress(Key::KeyZ)),
+                    KeyBoardKey::KeyX => send(&EventType::KeyPress(Key::KeyX)),
+                    KeyBoardKey::KeyC => send(&EventType::KeyPress(Key::KeyC)),
+                    KeyBoardKey::KeyV => send(&EventType::KeyPress(Key::KeyV)),
+                    KeyBoardKey::KeyB => send(&EventType::KeyPress(Key::KeyB)),
+                    KeyBoardKey::KeyN => send(&EventType::KeyPress(Key::KeyN)),
+                    KeyBoardKey::KeyM => send(&EventType::KeyPress(Key::KeyM)),
+                    KeyBoardKey::Comma => send(&EventType::KeyPress(Key::Comma)),
+                    KeyBoardKey::Dot => send(&EventType::KeyPress(Key::Dot)),
+                    KeyBoardKey::Slash => send(&EventType::KeyPress(Key::Slash)),
+                    KeyBoardKey::Insert => send(&EventType::KeyPress(Key::Insert)),
+                    KeyBoardKey::KpReturn => send(&EventType::KeyPress(Key::KpReturn)),
+                    KeyBoardKey::KpMinus => send(&EventType::KeyPress(Key::KpMinus)),
+                    KeyBoardKey::KpPlus => send(&EventType::KeyPress(Key::KpPlus)),
+                    KeyBoardKey::KpMultiply => send(&EventType::KeyPress(Key::KpMultiply)),
+                    KeyBoardKey::KpDivide => send(&EventType::KeyPress(Key::KpDivide)),
+                    KeyBoardKey::Kp0 => send(&EventType::KeyPress(Key::Kp0)),
+                    KeyBoardKey::Kp1 => send(&EventType::KeyPress(Key::Kp1)),
+                    KeyBoardKey::Kp2 => send(&EventType::KeyPress(Key::Kp2)),
+                    KeyBoardKey::Kp3 => send(&EventType::KeyPress(Key::Kp3)),
+                    KeyBoardKey::Kp4 => send(&EventType::KeyPress(Key::Kp4)),
+                    KeyBoardKey::Kp5 => send(&EventType::KeyPress(Key::Kp5)),
+                    KeyBoardKey::Kp6 => send(&EventType::KeyPress(Key::Kp6)),
+                    KeyBoardKey::Kp7 => send(&EventType::KeyPress(Key::Kp7)),
+                    KeyBoardKey::Kp8 => send(&EventType::KeyPress(Key::Kp8)),
+                    KeyBoardKey::Kp9 => send(&EventType::KeyPress(Key::Kp9)),
+                    KeyBoardKey::KpDelete => send(&EventType::KeyPress(Key::KpDelete)),
+                    KeyBoardKey::Function => send(&EventType::KeyPress(Key::Function)),
+                    KeyBoardKey::Unknown(k) => send(&EventType::KeyPress(Key::Unknown(*k as u32))),
+                },
+                KeyBoardEvent::Release(key) => match key {
+                    KeyBoardKey::Alt => send(&EventType::KeyRelease(Key::Alt)),
+                    KeyBoardKey::AltGr => send(&EventType::KeyRelease(Key::AltGr)),
+                    KeyBoardKey::Backspace => send(&EventType::KeyRelease(Key::Backspace)),
+                    KeyBoardKey::CapsLock => send(&EventType::KeyRelease(Key::CapsLock)),
+                    KeyBoardKey::ControlLeft => send(&EventType::KeyRelease(Key::ControlLeft)),
+                    KeyBoardKey::ControlRight => send(&EventType::KeyRelease(Key::ControlRight)),
+                    KeyBoardKey::Delete => send(&EventType::KeyRelease(Key::Delete)),
+                    KeyBoardKey::DownArrow => send(&EventType::KeyRelease(Key::DownArrow)),
+                    KeyBoardKey::End => send(&EventType::KeyRelease(Key::End)),
+                    KeyBoardKey::Escape => send(&EventType::KeyRelease(Key::Escape)),
+                    KeyBoardKey::F1 => send(&EventType::KeyRelease(Key::F1)),
+                    KeyBoardKey::F10 => send(&EventType::KeyRelease(Key::F10)),
+                    KeyBoardKey::F11 => send(&EventType::KeyRelease(Key::F11)),
+                    KeyBoardKey::F12 => send(&EventType::KeyRelease(Key::F12)),
+                    KeyBoardKey::F2 => send(&EventType::KeyRelease(Key::F2)),
+                    KeyBoardKey::F3 => send(&EventType::KeyRelease(Key::F3)),
+                    KeyBoardKey::F4 => send(&EventType::KeyRelease(Key::F4)),
+                    KeyBoardKey::F5 => send(&EventType::KeyRelease(Key::F5)),
+                    KeyBoardKey::F6 => send(&EventType::KeyRelease(Key::F6)),
+                    KeyBoardKey::F7 => send(&EventType::KeyRelease(Key::F7)),
+                    KeyBoardKey::F8 => send(&EventType::KeyRelease(Key::F8)),
+                    KeyBoardKey::F9 => send(&EventType::KeyRelease(Key::F9)),
+                    KeyBoardKey::Home => send(&EventType::KeyRelease(Key::Home)),
+                    KeyBoardKey::LeftArrow => send(&EventType::KeyRelease(Key::LeftArrow)),
+                    KeyBoardKey::MetaLeft => send(&EventType::KeyRelease(Key::MetaLeft)),
+                    KeyBoardKey::MetaRight => send(&EventType::KeyRelease(Key::MetaRight)),
+                    KeyBoardKey::PageDown => send(&EventType::KeyRelease(Key::PageDown)),
+                    KeyBoardKey::PageUp => send(&EventType::KeyRelease(Key::PageUp)),
+                    KeyBoardKey::Return => send(&EventType::KeyRelease(Key::Return)),
+                    KeyBoardKey::RightArrow => send(&EventType::KeyRelease(Key::RightArrow)),
+                    KeyBoardKey::ShiftLeft => send(&EventType::KeyRelease(Key::ShiftLeft)),
+                    KeyBoardKey::ShiftRight => send(&EventType::KeyRelease(Key::ShiftRight)),
+                    KeyBoardKey::Space => send(&EventType::KeyRelease(Key::Space)),
+                    KeyBoardKey::Tab => send(&EventType::KeyRelease(Key::Tab)),
+                    KeyBoardKey::UpArrow => send(&EventType::KeyRelease(Key::UpArrow)),
+                    KeyBoardKey::PrintScreen => send(&EventType::KeyRelease(Key::PrintScreen)),
+                    KeyBoardKey::ScrollLock => send(&EventType::KeyRelease(Key::ScrollLock)),
+                    KeyBoardKey::Pause => send(&EventType::KeyRelease(Key::Pause)),
+                    KeyBoardKey::NumLock => send(&EventType::KeyRelease(Key::NumLock)),
+                    KeyBoardKey::BackQuote => send(&EventType::KeyRelease(Key::BackQuote)),
+                    KeyBoardKey::Num1 => send(&EventType::KeyRelease(Key::Num1)),
+                    KeyBoardKey::Num2 => send(&EventType::KeyRelease(Key::Num2)),
+                    KeyBoardKey::Num3 => send(&EventType::KeyRelease(Key::Num3)),
+                    KeyBoardKey::Num4 => send(&EventType::KeyRelease(Key::Num4)),
+                    KeyBoardKey::Num5 => send(&EventType::KeyRelease(Key::Num5)),
+                    KeyBoardKey::Num6 => send(&EventType::KeyRelease(Key::Num6)),
+                    KeyBoardKey::Num7 => send(&EventType::KeyRelease(Key::Num7)),
+                    KeyBoardKey::Num8 => send(&EventType::KeyRelease(Key::Num8)),
+                    KeyBoardKey::Num9 => send(&EventType::KeyRelease(Key::Num9)),
+                    KeyBoardKey::Num0 => send(&EventType::KeyRelease(Key::Num0)),
+                    KeyBoardKey::Minus => send(&EventType::KeyRelease(Key::Minus)),
+                    KeyBoardKey::Equal => send(&EventType::KeyRelease(Key::Equal)),
+                    KeyBoardKey::KeyQ => send(&EventType::KeyRelease(Key::KeyQ)),
+                    KeyBoardKey::KeyW => send(&EventType::KeyRelease(Key::KeyW)),
+                    KeyBoardKey::KeyE => send(&EventType::KeyRelease(Key::KeyE)),
+                    KeyBoardKey::KeyR => send(&EventType::KeyRelease(Key::KeyR)),
+                    KeyBoardKey::KeyT => send(&EventType::KeyRelease(Key::KeyT)),
+                    KeyBoardKey::KeyY => send(&EventType::KeyRelease(Key::KeyY)),
+                    KeyBoardKey::KeyU => send(&EventType::KeyRelease(Key::KeyU)),
+                    KeyBoardKey::KeyI => send(&EventType::KeyRelease(Key::KeyI)),
+                    KeyBoardKey::KeyO => send(&EventType::KeyRelease(Key::KeyO)),
+                    KeyBoardKey::KeyP => send(&EventType::KeyRelease(Key::KeyP)),
+                    KeyBoardKey::LeftBracket => send(&EventType::KeyRelease(Key::LeftBracket)),
+                    KeyBoardKey::RightBracket => send(&EventType::KeyRelease(Key::RightBracket)),
+                    KeyBoardKey::KeyA => send(&EventType::KeyRelease(Key::KeyA)),
+                    KeyBoardKey::KeyS => send(&EventType::KeyRelease(Key::KeyS)),
+                    KeyBoardKey::KeyD => send(&EventType::KeyRelease(Key::KeyD)),
+                    KeyBoardKey::KeyF => send(&EventType::KeyRelease(Key::KeyF)),
+                    KeyBoardKey::KeyG => send(&EventType::KeyRelease(Key::KeyG)),
+                    KeyBoardKey::KeyH => send(&EventType::KeyRelease(Key::KeyH)),
+                    KeyBoardKey::KeyJ => send(&EventType::KeyRelease(Key::KeyJ)),
+                    KeyBoardKey::KeyK => send(&EventType::KeyRelease(Key::KeyK)),
+                    KeyBoardKey::KeyL => send(&EventType::KeyRelease(Key::KeyL)),
+                    KeyBoardKey::SemiColon => send(&EventType::KeyRelease(Key::SemiColon)),
+                    KeyBoardKey::Quote => send(&EventType::KeyRelease(Key::Quote)),
+                    KeyBoardKey::BackSlash => send(&EventType::KeyRelease(Key::BackSlash)),
+                    KeyBoardKey::IntlBackslash => send(&EventType::KeyRelease(Key::IntlBackslash)),
+                    KeyBoardKey::KeyZ => send(&EventType::KeyRelease(Key::KeyZ)),
+                    KeyBoardKey::KeyX => send(&EventType::KeyRelease(Key::KeyX)),
+                    KeyBoardKey::KeyC => send(&EventType::KeyRelease(Key::KeyC)),
+                    KeyBoardKey::KeyV => send(&EventType::KeyRelease(Key::KeyV)),
+                    KeyBoardKey::KeyB => send(&EventType::KeyRelease(Key::KeyB)),
+                    KeyBoardKey::KeyN => send(&EventType::KeyRelease(Key::KeyN)),
+                    KeyBoardKey::KeyM => send(&EventType::KeyRelease(Key::KeyM)),
+                    KeyBoardKey::Comma => send(&EventType::KeyRelease(Key::Comma)),
+                    KeyBoardKey::Dot => send(&EventType::KeyRelease(Key::Dot)),
+                    KeyBoardKey::Slash => send(&EventType::KeyRelease(Key::Slash)),
+                    KeyBoardKey::Insert => send(&EventType::KeyRelease(Key::Insert)),
+                    KeyBoardKey::KpReturn => send(&EventType::KeyRelease(Key::KpReturn)),
+                    KeyBoardKey::KpMinus => send(&EventType::KeyRelease(Key::KpMinus)),
+                    KeyBoardKey::KpPlus => send(&EventType::KeyRelease(Key::KpPlus)),
+                    KeyBoardKey::KpMultiply => send(&EventType::KeyRelease(Key::KpMultiply)),
+                    KeyBoardKey::KpDivide => send(&EventType::KeyRelease(Key::KpDivide)),
+                    KeyBoardKey::Kp0 => send(&EventType::KeyRelease(Key::Kp0)),
+                    KeyBoardKey::Kp1 => send(&EventType::KeyRelease(Key::Kp1)),
+                    KeyBoardKey::Kp2 => send(&EventType::KeyRelease(Key::Kp2)),
+                    KeyBoardKey::Kp3 => send(&EventType::KeyRelease(Key::Kp3)),
+                    KeyBoardKey::Kp4 => send(&EventType::KeyRelease(Key::Kp4)),
+                    KeyBoardKey::Kp5 => send(&EventType::KeyRelease(Key::Kp5)),
+                    KeyBoardKey::Kp6 => send(&EventType::KeyRelease(Key::Kp6)),
+                    KeyBoardKey::Kp7 => send(&EventType::KeyRelease(Key::Kp7)),
+                    KeyBoardKey::Kp8 => send(&EventType::KeyRelease(Key::Kp8)),
+                    KeyBoardKey::Kp9 => send(&EventType::KeyRelease(Key::Kp9)),
+                    KeyBoardKey::KpDelete => send(&EventType::KeyRelease(Key::KpDelete)),
+                    KeyBoardKey::Function => send(&EventType::KeyRelease(Key::Function)),
+                    KeyBoardKey::Unknown(k) => {
+                        send(&EventType::KeyRelease(Key::Unknown(*k as u32)))
+                    }
+                },
+            },
+            DeviceEvent::MouseEvent(event) => match event {
+                MouseEvent::Press(k) => match k {
+                    MouseKey::Left => send(&EventType::ButtonPress(Button::Left)),
+                    MouseKey::Right => send(&EventType::ButtonPress(Button::Right)),
+                    MouseKey::Middle => send(&EventType::ButtonPress(Button::Middle)),
+                    MouseKey::Unknown(k) => {
+                        send(&EventType::ButtonPress(Button::Unknown(*k as u8)))
+                    }
+                },
+                MouseEvent::Rlease(k) => match k {
+                    MouseKey::Left => send(&EventType::ButtonRelease(Button::Left)),
+                    MouseKey::Right => send(&EventType::ButtonRelease(Button::Right)),
+                    MouseKey::Middle => send(&EventType::ButtonRelease(Button::Middle)),
+                    MouseKey::Unknown(k) => {
+                        send(&EventType::ButtonRelease(Button::Unknown(*k as u8)))
+                    }
+                },
+                MouseEvent::Move(m) => send(&EventType::MouseMove { x: m.x, y: m.y }),
+                MouseEvent::Wheel(w) => match w {
+                    MouseWheel::Up => send(&EventType::Wheel {
+                        delta_x: 0,
+                        delta_y: 1,
+                    }),
+                    MouseWheel::Down => send(&EventType::Wheel {
+                        delta_x: 0,
+                        delta_y: -1,
+                    }),
+                },
+            },
+        }
     }
 }

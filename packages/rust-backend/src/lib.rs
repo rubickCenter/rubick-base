@@ -26,7 +26,7 @@ fn capture_base64_start(mut cx: FunctionContext) -> JsResult<JsString> {
 // 压缩
 fn lzma_compress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
-    let topath = cx.argument::<JsString>(0)?.value(&mut cx);
+    let topath = cx.argument::<JsString>(1)?.value(&mut cx);
     let channel = cx.channel();
     thread::spawn(move || {
         dataprocess::lzma_compress(frompath.as_str(), topath.as_str())
@@ -39,7 +39,7 @@ fn lzma_compress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
 // 解压
 fn lzma_decompress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
-    let topath = cx.argument::<JsString>(0)?.value(&mut cx);
+    let topath = cx.argument::<JsString>(1)?.value(&mut cx);
     let channel = cx.channel();
     thread::spawn(move || {
         dataprocess::lzma_decompress(frompath.as_str(), topath.as_str())
@@ -98,9 +98,37 @@ fn find_apps_start(mut cx: FunctionContext) -> JsResult<JsString> {
     Ok(apps)
 }
 
+// 模拟输入
+fn send_event_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let device = cx.argument::<JsString>(0)?.value(&mut cx);
+    let action = cx.argument::<JsString>(1)?.value(&mut cx);
+    let info = cx.argument::<JsValue>(2)?;
+    let send_info = if let Ok(button) = info.downcast::<JsString, CallContext<JsObject>>(&mut cx) {
+        ioio::Info::Button(button.value(&mut cx))
+    } else {
+        if let Ok(unknow_button) = info.downcast::<JsNumber, CallContext<JsObject>>(&mut cx) {
+            ioio::Info::UnknownButton(unknow_button.value(&mut cx))
+        } else {
+            let position: Handle<JsObject> = info.downcast_or_throw(&mut cx).unwrap();
+            let x = position
+                .get(&mut cx, "x")?
+                .downcast_or_throw::<JsNumber, CallContext<JsObject>>(&mut cx)?
+                .value(&mut cx);
+            let y = position
+                .get(&mut cx, "y")?
+                .downcast_or_throw::<JsNumber, CallContext<JsObject>>(&mut cx)?
+                .value(&mut cx);
+            ioio::Info::Position { x, y }
+        }
+    };
+    ioio::send(device.as_str(), action.as_str(), &send_info);
+    Ok(cx.undefined())
+}
+
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     // async task
+    cx.export_function("send_event_start", send_event_start)?;
     cx.export_function("find_apps_start", find_apps_start)?;
     cx.export_function("screen_color_picker_start", screen_color_picker_start)?;
     cx.export_function("capture_base64_start", capture_base64_start)?;

@@ -138,6 +138,29 @@ rubickWorker.start()
 
 </details>
 
+### 设备输入事件模拟
+
+模拟鼠标键盘输入事件非常简单，只要调用 `sendEvent` 即可
+
+由于 rubickbase 是用 TypeScript 书写，所以不用查阅鼠标键盘事件或按键的名称来书写 Event, 编辑器会自动提示你
+
+```js
+// 这里将会模拟按下 F1 键
+api.sendEvent({
+        device: "KeyBoard",
+        action: "Press",
+        info: "F1"
+})
+
+// 这里将会模拟按下 F1 键
+api.sendEvent({
+        device: "Mouse",
+        action: "Press",
+        info: "Middle"
+})
+```
+
+
 ### 设备输入事件侦听
 
 通过 `setEventChannel` API 创建目标事件频道, 获取对应事件的订阅器
@@ -258,6 +281,8 @@ const newImg = img.resize(100, 100, 1)
 </details>
 
 ### 功能一览
+
+rubickbase 还有以下功能:
 
 1.  lzma 压缩  
     compress: (fromPath: string, toPath: string) => Promise< undefined >

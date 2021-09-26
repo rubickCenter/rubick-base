@@ -42,7 +42,7 @@
 			}
 		},
 		"hooks": {
-			"before:git:commit": "pnpx gitmoji-changelog --group-similar-commits && pnpm pretty:all"
+			"before:git:commit": "pnpm pretty:all"
 		}
 	}
 }

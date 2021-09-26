@@ -2,6 +2,8 @@ on:
     push:
         tags:
             - '*'
+        branches:
+            - master
 
 name: Release
 
@@ -28,6 +30,20 @@ jobs:
               with:
                   version: 6.14.7
                   run_install: true
+
+            - name: Changelog
+              if: matrix.platform == 'ubuntu-latest'
+              run: npx gitmoji-changelog --group-similar-commits
+
+            - name: Release
+              if: matrix.platform == 'ubuntu-latest'
+              uses: taiki-e/create-gh-release-action@v1
+              with:
+                  changelog: CHANGELOG.md
+                  title: $version
+                  draft: true
+              env:
+                  GITHUB_TOKEN: ${{ secrets.github_token }}
 
             # rust
             - uses: Swatinem/rust-cache@v1
@@ -60,17 +76,6 @@ jobs:
               run: |
                   rustup component add rust-src --toolchain nightly-x86_64-apple-darwin
                   rustup component add rustfmt --toolchain nightly-x86_64-apple-darwin
-
-            # changelog
-            - name: Release
-              if: matrix.platform == 'ubuntu-latest'
-              uses: taiki-e/create-gh-release-action@v1
-              with:
-                  changelog: CHANGELOG.md
-                  title: $version
-                  draft: true
-              env:
-                  GITHUB_TOKEN: ${{ secrets.github_token }}
 
             # release
             - name: Release npm pkg

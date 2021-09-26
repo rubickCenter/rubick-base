@@ -6,7 +6,7 @@ import { loadPackageDefinition } from '@grpc/grpc-js'
 import { fromJSON } from '@grpc/proto-loader'
 import { INamespace } from 'protobufjs'
 import fs from 'fs-extra'
-import { eventEqual, rgbToHex } from './utils'
+import { eventEqual, rgbToHex, tryPort } from './utils'
 import { defaultLogger } from './logger'
 import { deviceEventEmitter, EventCallback, EventChannelMap } from './event'
 import { newImageFromBase64, Image } from './image'
@@ -15,7 +15,7 @@ import { RubickWorker } from './worker'
 export class RubickBase {
 	private server!: Mali<any>
 	private rustBackend!: RustBackendAPI
-	private port: string
+	private port: number
 	private tmpdir: string
 	private eventChannels: EventChannelMap
 	private cursorPosition: Position = { x: 1, y: 1 }
@@ -26,7 +26,7 @@ export class RubickBase {
 	constructor(settings: RubickBaseSettings) {
 		const { port, logger, tmpdir, workerBoot, ioEventCallback } = settings
 		// settings
-		this.port = port?.toString() || '50068'
+		this.port = port || 50068
 		this.logger = logger || defaultLogger
 		this.tmpdir = tmpdir || os.tmpdir()
 		this.eventChannels = new EventChannelMap(this.logger)
@@ -36,6 +36,8 @@ export class RubickBase {
 
 	// ******************************* life cycle *******************************
 	async start() {
+		this.port = await tryPort(this.port)
+
 		// start buitin service
 		this.rustBackend = await newRustBackend()
 		this.server = new Mali(await this.loadProto(), 'Rubick')

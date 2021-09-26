@@ -1,5 +1,6 @@
 import { defaultLogger } from './logger'
 import { DeviceEvent, Position } from './types'
+import { createServer } from 'net'
 
 // MIT LICENSE https://github.com/sindresorhus/rgb-hex
 const rgbToHex = (red: number, green: number, blue: number, alpha?: number) => {
@@ -31,4 +32,25 @@ const eventEqual = (deviceEvent: DeviceEvent, bindEvent: DeviceEvent) =>
 	(bindEvent.action ? deviceEvent.action === bindEvent.action : true) &&
 	(bindEvent.info ? infoEqual(deviceEvent.info, bindEvent.info) : true)
 
-export { rgbToHex, eventEqual }
+const tryPort = (port: number): Promise<number> => {
+	class ApiError extends Error {
+		code: string | undefined
+	}
+	const server = createServer().listen(port)
+	return new Promise((resolve, reject) => {
+		server.on('listening', () => {
+			server.close()
+			resolve(port)
+		})
+		server.on('error', (err) => {
+			if ((err as ApiError).code === 'EADDRINUSE') {
+				resolve(tryPort(port + 1)) //如占用端口号+1
+				console.warn(`The port ${port} is occupied try another.`)
+			} else {
+				reject(err)
+			}
+		})
+	})
+}
+
+export { rgbToHex, eventEqual, tryPort }

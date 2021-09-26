@@ -25,7 +25,10 @@ export interface RustBackendAPI {
 }
 
 async function newRustBackend(): Promise<RustBackendAPI> {
-	const rustBackend = await import(`rubick_backend-${process.platform}`)
+	let rustBackend = await import(`rubick_backend-${process.platform}`)
+	if (!!rustBackend.default) {
+		rustBackend = rustBackend.default
+	}
 	return {
 		ioioStart: async (port: string) => {
 			return await rustBackend.ioio_start(port)

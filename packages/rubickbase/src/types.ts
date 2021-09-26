@@ -159,7 +159,7 @@ export interface Position {
 
 export interface RubickBaseSettings {
 	// grpc server port
-	port?: string | number
+	port?: number
 	// custom logger
 	logger?: Logger
 	// tmpdir for file storage
@@ -174,7 +174,7 @@ export type Workers = 'ioio'
 
 export interface WorkerSettings {
 	// grpc server port
-	port?: string | number
+	port?: number
 	// custom logger
 	logger?: Logger
 }

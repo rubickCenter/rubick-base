@@ -5,11 +5,11 @@ import { Logger, WorkerSettings, Workers } from './types'
 export class RubickWorker {
 	rustBackend!: RustBackendAPI
 	logger: Logger
-	port: string
+	port: number
 	started: boolean
 	constructor(workerSettings: WorkerSettings) {
 		const { port, logger } = workerSettings
-		this.port = port?.toString() || '50068'
+		this.port = port || 50068
 		this.logger = logger || defaultLogger
 		this.started = false
 	}
@@ -30,11 +30,11 @@ export class RubickWorker {
 		if (workerName) {
 			switch (workerName) {
 				case 'ioio':
-					this.log(await this.rustBackend?.ioioStart(this.port), 'ioio')
+					this.log(await this.rustBackend?.ioioStart(this.port.toString()), 'ioio')
 					break
 			}
 		} else {
-			this.log(await this.rustBackend?.ioioStart(this.port), 'ioio')
+			this.log(await this.rustBackend?.ioioStart(this.port.toString()), 'ioio')
 		}
 	}
 }

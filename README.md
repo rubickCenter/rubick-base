@@ -347,3 +347,4 @@ const newImg = img.resize(100, 100, 1)
 -   [ ] 使用 consola 作为日志器
 -   [ ] 对每个 API 进行测试
 -   [ ] worker 关闭
+-   [ ] 拓展更多图像算法操作

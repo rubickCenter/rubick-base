@@ -1,11 +1,20 @@
 # Changelog
 
-<a name="0.10.3-0"></a>
-## 0.10.3-0 (2021-09-26)
+<a name="0.11.0"></a>
+## 0.11.0 (2021-09-26)
+
+### Added
+
+- ✨ simulation and consola [[0fe01b8](https://github.com/SOVLOOKUP/rubickbase/commit/0fe01b8b6777c76b2f5f5d66b2ad57c2b66925ce)]
 
 ### Fixed
 
 - 🐛 fix start in getAPI bug [[28156ff](https://github.com/SOVLOOKUP/rubickbase/commit/28156ff708dc337e5c98c7339b47c328fc606d1d)]
+
+### Miscellaneous
+
+-  Update README.md [[d0485b4](https://github.com/SOVLOOKUP/rubickbase/commit/d0485b499e387f87212d524643e23f805ff5e109)]
+-  Release 0.10.3-0 [[26b55ef](https://github.com/SOVLOOKUP/rubickbase/commit/26b55ef60ed2cd233742bd0c88bdbe631033bd6c)]
 
 
 <a name="0.10.2"></a>

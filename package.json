@@ -1,6 +1,6 @@
 {
 	"name": "rubickbase",
-	"version": "0.10.3-0",
+	"version": "0.11.0",
 	"description": "Expand native capabilities for nodejs and electron based on rust",
 	"author": "sovlookup <gonorth@qq.com>",
 	"scripts": {

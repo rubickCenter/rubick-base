@@ -12,6 +12,8 @@ if (fs.existsSync(dist)) {
 await fs.mkdirp(dist)
 await fs.copy('index.node', `${dist}/index.node`)
 await fs.copy('index.d.ts', `${dist}/index.d.ts`)
+await fs.copy('index.js', `${dist}/index.js`)
+await fs.copy('index.js', `${dist}/README.md`)
 
 packagejson['name'] = packagejson['name'] + `-${platform}`
 packagejson['os'] = [platform]

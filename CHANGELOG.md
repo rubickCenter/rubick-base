@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.11.2"></a>
+## 0.11.2 (2021-09-26)
+
+### Fixed
+
+- 🐛 fix scripts and rubickbackend index bug [[efe5011](https://github.com/SOVLOOKUP/rubickbase/commit/efe50119fbef6a9509aae418114b7de3a00e45fc)]
+
+
 <a name="0.11.1"></a>
 ## 0.11.1 (2021-09-26)
 

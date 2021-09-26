@@ -1,8 +1,10 @@
+简体中文 | [English](./README-EN.md)
+
 # rubickbase
 
 基于 Rust / WASM 提供截图、取色、键鼠事件监听模拟、压缩解压、图像处理、获取已安装应用等跨平台功能的现代异步 Nodejs 模块，占用空间小, 安装便捷, 使用简单, 高性能, 资源占用极小, 可取代 iohook 和 robotjs
 
-## Features
+## 功能
 
 -   [x] 键鼠事件监听钩子 mouse/keyboard event listen
 -   [x] 截图 screen capture
@@ -17,7 +19,7 @@
 -   [x] 键盘事件模拟 keyboard input event simulation
 -   [x] 鼠标事件模拟 mouse input event simulation
 
-## Install
+## 安装
 
 与 iohook 与 robotjs 不同, 你不需要针对不同版本进行繁琐的重新编译, 一切开箱即用
 
@@ -47,7 +49,7 @@ v13.x, **v14.x** ,v15.x ,16.x
 
 </details>
 
-## Getting start
+## 快速开始
 
 ### 引入依赖
 
@@ -333,7 +335,7 @@ rubickbase 还有以下功能:
 
     </details>
 
-## Contribute
+## 贡献与联系
 
 欢迎任何形式的贡献与开源协作！
 
@@ -350,26 +352,12 @@ rubickbase 还有以下功能:
 | Commit  | · `pnpm commit`  |
 | Release | · `pnpm release` |
 
-## LICENSE
+欢迎关注公众号，与我共同成长:
+
+![wechat](https://z3.ax1x.com/2021/09/26/4yRpN9.jpg)
+
+## 开源协议
 
 本项目为开源项目, 遵守 MPLv2 协议
 
 如需闭源形式的修改与商用, 请联系我获得授权
-
-## TODO
-
--   [x] 解决 jimp 依赖占用磁盘、CPU、内存的问题
--   [x] 抽离 utils 函数
--   [x] 解决 hex16 转换 bug
--   [x] 解决截图有黑屏的情况
--   [x] 使用 rust 进行屏幕取色 并防止超出边界
--   [x] 事件订阅模式 event emitter
--   [x] api 调用 async 模式
--   [x] 使用 base64 向 js 传输图片
--   [x] 完善 README 每个功能给个例子
--   [x] 完善文档
--   [x] 使用 consola 作为日志器
--   [ ] 更多图像操作
--   [ ] 压缩解压的回调函数
--   [ ] 对每个 API 进行测试
--   [ ] worker 关闭

@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="1.0.1"></a>
+## 1.0.1 (2021-09-26)
+
+### Miscellaneous
+
+-  Release 1.0.1 [[30e4488](https://github.com/SOVLOOKUP/rubickbase/commit/30e4488417674c14d355e61ebd7a2e67718798c2)]
+
+
 <a name="1.0.0"></a>
 ## 1.0.0 (2021-09-26)
 

@@ -152,7 +152,7 @@ api.sendEvent({
         info: "F1"
 })
 
-// 这里将会模拟按下 F1 键
+// 这里将会模拟按下鼠标中键
 api.sendEvent({
         device: "Mouse",
         action: "Press",

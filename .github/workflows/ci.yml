@@ -27,7 +27,7 @@ jobs:
 
             - uses: pnpm/action-setup@v2.0.1
               with:
-                  version: 6.14.7
+                  version: 6.15.1
                   run_install: true
 
             - name: Changelog

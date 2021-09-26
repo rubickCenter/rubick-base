@@ -1,4 +1,4 @@
-## RubickBase
+# rubickbase
 
 基于 Rust / WASM 提供截图、取色、键鼠事件监听模拟、压缩解压、图像处理等跨平台功能的现代异步 Nodejs 模块，占用空间小, 安装便捷, 使用简单, 高性能, 资源占用极小, 可取代 iohook 和 robotjs
 

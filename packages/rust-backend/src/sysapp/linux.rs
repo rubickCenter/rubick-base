@@ -25,7 +25,7 @@ fn get_appdirs() -> Vec<PathBuf> {
 }
 
 impl AppParser {
-    fn new_parser() -> AppParser {
+    fn new_parser() -> Self {
         // Get icon dirs, add "icons" (/usr/share/icons ecc...)
         let mut icon_dirs: Vec<String> = get_appdirs()
             .iter()

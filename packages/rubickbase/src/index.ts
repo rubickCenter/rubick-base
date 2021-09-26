@@ -154,7 +154,7 @@ export class RubickBase {
 	// ******************************* expose APIs *******************************
 	getAPI() {
 		if (!this.started) {
-			this.start()
+			;(async () => await this.start())()
 		}
 
 		/** get cursor position
@@ -314,13 +314,11 @@ export class RubickBase {
 			)
 
 		return {
-			// use whenever you want
 			getInstalledApps,
 			screenCapture,
 			screenCaptureAroundPosition,
 			compress,
 			decompress,
-			// must use after `ioio` worker start
 			getCursorPosition,
 			getCursorPositionPixelColor,
 			setEventChannel,

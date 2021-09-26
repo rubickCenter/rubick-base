@@ -42,8 +42,7 @@
 			}
 		},
 		"hooks": {
-			"after:bump": "pnpx gitmoji-changelog --group-similar-commits",
-			"before:git:commit": "pnpm pretty:all"
+			"before:git:commit": "pnpx gitmoji-changelog --group-similar-commits && pnpm pretty:all"
 		}
 	}
 }

@@ -4,18 +4,18 @@
 
 ## Features
 
--   [x] 键鼠事件监听钩子 mouse/keyboard event listen
--   [x] 截图 screen capture
--   [x] 图片取色 pixel color picker
--   [x] 获取鼠标位置 get cursor position
--   [x] 获取鼠标像素颜色 pick color at cursor position
--   [x] lzma2 压缩解压 lzma2 (de)compress
--   [x] 注册快捷键事件 register global hotkey
--   [x] 截图获取某位置周围图像 capture the screen around cursor
--   [x] 获取已安装的应用列表(linux✅/macos✅/windows✅) get installed app list
--   [x] 获取已安装应用的详细信息(linux✅) get installed app detail info
--   [x] 键盘事件模拟 keyboard input event simulation
--   [x] 鼠标事件模拟 mouse input event simulation
+-   [x] Mouse/keyboard event listen
+-   [x] Screen capture
+-   [x] Pixel color picker
+-   [x] Get cursor position
+-   [x] Pick color at cursor position
+-   [x] Lzma2 (de)compress
+-   [x] Register global hotkey
+-   [x] Capture the screen around cursor
+-   [x] Get installed app list (linux✅/macos✅/windows✅) 
+-   [x] Get installed app detail info (linux✅) 
+-   [x] Keyboard input event simulation
+-   [x] Mouse input event simulation
 
 ## Install
 
@@ -352,7 +352,4 @@ rubickbase 还有以下功能:
 
 ## LICENSE
 
-本项目为开源项目, 遵守 MPLv2 协议
-
-如需闭源形式的修改与商用, 请联系我获得授权
-
+MPLv2

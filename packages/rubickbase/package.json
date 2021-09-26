@@ -32,8 +32,12 @@
 		}
 	},
 	"scripts": {
-		"postinstall": "node scripts/postinstall.js",
 		"prepack": "bob-esbuild build --clean"
+	},
+	"optionalDependencies": {
+		"rubick_backend-darwin": "*",
+		"rubick_backend-linux": "*",
+		"rubick_backend-win32": "*"
 	},
 	"dependencies": {
 		"@grpc/grpc-js": "^1.3.7",
@@ -47,7 +51,6 @@
 		"protobufjs": "^6.11.2"
 	},
 	"files": [
-		"dist",
-		"scripts"
+		"dist"
 	]
 }

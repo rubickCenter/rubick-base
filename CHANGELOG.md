@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.11.1"></a>
+## 0.11.1 (2021-09-26)
+
+### Changed
+
+- 🚸 improve install [[3543c3d](https://github.com/SOVLOOKUP/rubickbase/commit/3543c3d049de81e82a582a23080bdd838067adcb)]
+
+
 <a name="0.11.0"></a>
 ## 0.11.0 (2021-09-26)
 

@@ -1,6 +1,6 @@
 {
 	"name": "rubick_backend",
-	"version": "0.11.0",
+	"version": "0.11.1",
 	"description": "Native Node.js modules that listen/send simulated events to devices",
 	"main": "index.js",
 	"homepage": "https://github.com/SOVLOOKUP/rubickbase",

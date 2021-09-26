@@ -6,18 +6,18 @@
 
 ## 功能
 
--   [x] 键鼠事件监听钩子 mouse/keyboard event listen
--   [x] 截图 screen capture
--   [x] 图片取色 pixel color picker
--   [x] 获取鼠标位置 get cursor position
--   [x] 获取鼠标像素颜色 pick color at cursor position
--   [x] lzma2 压缩解压 lzma2 (de)compress
--   [x] 注册快捷键事件 register global hotkey
--   [x] 截图获取某位置周围图像 capture the screen around cursor
--   [x] 获取已安装的应用列表(linux✅/macos✅/windows✅) get installed app list
--   [x] 获取已安装应用的详细信息(linux✅) get installed app detail info
--   [x] 键盘事件模拟 keyboard input event simulation
--   [x] 鼠标事件模拟 mouse input event simulation
+-   [x] 键鼠事件监听钩子
+-   [x] 截图
+-   [x] 图片取色
+-   [x] 获取鼠标位置
+-   [x] 获取鼠标像素颜色
+-   [x] lzma2 压缩解压
+-   [x] 注册快捷键事件
+-   [x] 截图获取某位置周围图像
+-   [x] 获取已安装的应用列表(linux✅/macos✅/windows✅)
+-   [x] 获取已安装应用的详细信息(linux✅)
+-   [x] 键盘事件模拟
+-   [x] 鼠标事件模拟
 
 ## 安装
 

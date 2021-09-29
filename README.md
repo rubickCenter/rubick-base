@@ -376,7 +376,7 @@ rubickbase 还有以下功能:
 | Commit  | · `pnpm commit`  |
 | Release | · `pnpm release` |
 
-欢迎关注公众号，与我共同成长:
+欢迎关注公众号，与我们共同成长:
 
 ![wechat](https://z3.ax1x.com/2021/09/26/4yRpN9.jpg)
 

@@ -5,7 +5,7 @@ const rubickBase = newRubickBase()
 async function main() {
 	// start rubickbase
 	await rubickBase.start()
-	const api = rubickBase.getAPI()
+	const api = await rubickBase.getAPI()
 
 	// screen capture
 	await api.screenCapture()

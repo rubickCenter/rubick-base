@@ -177,10 +177,8 @@ export class RubickBase {
 	}
 
 	// ******************************* expose APIs *******************************
-	getAPI() {
-		if (!this.started) {
-			;(async () => await this.start())()
-		}
+	async getAPI() {
+		if (!this.started) await this.start()
 
 		/** get cursor position
 		 *

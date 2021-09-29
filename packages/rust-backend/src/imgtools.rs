@@ -2,7 +2,7 @@ extern crate scrap;
 
 use base64::encode;
 use image::DynamicImage;
-use image::{imageops, GenericImageView, ImageBuffer, ImageError, Rgb, Rgba};
+use image::{imageops, ImageBuffer, ImageError, Rgb};
 use scrap::{Capturer, Display};
 use std::io::ErrorKind::WouldBlock;
 extern crate image;
@@ -86,11 +86,11 @@ fn screen_capture_rect_raw(
 }
 
 // capture primary screen
-#[allow(dead_code)]
-pub fn screen_capture(path: String) -> Result<(), ImageError> {
-    screen_capture_raw().save_with_format(&path, image::ImageFormat::Png)?;
-    Ok(())
-}
+// #[allow(dead_code)]
+// pub fn screen_capture(path: String) -> Result<(), ImageError> {
+//     screen_capture_raw().save_with_format(&path, image::ImageFormat::Png)?;
+//     Ok(())
+// }
 
 #[allow(dead_code)]
 pub fn screen_capture_base64() -> Result<String, ImageError> {
@@ -100,18 +100,18 @@ pub fn screen_capture_base64() -> Result<String, ImageError> {
     Ok(encode(&buf))
 }
 
-#[allow(dead_code)]
-pub fn screen_capture_rect(
-    x: u32,
-    y: u32,
-    width: u32,
-    height: u32,
-    path: String,
-) -> Result<(), ImageError> {
-    screen_capture_rect_raw(x, y, width, height)?
-        .save_with_format(path, image::ImageFormat::Png)?;
-    Ok(())
-}
+// #[allow(dead_code)]
+// pub fn screen_capture_rect(
+//     x: u32,
+//     y: u32,
+//     width: u32,
+//     height: u32,
+//     path: String,
+// ) -> Result<(), ImageError> {
+//     screen_capture_rect_raw(x, y, width, height)?
+//         .save_with_format(path, image::ImageFormat::Png)?;
+//     Ok(())
+// }
 
 #[allow(dead_code)]
 pub fn screen_capture_rect_base64(
@@ -127,17 +127,17 @@ pub fn screen_capture_rect_base64(
 }
 
 // pick color from picture
-#[allow(dead_code)]
-pub fn color_picker(path: String, x: u32, y: u32) -> Result<Rgba<u8>, ImageError> {
-    let img = image::io::Reader::open(path)?
-        .with_guessed_format()?
-        .decode()?;
+// #[allow(dead_code)]
+// pub fn color_picker(path: String, x: u32, y: u32) -> Result<Rgba<u8>, ImageError> {
+//     let img = image::io::Reader::open(path)?
+//         .with_guessed_format()?
+//         .decode()?;
 
-    let x = valid_border(x, img.width());
-    let y = valid_border(y, img.height());
-    let px = img.get_pixel(x, y);
-    Ok(px)
-}
+//     let x = valid_border(x, img.width());
+//     let y = valid_border(y, img.height());
+//     let px = img.get_pixel(x, y);
+//     Ok(px)
+// }
 
 // pick color from primary screen
 #[allow(dead_code)]

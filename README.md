@@ -75,7 +75,7 @@ const rubickBase = newRubickBase()
 
 async function main() {
 	// start rubickbase and get APIs
-	const api = rubickBase.getAPI()
+	const api = await rubickBase.getAPI()
 	// cursor Position
 	let task = setInterval(async () => {
 		console.log(await api.getCursorPosition())

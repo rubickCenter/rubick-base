@@ -5,6 +5,8 @@
 ## Features
 
 -   [x] Mouse/keyboard event listen
+-   [x] Keyboard input event simulation
+-   [x] Mouse input event simulation
 -   [x] Screen capture
 -   [x] Pixel color picker
 -   [x] Get cursor position
@@ -12,10 +14,9 @@
 -   [x] Lzma2 (de)compress
 -   [x] Register global hotkey
 -   [x] Capture the screen around cursor
--   [x] Get installed app list (linux✅/macos✅/windows✅) 
--   [x] Get installed app detail info (linux✅) 
--   [x] Keyboard input event simulation
--   [x] Mouse input event simulation
+-   [x] Get installed app list (linux✅/macos✅/windows✅)
+-   [x] Get installed app detail info (linux✅)
+-   [x] Get system locale language
 
 ## Install
 
@@ -147,19 +148,18 @@ rubickWorker.start()
 ```js
 // 这里将会模拟按下 F1 键
 api.sendEvent({
-        device: "KeyBoard",
-        action: "Press",
-        info: "F1"
+	device: 'KeyBoard',
+	action: 'Press',
+	info: 'F1',
 })
 
 // 这里将会模拟按下鼠标中键
 api.sendEvent({
-        device: "Mouse",
-        action: "Press",
-        info: "Middle"
+	device: 'Mouse',
+	action: 'Press',
+	info: 'Middle',
 })
 ```
-
 
 ### 设备输入事件侦听
 

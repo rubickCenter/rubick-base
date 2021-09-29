@@ -1,5 +1,5 @@
 import { EventCallback } from './event'
-
+import { Image } from './image'
 export interface RGBA {
 	r: number
 	g: number
@@ -185,4 +185,21 @@ export interface Logger {
 	info: Function
 	success: Function
 	warn: Function
+}
+
+export interface BasicApi {
+	language: () => Promise<string | undefined>
+	sendEvent: (event: DeviceEvent) => Promise<undefined>
+	getInstalledApps: (
+		getDetailInfo?: boolean,
+		extraDirs?: string[] | undefined,
+	) => Promise<string | undefined>
+	screenCapture: () => Promise<Image | undefined>
+	screenCaptureAroundPosition: (
+		position: Position,
+		width: number,
+		height: number,
+	) => Promise<Image | undefined>
+	compress: (fromPath: string, toPath: string) => Promise<undefined>
+	decompress: (fromPath: string, toPath: string) => Promise<undefined>
 }

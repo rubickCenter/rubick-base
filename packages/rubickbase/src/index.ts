@@ -1,6 +1,14 @@
 import os from 'os'
 import Mali from 'mali'
-import { Logger, RubickBaseSettings, DeviceEvent, Position, Color, WorkerSettings } from './types'
+import {
+	Logger,
+	RubickBaseSettings,
+	DeviceEvent,
+	Position,
+	Color,
+	WorkerSettings,
+	BasicApi,
+} from './types'
 import newRustBackend, { RustBackendAPI } from './backend'
 import { loadPackageDefinition } from '@grpc/grpc-js'
 import { fromJSON } from '@grpc/proto-loader'
@@ -15,6 +23,7 @@ import { RubickWorker } from './worker'
 export class RubickBase {
 	private server!: Mali<any>
 	private rustBackend!: RustBackendAPI
+	private basicAPI!: BasicApi
 	private port: number
 	private tmpdir: string
 	private eventChannels: EventChannelMap
@@ -22,7 +31,6 @@ export class RubickBase {
 	private workerBoot: boolean
 	private ioEventCallback: EventCallback
 	private started: boolean = false
-	private basicAPI = {}
 	logger: Logger
 	constructor(settings: RubickBaseSettings) {
 		const { port, logger, tmpdir, workerBoot, ioEventCallback } = settings

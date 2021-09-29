@@ -31,6 +31,8 @@ declare namespace rubick_backend {
 		width: number,
 		height: number,
 	): Promise<string>
+	// get local language
+	function current_locale_language(): Promise<string>
 	// Deprecated
 	// function capture_start(path: string): Promise<undefined>
 	// function color_picker_start(

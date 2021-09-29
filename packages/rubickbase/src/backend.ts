@@ -13,6 +13,7 @@ export interface RustBackendAPI {
 	) => Promise<string>
 	getInstalledApps: (getDetailInfo: boolean, extraDirs?: Array<string>) => Promise<string>
 	sendEvent: (event: DeviceEvent) => Promise<undefined>
+	language: () => Promise<string>
 	// Deprecated
 	// capture: (path: string) => Promise<undefined>
 	// colorPicker: (path: string, position: Position) => Promise<RGBA>
@@ -65,6 +66,9 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 				throw new Error('Not valid event!')
 			}
 			return await rustBackend.send_event_start(event.device, event.action, event.info)
+		},
+		language: async () => {
+			return await rustBackend.current_locale_language()
 		},
 		// Deprecated
 		// capture: async (path: string) => {

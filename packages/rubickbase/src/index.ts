@@ -36,10 +36,14 @@ export class RubickBase {
 
 	// ******************************* life cycle *******************************
 	async start() {
+		if (this.started) {
+			this.logger.error('Rubickbase has already started!')
+			return
+		}
+
 		this.port = await tryPort(this.port)
 
 		// start buitin service
-		this.rustBackend = await newRustBackend()
 		this.server = new Mali(await this.loadProto(), 'Rubick')
 
 		this.server.use('ioio', async (ctx: any) => {
@@ -158,8 +162,14 @@ export class RubickBase {
 		return undefined
 	}
 
+	private getLanguageError() {
+		this.logger.error('Got an api get language error!')
+		return undefined
+	}
+
 	// ******************************* expose APIs *******************************
 	getAPI() {
+		const basicAPIs = this.getBasicAPI()
 		if (!this.started) {
 			;(async () => await this.start())()
 		}
@@ -187,61 +197,6 @@ export class RubickBase {
 					},
 				}
 			}, this.colorError)
-
-		/** capture primary screen
-		 *
-		 * @returns {Promise<Image | undefined>} image object
-		 */
-		const screenCapture = async (): Promise<Image | undefined> =>
-			await this.tryBackend(async () => {
-				const imgBase64 = await this.rustBackend.captureToBase64()
-				return newImageFromBase64(imgBase64)
-			}, this.imageError)
-
-		/** capture screen return the area around position
-		 *
-		 * @param position center of the image
-		 * @param width width
-		 * @param height height
-		 * @returns {Promise<Image | undefined>} image object
-		 */
-		const screenCaptureAroundPosition = async (
-			position: Position,
-			width: number,
-			height: number,
-		): Promise<Image | undefined> =>
-			await this.tryBackend(async () => {
-				const imgBase64 = await this.rustBackend.screenCaptureAroundPositionToBase64(
-					position,
-					width,
-					height,
-				)
-				return newImageFromBase64(imgBase64)
-			}, this.imageError)
-
-		/** lzma compress
-		 * @param fromPath from file
-		 * @param toPath to file
-		 */
-		const compress = async (fromPath: string, toPath: string) =>
-			await this.validAndTryBackend(
-				async () => await this.rustBackend.compress(fromPath, toPath),
-				this.lzmaError,
-				[],
-				[fromPath, toPath],
-			)
-
-		/** lzma decompress
-		 * @param fromPath from file
-		 * @param toPath to file
-		 */
-		const decompress = async (fromPath: string, toPath: string) =>
-			await this.validAndTryBackend(
-				async () => await this.rustBackend.decompress(fromPath, toPath),
-				this.lzmaError,
-				[],
-				[fromPath, toPath],
-			)
 
 		/** set a channel and get register
 		 *
@@ -304,6 +259,33 @@ export class RubickBase {
 			}
 		}
 
+		return {
+			...basicAPIs,
+			// ioio worker
+			getCursorPosition,
+			getCursorPositionPixelColor,
+			setEventChannel,
+			allEventChannels,
+			hasEventChannel,
+			delEventChannel,
+		}
+	}
+
+	// these apis can work without any workers
+	getBasicAPI() {
+		;(async () => (this.rustBackend = await newRustBackend()))()
+
+		/** input simulation
+		 *
+		 * @param event device event to send
+		 * @returns {Promise<undefined>}
+		 */
+		const sendEvent = async (event: DeviceEvent): Promise<undefined> =>
+			await this.tryBackend(
+				async () => await this.rustBackend.sendEvent(event),
+				this.simulationError,
+			)
+
 		/** get installed app or app detail info
 		 *
 		 * @param getDetailInfo get app detail info rather than app entry default false
@@ -320,30 +302,79 @@ export class RubickBase {
 				extraDirs,
 			)
 
-		/** input simulation
+		/** capture primary screen
 		 *
-		 * @param event device event to send
-		 * @returns {Promise<undefined>}
+		 * @returns {Promise<Image | undefined>} image object
 		 */
-		const sendEvent = async (event: DeviceEvent): Promise<undefined> =>
+		const screenCapture = async (): Promise<Image | undefined> =>
+			await this.tryBackend(async () => {
+				const imgBase64 = await this.rustBackend.captureToBase64()
+				return newImageFromBase64(imgBase64)
+			}, this.imageError)
+
+		/** capture screen return the area around position
+		 *
+		 * @param position center of the image
+		 * @param width width
+		 * @param height height
+		 * @returns {Promise<Image | undefined>} image object
+		 */
+		const screenCaptureAroundPosition = async (
+			position: Position,
+			width: number,
+			height: number,
+		): Promise<Image | undefined> =>
+			await this.tryBackend(async () => {
+				const imgBase64 = await this.rustBackend.screenCaptureAroundPositionToBase64(
+					position,
+					width,
+					height,
+				)
+				return newImageFromBase64(imgBase64)
+			}, this.imageError)
+
+		/** lzma compress
+		 * @param fromPath from file
+		 * @param toPath to file
+		 */
+		const compress = async (fromPath: string, toPath: string) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.compress(fromPath, toPath),
+				this.lzmaError,
+				[],
+				[fromPath, toPath],
+			)
+
+		/** lzma decompress
+		 * @param fromPath from file
+		 * @param toPath to file
+		 */
+		const decompress = async (fromPath: string, toPath: string) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.decompress(fromPath, toPath),
+				this.lzmaError,
+				[],
+				[fromPath, toPath],
+			)
+
+		/** get system locale language
+		 *
+		 * @returns system language
+		 */
+		const language = async () =>
 			await this.tryBackend(
-				async () => await this.rustBackend.sendEvent(event),
-				this.simulationError,
+				async () => await this.rustBackend.language(),
+				this.getLanguageError,
 			)
 
 		return {
+			language,
 			sendEvent,
 			getInstalledApps,
 			screenCapture,
 			screenCaptureAroundPosition,
 			compress,
 			decompress,
-			getCursorPosition,
-			getCursorPositionPixelColor,
-			setEventChannel,
-			allEventChannels,
-			hasEventChannel,
-			delEventChannel,
 		}
 	}
 }

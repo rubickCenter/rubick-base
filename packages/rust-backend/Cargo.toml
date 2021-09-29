@@ -35,6 +35,8 @@ rust-ini = "0.17.0"
 walkdir = "2.3.2"
 serde = { version = "1.0.130", features = ["derive"] }
 serde_json = "1.0.68"
+# lang
+sys-locale = "0.1.0"
 
 [build-dependencies]
 tonic-build = "0.5.2"

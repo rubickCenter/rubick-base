@@ -5,6 +5,7 @@ mod ioio;
 mod sysapp;
 use neon::prelude::*;
 use std::thread;
+use sys_locale::get_locale;
 
 // 开启键鼠事件侦测
 fn ioio_start(mut cx: FunctionContext) -> JsResult<JsBoolean> {
@@ -125,9 +126,15 @@ fn send_event_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     Ok(cx.undefined())
 }
 
+fn current_locale_language(mut cx: FunctionContext) -> JsResult<JsString> {
+    let current_locale = get_locale().unwrap_or_else(|| String::from("en-US"));
+    Ok(cx.string(current_locale))
+}
+
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     // async task
+    cx.export_function("current_locale_language", current_locale_language)?;
     cx.export_function("send_event_start", send_event_start)?;
     cx.export_function("find_apps_start", find_apps_start)?;
     cx.export_function("screen_color_picker_start", screen_color_picker_start)?;

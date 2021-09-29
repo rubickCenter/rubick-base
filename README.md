@@ -64,7 +64,7 @@ import { newRubickBase } from 'rubickbase'
 
 ### 基本使用
 
-在这个例子中，你通过 `newRubickbase` 获得了 rubickbase 服务实例，并通过 `start` 函数启动了服务，rubickbase 启动后会在后台进行服务侦听，你可以通过 `getAPI` 获取到 rubickbase 所有功能
+在这个例子中，你通过 `newRubickbase` 获得了 rubickbase 服务实例，你可以通过 `getAPI` 获取到 rubickbase 所有功能
 
 这里每隔一秒获取当前的鼠标位置，并且 10 秒后调用 `close` 将 rubickbase 服务关闭
 
@@ -73,16 +73,15 @@ import { newRubickBase } from 'rubickbase'
 const rubickBase = newRubickBase()
 
 async function main() {
-	// start rubickbase
-	await server.start()
-	const api = server.getAPI()
+	// start rubickbase and get APIs
+	const api = rubickBase.getAPI()
 	// cursor Position
 	let task = setInterval(async () => {
 		console.log(await api.getCursorPosition())
 	}, 1000)
 	// close rubickbase
 	setTimeout(async () => {
-		await server.close()
+		await rubickBase.close()
 		clearInterval(task)
 	}, 10000)
 }
@@ -93,24 +92,24 @@ main()
 <details>
 <summary> 可选初始化参数 </summary>
 
-| 参数名称        | 参数意义               | 类型          |
-| --------------- | ---------------------- | ------------- |
-| port            | GRPC 服务器的端口      | number        |
-| logger          | 日志器                 | Logger        |
-| tmpdir          | 临时文件目录           | string        |
-| workerBoot      | 是否将 worker 一起启动 | boolean       |
-| ioEventCallback | 侦听所有设备事件       | EventCallback |
+| 参数名称        | 参数意义                   | 类型          |
+| --------------- | -------------------------- | ------------- |
+| port            | GRPC 服务器的端口          | number        |
+| logger          | 日志器                     | Logger        |
+| tmpdir          | 临时文件目录               | string        |
+| workerBoot      | 是否将 worker 一起启动     | boolean       |
+| ioEventCallback | 侦听所有设备事件的回调函数 | EventCallback |
 
 </details>
 
 <details>
-<summary> 分离工作模式 </summary>
+<summary> 高级启动 </summary>
 
 rubickbase 由 GRPC 服务器 master 与多个提供不同功能的 worker 组合运行
 
-如果你需要在不同的地方或不同的时间运行他们, 可以依据需要分别启动
+一般来说，当你调用 `getAPI` 时，rubickbase 会自动开启所有服务，但如果你需要在不同的地方或时间运行他们, 就可以手动控制他们的生命周期，达到更精细的控制
 
-首先你需要在 master 启动时选择不启动 workers
+首先你需要在 master 启动时选择不启动 workers，这时候 master 会侦听来自 worker 的消息
 
 ```js
 // init rubickbase
@@ -122,7 +121,10 @@ rubickBase.start()
 
 ```js
 const rubickWorker = newRubickWorker()
+// 启动所有 worker
 rubickWorker.start()
+// 单独启动 ioio worker
+rubickWorker.start('ioio')
 ```
 
 注意, worker 的生命周期(存在时间)必须比 master 要短, 否则 worker 中的 GRPC client 会抛出找不到服务端的异常
@@ -140,6 +142,25 @@ rubickWorker.start()
 
 </details>
 
+<details>
+<summary> 直接使用底层无状态 API </summary>
+
+允许你在不启动 master 和 worker 的情况下直接调用一些基础 API
+
+```js
+const {
+	language,
+	sendEvent,
+	getInstalledApps,
+	screenCapture,
+	screenCaptureAroundPosition,
+	compress,
+	decompress,
+} = newRubickBase().getBasicAPI()
+```
+
+</details>
+
 ### 设备输入事件模拟
 
 模拟鼠标键盘输入事件非常简单，只要调用 `sendEvent` 即可
@@ -149,19 +170,18 @@ rubickWorker.start()
 ```js
 // 这里将会模拟按下 F1 键
 api.sendEvent({
-        device: "KeyBoard",
-        action: "Press",
-        info: "F1"
+	device: 'KeyBoard',
+	action: 'Press',
+	info: 'F1',
 })
 
 // 这里将会模拟按下鼠标中键
 api.sendEvent({
-        device: "Mouse",
-        action: "Press",
-        info: "Middle"
+	device: 'Mouse',
+	action: 'Press',
+	info: 'Middle',
 })
 ```
-
 
 ### 设备输入事件侦听
 
@@ -335,6 +355,9 @@ rubickbase 还有以下功能:
 
     </details>
 
+8.  获取系统语言
+    language: () => Promise< string >
+
 ## 贡献与联系
 
 欢迎任何形式的贡献与开源协作！
@@ -358,6 +381,4 @@ rubickbase 还有以下功能:
 
 ## 开源协议
 
-本项目为开源项目, 遵守 MPLv2 协议
-
-如需修改与商用, 欢迎与我联系
+本项目遵守 MPLv2 协议

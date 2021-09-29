@@ -157,7 +157,7 @@ const {
 	screenCaptureAroundPosition,
 	compress,
 	decompress,
-} = newRubickBase().getBasicAPI()
+} = await newRubickBase().getBasicAPI()
 ```
 
 </details>

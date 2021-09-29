@@ -22,6 +22,7 @@ export class RubickBase {
 	private workerBoot: boolean
 	private ioEventCallback: EventCallback
 	private started: boolean = false
+	private basicAPI = {}
 	logger: Logger
 	constructor(settings: RubickBaseSettings) {
 		const { port, logger, tmpdir, workerBoot, ioEventCallback } = settings
@@ -40,10 +41,10 @@ export class RubickBase {
 			this.logger.error('Rubickbase has already started!')
 			return
 		}
-
 		this.port = await tryPort(this.port)
 
 		// start buitin service
+		this.basicAPI = await this.getBasicAPI()
 		this.server = new Mali(await this.loadProto(), 'Rubick')
 
 		this.server.use('ioio', async (ctx: any) => {
@@ -169,7 +170,6 @@ export class RubickBase {
 
 	// ******************************* expose APIs *******************************
 	getAPI() {
-		const basicAPIs = this.getBasicAPI()
 		if (!this.started) {
 			;(async () => await this.start())()
 		}
@@ -260,7 +260,7 @@ export class RubickBase {
 		}
 
 		return {
-			...basicAPIs,
+			...this.basicAPI,
 			// ioio worker
 			getCursorPosition,
 			getCursorPositionPixelColor,
@@ -272,8 +272,8 @@ export class RubickBase {
 	}
 
 	// these apis can work without any workers
-	getBasicAPI() {
-		;(async () => (this.rustBackend = await newRustBackend()))()
+	async getBasicAPI() {
+		this.rustBackend = await newRustBackend()
 
 		/** input simulation
 		 *

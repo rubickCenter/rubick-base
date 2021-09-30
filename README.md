@@ -309,6 +309,8 @@ const newImg = img.resize(100, 100)
 const newImg = img.resize(100, 100, 1)
 ```
 
+</details>
+
 3. 裁剪 Image.crop
 
 输入左上角的点、宽、高，输出裁剪后的图像
@@ -316,8 +318,6 @@ const newImg = img.resize(100, 100, 1)
 ```js
 const newImg = img.crop({ x: 5, y: 5 }, 10, 10)
 ```
-
-</details>
 
 ### 功能一览
 

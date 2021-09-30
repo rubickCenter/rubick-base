@@ -33,7 +33,7 @@
 
 **其他工具**
 
--   [x] asar + zstd 压缩
+-   [x] asar 打包压缩解压 (zstd算法)
 
 ## 安装
 
@@ -377,10 +377,10 @@ rubickbase 还有以下功能:
 
     是 electron 官方 asar 格式的超集，打包时增加了 zstd 压缩算法
 
-    asarList(path: string): Promise< Array < string > | undefined>
-    asarExtractFile(path: string, dest: string): Promise< undefined >
-    asarExtract(path: string, dest: string): Promise< undefined >
-    asarPack(path: string, dest: string, level?: number): Promise< undefined >
+    asarList(path: string): Promise< Array < string > | undefined>   
+    asarExtractFile(path: string, dest: string): Promise< undefined >   
+    asarExtract(path: string, dest: string): Promise< undefined >   
+    asarPack(path: string, dest: string, level?: number): Promise< undefined >   
 
 ## 贡献与联系
 

@@ -1,5 +1,5 @@
 import fs from 'fs-extra'
-import { PhotonImage, resize } from '@silvia-odwyer/photon-node'
+import { PhotonImage, resize, crop } from '@silvia-odwyer/photon-node'
 import { Color, Position } from './types'
 import { rgbToHex } from './utils'
 
@@ -39,8 +39,40 @@ class Image {
 		return new Image(img)
 	}
 
+	/** get image raw pixels
+	 *
+	 * @returns image array
+	 */
 	getRawPixel() {
 		return this.photonImage.get_raw_pixels()
+	}
+
+	/** crop image
+	 *
+	 * @param leftTopPosition left top point position
+	 * @param width img width
+	 * @param height img height
+	 * @returns img object
+	 */
+	crop(leftTopPosition: Position, width: number, height: number) {
+		const [w, h] = [this.width(), this.height()]
+		const limitValue = (value: number, min: number, max: number) => {
+			if (value < min) {
+				value = min
+			}
+			if (value > max) {
+				value = max
+			}
+			return value
+		}
+		// limit boarder
+		leftTopPosition.x = limitValue(leftTopPosition.x, 0, w)
+		leftTopPosition.y = limitValue(leftTopPosition.y, 0, h)
+		width = limitValue(width, 0, w - width)
+		height = limitValue(height, 0, h - height)
+		return new Image(
+			crop(this.photonImage, leftTopPosition.x, leftTopPosition.y, width, height),
+		)
 	}
 
 	/** get pixel color at picture position

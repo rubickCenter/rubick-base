@@ -20,8 +20,8 @@
 -   [x] 获取鼠标像素颜色(主屏幕)
 -   [x] 图片缩放
 -   [x] 图片取色
+-   [x] 图片裁剪
 -   [ ] 多屏幕截图
--   [ ] 图片裁剪
 
 **系统信息**
 
@@ -314,6 +314,14 @@ const newImg = img.resize(100, 100)
 const newImg = img.resize(100, 100, 1)
 ```
 
+3. 裁剪 Image.crop
+
+输入左上角的点、宽、高，输出裁剪后的图像
+
+```js
+const newImg = img.crop({ x: 5, y: 5 }, 10, 10)
+```
+
 </details>
 
 ### 功能一览
@@ -330,12 +338,15 @@ rubickbase 还有以下功能:
     getCursorPosition: () => Position
 
 4.  获取鼠标当前座标的像素值  
+    _此 API 仅适用于主屏幕_  
     getCursorPositionPixelColor: () => Promise< Color >
 
 5.  主屏幕截屏  
+    _此 API 仅适用于主屏幕_  
     screenCapture: () => Promise< Image >
 
-6.  获取鼠标周围图像[ ！即将被图片裁剪取代！ ]
+6.  获取鼠标周围图像  
+    _此 API 仅适用于主屏幕_  
     screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image >
 
 7.  获取系统内已安装的应用列表  

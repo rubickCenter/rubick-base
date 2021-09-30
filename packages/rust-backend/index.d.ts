@@ -11,6 +11,8 @@ declare namespace rubick_backend {
 	function ioio_start(port: string): Promise<boolean>
 	// screen capture
 	function capture_base64_start(): Promise<string>
+	// screen all capture
+	function capture_all_base64_start(): Promise<Array<string>>
 	// screen color picker
 	function screen_color_picker_start(
 		x: number,
@@ -20,10 +22,6 @@ declare namespace rubick_backend {
 		g: number
 		b: number
 	}>
-	// compress
-	function lzma_compress_start(fromPath: string, toPath: string): Promise<undefined>
-	// decompress
-	function lzma_decompress_start(fromPath: string, toPath: string): Promise<undefined>
 	// capture screen around position
 	function screen_capture_rect_base64_start(
 		x: number,
@@ -34,6 +32,10 @@ declare namespace rubick_backend {
 	// get local language
 	function current_locale_language(): Promise<string>
 	// Deprecated
+	// compress
+	// function lzma_compress_start(fromPath: string, toPath: string): Promise<undefined>
+	// decompress
+	// function lzma_decompress_start(fromPath: string, toPath: string): Promise<undefined>
 	// function capture_start(path: string): Promise<undefined>
 	// function color_picker_start(
 	// 	path: string,

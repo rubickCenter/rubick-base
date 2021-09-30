@@ -24,31 +24,42 @@ fn capture_base64_start(mut cx: FunctionContext) -> JsResult<JsString> {
     Ok(cx.string(res))
 }
 
-// 压缩
-fn lzma_compress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
-    let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
-    let topath = cx.argument::<JsString>(1)?.value(&mut cx);
-    let channel = cx.channel();
-    thread::spawn(move || {
-        dataprocess::lzma_compress(frompath.as_str(), topath.as_str())
-            .expect("lzma_compress error!");
-        channel.send(move |mut _cx| Ok(()))
-    });
-    Ok(cx.undefined())
+// 多屏幕截图 base64
+fn capture_all_base64_start(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let res = imgtools::screen_capture_all_base64().expect("screen capture error");
+    let captures = cx.empty_array();
+    for (i, v) in res.into_iter().enumerate() {
+        let value = cx.string(v);
+        captures.set(&mut cx, i as u32, value)?;
+    }
+    Ok(captures)
 }
 
+// 压缩
+// fn lzma_compress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+//     let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
+//     let topath = cx.argument::<JsString>(1)?.value(&mut cx);
+//     let channel = cx.channel();
+//     thread::spawn(move || {
+//         dataprocess::lzma_compress(frompath.as_str(), topath.as_str())
+//             .expect("lzma_compress error!");
+//         channel.send(move |mut _cx| Ok(()))
+//     });
+//     Ok(cx.undefined())
+// }
+
 // 解压
-fn lzma_decompress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
-    let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
-    let topath = cx.argument::<JsString>(1)?.value(&mut cx);
-    let channel = cx.channel();
-    thread::spawn(move || {
-        dataprocess::lzma_decompress(frompath.as_str(), topath.as_str())
-            .expect("lzma_decompress error!");
-        channel.send(move |mut _cx| Ok(()))
-    });
-    Ok(cx.undefined())
-}
+// fn lzma_decompress_start(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+//     let frompath = cx.argument::<JsString>(0)?.value(&mut cx);
+//     let topath = cx.argument::<JsString>(1)?.value(&mut cx);
+//     let channel = cx.channel();
+//     thread::spawn(move || {
+//         dataprocess::lzma_decompress(frompath.as_str(), topath.as_str())
+//             .expect("lzma_decompress error!");
+//         channel.send(move |mut _cx| Ok(()))
+//     });
+//     Ok(cx.undefined())
+// }
 
 // 获取屏幕矩形区域截图 base64
 fn screen_capture_rect_base64_start(mut cx: FunctionContext) -> JsResult<JsString> {
@@ -139,14 +150,15 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("find_apps_start", find_apps_start)?;
     cx.export_function("screen_color_picker_start", screen_color_picker_start)?;
     cx.export_function("capture_base64_start", capture_base64_start)?;
+    cx.export_function("capture_all_base64_start", capture_all_base64_start)?;
     cx.export_function(
         "screen_capture_rect_base64_start",
         screen_capture_rect_base64_start,
     )?;
     // mutithread task
     cx.export_function("ioio_start", ioio_start)?;
-    cx.export_function("lzma_compress_start", lzma_compress_start)?;
-    cx.export_function("lzma_decompress_start", lzma_decompress_start)?;
+    // cx.export_function("lzma_compress_start", lzma_compress_start)?;
+    // cx.export_function("lzma_decompress_start", lzma_decompress_start)?;
     // Deprecated
     // cx.export_function("screen_capture_rect_start", screen_capture_rect_start)?;
     // cx.export_function("color_picker_start", color_picker_start)?;

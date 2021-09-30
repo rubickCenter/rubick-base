@@ -4,8 +4,6 @@ export interface RustBackendAPI {
 	ioioStart: (port: string) => Promise<boolean>
 	captureToBase64: () => Promise<string>
 	screenColorPicker: (position: Position) => Promise<RGB>
-	compress: (fromPath: string, toPath: string) => Promise<undefined>
-	decompress: (fromPath: string, toPath: string) => Promise<undefined>
 	screenCaptureAroundPositionToBase64: (
 		position: Position,
 		width: number,
@@ -14,7 +12,10 @@ export interface RustBackendAPI {
 	getInstalledApps: (getDetailInfo: boolean, extraDirs?: Array<string>) => Promise<string>
 	sendEvent: (event: DeviceEvent) => Promise<undefined>
 	language: () => Promise<string>
+	captureAllToBase64: () => Promise<Array<string>>
 	// Deprecated
+	// compress: (fromPath: string, toPath: string) => Promise<undefined>
+	// decompress: (fromPath: string, toPath: string) => Promise<undefined>
 	// capture: (path: string) => Promise<undefined>
 	// colorPicker: (path: string, position: Position) => Promise<RGBA>
 	// screenCaptureAroundPosition: (
@@ -31,6 +32,9 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		rustBackend = rustBackend.default
 	}
 	return {
+		captureAllToBase64: async () => {
+			return await rustBackend.capture_all_base64_start()
+		},
 		ioioStart: async (port: string) => {
 			return await rustBackend.ioio_start(port)
 		},
@@ -39,12 +43,6 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		},
 		screenColorPicker: async (position: Position) => {
 			return await rustBackend.screen_color_picker_start(position.x, position.y)
-		},
-		compress: async (fromPath: string, toPath: string) => {
-			return await rustBackend.lzma_compress_start(fromPath, toPath)
-		},
-		decompress: async (fromPath: string, toPath: string) => {
-			return await rustBackend.lzma_decompress_start(fromPath, toPath)
 		},
 		screenCaptureAroundPositionToBase64: async (
 			position: Position,
@@ -71,6 +69,12 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 			return await rustBackend.current_locale_language()
 		},
 		// Deprecated
+		// compress: async (fromPath: string, toPath: string) => {
+		// 	return await rustBackend.lzma_compress_start(fromPath, toPath)
+		// },
+		// decompress: async (fromPath: string, toPath: string) => {
+		// 	return await rustBackend.lzma_decompress_start(fromPath, toPath)
+		// },
 		// capture: async (path: string) => {
 		// 	return await rustBackend.capture_start(path)
 		// },

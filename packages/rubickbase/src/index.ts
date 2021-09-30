@@ -156,11 +156,6 @@ export class RubickBase {
 		return undefined
 	}
 
-	private lzmaError() {
-		this.logger.error('Got an api lzma error!')
-		return undefined
-	}
-
 	private appSearchError() {
 		this.logger.error('Got an api app search error!')
 		return undefined
@@ -318,6 +313,16 @@ export class RubickBase {
 				return newImageFromBase64(imgBase64)
 			}, this.imageError)
 
+		/** capture all screen
+		 *
+		 * @returns {Promise<Array<Image> | undefined>} image object
+		 */
+		const screenCaptureAll = async (): Promise<Array<Image> | undefined> =>
+			await this.tryBackend(async () => {
+				const captures = await this.rustBackend.captureAllToBase64()
+				return captures.map((capture) => newImageFromBase64(capture))
+			}, this.imageError)
+
 		/** capture screen return the area around position
 		 *
 		 * @param position center of the image
@@ -343,25 +348,25 @@ export class RubickBase {
 		 * @param fromPath from file
 		 * @param toPath to file
 		 */
-		const compress = async (fromPath: string, toPath: string) =>
-			await this.validAndTryBackend(
-				async () => await this.rustBackend.compress(fromPath, toPath),
-				this.lzmaError,
-				[],
-				[fromPath, toPath],
-			)
+		// const compress = async (fromPath: string, toPath: string) =>
+		// 	await this.validAndTryBackend(
+		// 		async () => await this.rustBackend.compress(fromPath, toPath),
+		// 		this.lzmaError,
+		// 		[],
+		// 		[fromPath],
+		// 	)
 
 		/** lzma decompress
 		 * @param fromPath from file
 		 * @param toPath to file
 		 */
-		const decompress = async (fromPath: string, toPath: string) =>
-			await this.validAndTryBackend(
-				async () => await this.rustBackend.decompress(fromPath, toPath),
-				this.lzmaError,
-				[],
-				[fromPath, toPath],
-			)
+		// const decompress = async (fromPath: string, toPath: string) =>
+		// 	await this.validAndTryBackend(
+		// 		async () => await this.rustBackend.decompress(fromPath, toPath),
+		// 		this.lzmaError,
+		// 		[],
+		// 		[fromPath],
+		// 	)
 
 		/** get system locale language
 		 *
@@ -374,13 +379,12 @@ export class RubickBase {
 			)
 
 		return {
+			screenCaptureAll,
 			language,
 			sendEvent,
 			getInstalledApps,
 			screenCapture,
 			screenCaptureAroundPosition,
-			compress,
-			decompress,
 		}
 	}
 }

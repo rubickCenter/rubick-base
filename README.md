@@ -4,7 +4,7 @@
 
 # rubickbase
 
-基于 Rust / WASM 提供截图、取色、键鼠事件监听模拟、压缩解压、图像处理、获取已安装应用等跨平台功能的现代异步 Nodejs 模块，占用空间小, 安装便捷, 使用简单, 高性能, 资源占用极小, 可取代 iohook 和 robotjs
+基于 Rust / WASM 提供截图、取色、键鼠事件监听模拟、图像处理、获取已安装应用等跨平台功能的现代异步 Nodejs 模块，占用空间小, 安装便捷, 使用简单, 高性能, 资源占用极小, 可取代 iohook 和 robotjs
 
 ## 功能
 
@@ -30,10 +30,6 @@
 -   [x] 获取已安装的应用列表(linux✅/macos✅/windows✅)
 -   [x] 获取已安装应用的详细信息(linux✅)
 -   [x] 获取系统语言
-
-**其他工具**
-
--   [x] lzma2 压缩解压
 
 ## 安装
 
@@ -323,28 +319,22 @@ const newImg = img.crop({ x: 5, y: 5 }, 10, 10)
 
 rubickbase 还有以下功能:
 
-1.  lzma 压缩  
-    compress: (fromPath: string, toPath: string) => Promise< undefined >
-
-2.  lzma 解压  
-    decompress: (fromPath: string, toPath: string) => Promise< undefined >
-
-3.  获取鼠标当前座标  
+1.  获取鼠标当前座标  
     getCursorPosition: () => Position
 
-4.  获取鼠标当前座标的像素值  
+2.  获取鼠标当前座标的像素值  
     _此 API 仅适用于主屏幕_  
     getCursorPositionPixelColor: () => Promise< Color >
 
-5.  主屏幕截屏  
+3.  主屏幕截屏  
     _此 API 仅适用于主屏幕_  
     screenCapture: () => Promise< Image >
 
-6.  获取鼠标周围图像  
+4.  获取鼠标周围图像  
     _此 API 仅适用于主屏幕_  
     screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image >
 
-7.  获取系统内已安装的应用列表  
+5.  获取系统内已安装的应用列表  
     getInstalledApps: (getDetailInfo: boolean = false, extraDirs?: Array< string >) => Promise< string >
 
     `getDetailInfo` 是否获取应用详细信息 默认否 (目前只有 Linux 有效)  
@@ -375,7 +365,7 @@ rubickbase 还有以下功能:
 
     </details>
 
-8.  获取系统语言
+6.  获取系统语言
     language: () => Promise< string >
 
 ## 贡献与联系

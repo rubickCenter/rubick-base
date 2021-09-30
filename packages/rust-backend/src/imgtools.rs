@@ -8,8 +8,7 @@ use std::io::ErrorKind::WouldBlock;
 extern crate image;
 
 // capture primary screen return image raw
-fn screen_capture_raw() -> ImageBuffer<Rgb<u8>, Vec<u8>> {
-    let display = Display::primary().expect("Couldn't find primary display.");
+fn screen_capture_raw(display: Display) -> ImageBuffer<Rgb<u8>, Vec<u8>> {
     let mut capturer = Capturer::new(display).expect("Couldn't begin capture.");
     let (w, h) = (capturer.width(), capturer.height());
 
@@ -55,7 +54,8 @@ fn screen_capture_rect_raw(
     width: u32,
     height: u32,
 ) -> Result<ImageBuffer<Rgb<u8>, Vec<u8>>, ImageError> {
-    let mut img = screen_capture_raw();
+    let display = Display::primary().expect("Couldn't find primary display.");
+    let mut img = screen_capture_raw(display);
     let halfw = width / 2;
     let halfh = height / 2;
 
@@ -94,10 +94,28 @@ fn screen_capture_rect_raw(
 
 #[allow(dead_code)]
 pub fn screen_capture_base64() -> Result<String, ImageError> {
-    let img_rgb = DynamicImage::ImageRgb8(screen_capture_raw());
+    let display = Display::primary().expect("Couldn't find primary display.");
+    let img_rgb = DynamicImage::ImageRgb8(screen_capture_raw(display));
     let mut buf = vec![];
     img_rgb.write_to(&mut buf, image::ImageOutputFormat::Png)?;
     Ok(encode(&buf))
+}
+
+#[allow(dead_code)]
+pub fn screen_capture_all_base64() -> Result<Vec<String>, ImageError> {
+    let displays = Display::all().expect("Couldn't find any display.");
+    let captures = displays
+        .into_iter()
+        .map(|d| {
+            let img_rgb = DynamicImage::ImageRgb8(screen_capture_raw(d));
+            let mut buf = vec![];
+            img_rgb
+                .write_to(&mut buf, image::ImageOutputFormat::Png)
+                .unwrap();
+            encode(&buf)
+        })
+        .collect();
+    Ok(captures)
 }
 
 // #[allow(dead_code)]
@@ -142,7 +160,8 @@ pub fn screen_capture_rect_base64(
 // pick color from primary screen
 #[allow(dead_code)]
 pub fn screen_color_picker(x: u32, y: u32) -> Result<Rgb<u8>, ImageError> {
-    let screen_capture = screen_capture_raw();
+    let display = Display::primary().expect("Couldn't find primary display.");
+    let screen_capture = screen_capture_raw(display);
 
     let x = valid_border(x, screen_capture.width());
     let y = valid_border(y, screen_capture.height());

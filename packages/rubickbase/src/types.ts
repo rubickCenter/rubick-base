@@ -200,6 +200,4 @@ export interface BasicApi {
 		width: number,
 		height: number,
 	) => Promise<Image | undefined>
-	compress: (fromPath: string, toPath: string) => Promise<undefined>
-	decompress: (fromPath: string, toPath: string) => Promise<undefined>
 }

@@ -6,9 +6,8 @@ pub use error::Error;
 use prost::bytes::Buf;
 use serde_json::{json, Value};
 use std::{
-    env,
+    env, fs,
     fs::File,
-    fs::{self, OpenOptions},
     io::{self, Read, Seek, SeekFrom, Write},
     path::{Path, PathBuf},
 };
@@ -246,7 +245,10 @@ pub fn extract(archive: &str, dest: &str) -> Result<(), Error> {
             file.seek(SeekFrom::Start(header_size as u64 + offset))?;
             file.read_exact(&mut buffer)?;
             if compressed {
-                zstd::stream::copy_decode(&mut buffer.reader(), &mut fs::File::create(path)?)?;
+                zstd::stream::copy_decode(
+                    &mut buffer.reader(),
+                    &mut fs::File::create(dest.join(path))?,
+                )?;
             } else {
                 fs::write(dest.join(path), buffer)?;
             };
@@ -290,9 +292,9 @@ pub fn extract_file(archive: &str, dest: &str) -> Result<(), Error> {
             file.seek(SeekFrom::Start(header_size as u64 + offset))?;
             file.read_exact(&mut buffer)?;
             if compressed {
-                zstd::stream::copy_decode(&mut buffer.reader(), &mut fs::File::create(path)?)?;
+                zstd::stream::copy_decode(&mut buffer.reader(), &mut fs::File::create(&dest)?)?;
             } else {
-                fs::write(dest.join(path), buffer)?;
+                fs::write(&dest, buffer)?;
             };
         }
         Ok(())

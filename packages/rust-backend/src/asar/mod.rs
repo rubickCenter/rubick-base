@@ -37,11 +37,7 @@ fn read_header(reader: &mut File) -> Result<(u32, Value, bool), io::Error> {
     let json: Value = serde_json::from_slice(&json_buffer)?;
     let compressed = if let Some(compressed) = json.get("compress") {
         if let Some(compressed) = compressed.as_bool() {
-            if compressed {
-                true
-            } else {
-                false
-            }
+            compressed
         } else {
             false
         }
@@ -122,7 +118,8 @@ pub fn pack(path: &str, dest: &str, level: i32) -> Result<(), Error> {
         "files": {},
         "compress": if level == 0 {false} else {true}
     });
-    let mut archive = OpenOptions::new().write(true).append(true).open(dest)?;
+    let tmp_file_name = format!(".{}", dest);
+    let mut tmp_file = fs::File::create(&tmp_file_name)?;
     let dir = PathBuf::from(path);
 
     if fs::try_exists(&path).unwrap() {
@@ -179,7 +176,7 @@ pub fn pack(path: &str, dest: &str, level: i32) -> Result<(), Error> {
             }
             Ok(())
         }
-        walk_dir(dir, &mut header_json["files"], &mut 0, level, &mut archive)?;
+        walk_dir(dir, &mut header_json["files"], &mut 0, level, &mut tmp_file)?;
     } else {
         panic!("No such file or directory {}!", path);
     }
@@ -203,9 +200,13 @@ pub fn pack(path: &str, dest: &str, level: i32) -> Result<(), Error> {
     write_u32(&mut header[8..12], 4 + size as u32);
     write_u32(&mut header[12..16], json_size as u32);
 
+    let mut archive = fs::File::create(dest)?;
     // write header
-    archive.seek(SeekFrom::Start(0))?;
     archive.write(&header)?;
+    // write body
+    io::copy(&mut File::open(&tmp_file_name)?, &mut archive)?;
+    // remove tmp file
+    fs::remove_file(tmp_file_name)?;
 
     Ok(())
 }

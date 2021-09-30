@@ -1,5 +1,7 @@
 简体中文 | [English](./README-EN.md)
 
+![403295935](https://user-images.githubusercontent.com/53158137/135377195-7fc4bb2f-e456-4d95-b2ec-2585417e600b.jpg)
+
 # rubickbase
 
 基于 Rust / WASM 提供截图、取色、键鼠事件监听模拟、压缩解压、图像处理、获取已安装应用等跨平台功能的现代异步 Nodejs 模块，占用空间小, 安装便捷, 使用简单, 高性能, 资源占用极小, 可取代 iohook 和 robotjs
@@ -80,27 +82,20 @@ import { newRubickBase } from 'rubickbase'
 
 在这个例子中，你通过 `newRubickbase` 获得了 rubickbase 服务实例，你可以通过 `getAPI` 获取到 rubickbase 所有功能
 
-这里每隔一秒获取当前的鼠标位置，并且 10 秒后调用 `close` 将 rubickbase 服务关闭
+这里每隔一秒获取当前的鼠标位置
 
 ```js
+const { newRubickBase } = require('rubickbase')
+
 // init rubickbase
 const rubickBase = newRubickBase()
 
-async function main() {
-	// start rubickbase and get APIs
-	const api = await rubickBase.getAPI()
-	// cursor Position
-	let task = setInterval(async () => {
-		console.log(await api.getCursorPosition())
-	}, 1000)
-	// close rubickbase
-	setTimeout(async () => {
-		await rubickBase.close()
-		clearInterval(task)
-	}, 10000)
-}
-
-main()
+setInterval(async () => {
+    // start rubickbase and get APIs
+    const api = await rubickBase.getAPI()
+    // print Cursor Position
+    console.log(api.getCursorPosition())
+}, 1000)
 ```
 
 <details>
@@ -400,7 +395,7 @@ rubickbase 还有以下功能:
 | Commit  | · `pnpm commit`  |
 | Release | · `pnpm release` |
 
-欢迎关注公众号，与我们共同成长:
+关注公众号后发送`联系`关键字加我微信:
 
 ![wechat](https://z3.ax1x.com/2021/09/26/4yRpN9.jpg)
 

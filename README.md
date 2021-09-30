@@ -23,7 +23,7 @@
 -   [x] 图片缩放
 -   [x] 图片取色
 -   [x] 图片裁剪
--   [ ] 多屏幕截图
+-   [x] 多屏幕截图
 
 **系统信息**
 
@@ -327,14 +327,16 @@ rubickbase 还有以下功能:
     getCursorPositionPixelColor: () => Promise< Color >
 
 3.  主屏幕截屏  
-    _此 API 仅适用于主屏幕_  
     screenCapture: () => Promise< Image >
 
-4.  获取鼠标周围图像  
+4.  所有屏幕截屏  
+    screenCaptureAll: () => Promise< Image[] >
+
+5.  获取鼠标周围图像  
     _此 API 仅适用于主屏幕_  
     screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image >
 
-5.  获取系统内已安装的应用列表  
+6.  获取系统内已安装的应用列表  
     getInstalledApps: (getDetailInfo: boolean = false, extraDirs?: Array< string >) => Promise< string >
 
     `getDetailInfo` 是否获取应用详细信息 默认否 (目前只有 Linux 有效)  
@@ -365,7 +367,7 @@ rubickbase 还有以下功能:
 
     </details>
 
-6.  获取系统语言
+7.  获取系统语言
     language: () => Promise< string >
 
 ## 贡献与联系

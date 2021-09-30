@@ -171,6 +171,11 @@ export class RubickBase {
 		return undefined
 	}
 
+	private asarError() {
+		this.logger.error('Got an api asar error!')
+		return undefined
+	}
+
 	// ******************************* expose APIs *******************************
 	async getAPI() {
 		if (!this.started) await this.start()
@@ -344,6 +349,59 @@ export class RubickBase {
 				return newImageFromBase64(imgBase64)
 			}, this.imageError)
 
+		/** list all files in asar
+		 *
+		 * @param path asar path
+		 * @returns files path
+		 */
+		const asarList = async (path: string) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.asarList(path),
+				this.asarError,
+				[],
+				[path],
+			)
+
+		/** asar extract all file
+		 *
+		 * @param path asar path
+		 * @param dest folder name
+		 */
+		const asarExtract = async (path: string, dest: string) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.asarExtract(path, dest),
+				this.asarError,
+				[],
+				[path],
+			)
+
+		/** asar extract one file
+		 *
+		 * @param path asar path
+		 * @param dest file name
+		 */
+		const asarExtractFile = async (path: string, dest: string) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.asarExtractFile(path, dest),
+				this.asarError,
+				[],
+				[path],
+			)
+
+		/** asar pack with zstd compress
+		 *
+		 * @param path asar path
+		 * @param dest output file path
+		 * @param level compress leve 0-21 default 0
+		 */
+		const asarPack = async (path: string, dest: string, level?: number) =>
+			await this.validAndTryBackend(
+				async () => await this.rustBackend.asarPack(path, dest, level),
+				this.asarError,
+				[path],
+				[],
+			)
+
 		/** lzma compress
 		 * @param fromPath from file
 		 * @param toPath to file
@@ -379,6 +437,10 @@ export class RubickBase {
 			)
 
 		return {
+			asarList,
+			asarExtract,
+			asarExtractFile,
+			asarPack,
 			screenCaptureAll,
 			language,
 			sendEvent,

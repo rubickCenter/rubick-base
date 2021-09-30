@@ -200,4 +200,8 @@ export interface BasicApi {
 		width: number,
 		height: number,
 	) => Promise<Image | undefined>
+	asarList(path: string): Promise<Array<string> | undefined>
+	asarExtractFile(path: string, dest: string): Promise<undefined>
+	asarExtract(path: string, dest: string): Promise<undefined>
+	asarPack(path: string, dest: string, level?: number): Promise<undefined>
 }

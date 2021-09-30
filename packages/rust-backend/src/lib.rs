@@ -1,5 +1,5 @@
 #![feature(path_try_exists)]
-mod dataprocess;
+mod asar;
 mod imgtools;
 mod ioio;
 mod sysapp;
@@ -142,9 +142,47 @@ fn current_locale_language(mut cx: FunctionContext) -> JsResult<JsString> {
     Ok(cx.string(current_locale))
 }
 
+fn asar_pack(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let path = cx.argument::<JsString>(0)?.value(&mut cx);
+    let dest = cx.argument::<JsString>(1)?.value(&mut cx);
+    let level = cx.argument::<JsNumber>(2)?.value(&mut cx);
+    asar::pack(&path, &dest, level as i32).expect("asar pack error!");
+    Ok(cx.undefined())
+}
+
+fn asar_extract(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let path = cx.argument::<JsString>(0)?.value(&mut cx);
+    let dest = cx.argument::<JsString>(1)?.value(&mut cx);
+    asar::extract(&path, &dest).expect("asar extract error!");
+    Ok(cx.undefined())
+}
+
+fn asar_extract_file(mut cx: FunctionContext) -> JsResult<JsUndefined> {
+    let path = cx.argument::<JsString>(0)?.value(&mut cx);
+    let dest = cx.argument::<JsString>(1)?.value(&mut cx);
+    asar::extract_file(&path, &dest).expect("asar extract file error!");
+    Ok(cx.undefined())
+}
+
+fn asar_list(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let path = cx.argument::<JsString>(0)?.value(&mut cx);
+    let list = asar::list(&path).expect("asar extract file error!");
+    let list = list.into_iter().map(|p| String::from(p.to_str().unwrap()));
+    let res = cx.empty_array();
+    for (i, v) in list.enumerate() {
+        let value = cx.string(v);
+        res.set(&mut cx, i as u32, value)?;
+    }
+    Ok(res)
+}
+
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     // async task
+    cx.export_function("asar_list", asar_list)?;
+    cx.export_function("asar_extract_file", asar_extract_file)?;
+    cx.export_function("asar_extract", asar_extract)?;
+    cx.export_function("asar_pack", asar_pack)?;
     cx.export_function("current_locale_language", current_locale_language)?;
     cx.export_function("send_event_start", send_event_start)?;
     cx.export_function("find_apps_start", find_apps_start)?;

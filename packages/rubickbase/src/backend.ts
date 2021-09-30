@@ -13,6 +13,10 @@ export interface RustBackendAPI {
 	sendEvent: (event: DeviceEvent) => Promise<undefined>
 	language: () => Promise<string>
 	captureAllToBase64: () => Promise<Array<string>>
+	asarList(path: string): Promise<Array<string>>
+	asarExtractFile(path: string, dest: string): Promise<undefined>
+	asarExtract(path: string, dest: string): Promise<undefined>
+	asarPack(path: string, dest: string, level?: number): Promise<undefined>
 	// Deprecated
 	// compress: (fromPath: string, toPath: string) => Promise<undefined>
 	// decompress: (fromPath: string, toPath: string) => Promise<undefined>
@@ -32,6 +36,21 @@ async function newRustBackend(): Promise<RustBackendAPI> {
 		rustBackend = rustBackend.default
 	}
 	return {
+		asarList: async (path: string) => {
+			return await rustBackend.asar_list(path)
+		},
+		asarExtract: async (path: string, dest: string) => {
+			return await rustBackend.asar_extract(path, dest)
+		},
+		asarExtractFile: async (path: string, dest: string) => {
+			return await rustBackend.asar_extract_file(path, dest)
+		},
+		asarPack: async (path: string, dest: string, level?: number) => {
+			level = level || 0
+			if (level < 0) level = 0
+			if (level > 21) level = 21
+			return await rustBackend.asar_pack(path, dest, level)
+		},
 		captureAllToBase64: async () => {
 			return await rustBackend.capture_all_base64_start()
 		},

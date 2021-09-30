@@ -31,6 +31,10 @@
 -   [x] 获取已安装应用的详细信息(linux✅)
 -   [x] 获取系统语言
 
+**其他工具**
+
+-   [x] asar + zstd 压缩
+
 ## 安装
 
 与 iohook 与 robotjs 不同, 你不需要针对不同版本进行繁琐的重新编译, 一切开箱即用
@@ -368,6 +372,15 @@ rubickbase 还有以下功能:
 
 7.  获取系统语言
     language: () => Promise< string >
+
+8.  asar + zstd 压缩
+
+    是 electron 官方 asar 格式的超集，打包时增加了 zstd 压缩算法
+
+    asarList(path: string): Promise< Array < string > | undefined>
+    asarExtractFile(path: string, dest: string): Promise< undefined >
+    asarExtract(path: string, dest: string): Promise< undefined >
+    asarPack(path: string, dest: string, level?: number): Promise< undefined >
 
 ## 贡献与联系
 

@@ -31,6 +31,10 @@ declare namespace rubick_backend {
 	): Promise<string>
 	// get local language
 	function current_locale_language(): Promise<string>
+	function asar_list(path: string): Promise<Array<string>>
+	function asar_extract_file(path: string, dest: string): Promise<undefined>
+	function asar_extract(path: string, dest: string): Promise<undefined>
+	function asar_pack(path: string, dest: string, level: number): Promise<undefined>
 	// Deprecated
 	// compress
 	// function lzma_compress_start(fromPath: string, toPath: string): Promise<undefined>

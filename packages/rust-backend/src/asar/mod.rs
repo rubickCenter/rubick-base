@@ -9,9 +9,7 @@ use std::{
     env,
     fs::File,
     fs::{self, OpenOptions},
-    io,
-    io::prelude::*,
-    os::unix::prelude::FileExt,
+    io::{self, Read, Seek, SeekFrom, Write},
     path::{Path, PathBuf},
 };
 use util::{align_size, read_u32, write_u32};
@@ -206,7 +204,8 @@ pub fn pack(path: &str, dest: &str, level: i32) -> Result<(), Error> {
     write_u32(&mut header[12..16], json_size as u32);
 
     // write header
-    archive.write_at(&header, 0)?;
+    archive.seek(SeekFrom::Start(0))?;
+    archive.write(&header)?;
 
     Ok(())
 }
@@ -243,7 +242,8 @@ pub fn extract(archive: &str, dest: &str) -> Result<(), Error> {
             let offset = val.get("offset").unwrap().as_u64().unwrap();
             let size = val.get("size").unwrap().as_u64().unwrap();
             let mut buffer = vec![0u8; size as usize];
-            file.read_exact_at(&mut buffer, header_size as u64 + offset)?;
+            file.seek(SeekFrom::Start(header_size as u64 + offset))?;
+            file.read_exact(&mut buffer)?;
             if compressed {
                 zstd::stream::copy_decode(&mut buffer.reader(), &mut fs::File::create(path)?)?;
             } else {
@@ -286,7 +286,8 @@ pub fn extract_file(archive: &str, dest: &str) -> Result<(), Error> {
             let offset = val.get("offset").unwrap().as_u64().unwrap();
             let size = val.get("size").unwrap().as_u64().unwrap();
             let mut buffer = vec![0u8; size as usize];
-            file.read_exact_at(&mut buffer, header_size as u64 + offset)?;
+            file.seek(SeekFrom::Start(header_size as u64 + offset))?;
+            file.read_exact(&mut buffer)?;
             if compressed {
                 zstd::stream::copy_decode(&mut buffer.reader(), &mut fs::File::create(path)?)?;
             } else {

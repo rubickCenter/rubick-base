@@ -80,27 +80,20 @@ import { newRubickBase } from 'rubickbase'
 
 在这个例子中，你通过 `newRubickbase` 获得了 rubickbase 服务实例，你可以通过 `getAPI` 获取到 rubickbase 所有功能
 
-这里每隔一秒获取当前的鼠标位置，并且 10 秒后调用 `close` 将 rubickbase 服务关闭
+这里每隔一秒获取当前的鼠标位置
 
 ```js
+const { newRubickBase } = require('rubickbase')
+
 // init rubickbase
 const rubickBase = newRubickBase()
 
-async function main() {
-	// start rubickbase and get APIs
-	const api = await rubickBase.getAPI()
-	// cursor Position
-	let task = setInterval(async () => {
-		console.log(await api.getCursorPosition())
-	}, 1000)
-	// close rubickbase
-	setTimeout(async () => {
-		await rubickBase.close()
-		clearInterval(task)
-	}, 10000)
-}
-
-main()
+setInterval(async () => {
+    // start rubickbase and get APIs
+    const api = await rubickBase.getAPI()
+    // print Cursor Position
+    console.log(api.getCursorPosition())
+}, 1000)
 ```
 
 <details>

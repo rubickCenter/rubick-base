@@ -3,12 +3,15 @@ mod error;
 mod util;
 
 pub use error::Error;
+use prost::bytes::Buf;
 use serde_json::{json, Value};
 use std::{
-    env, fs,
+    env,
     fs::File,
+    fs::{self, OpenOptions},
     io,
-    io::{prelude::*, SeekFrom},
+    io::prelude::*,
+    os::unix::prelude::FileExt,
     path::{Path, PathBuf},
 };
 use util::{align_size, read_u32, write_u32};
@@ -120,9 +123,8 @@ pub fn pack(path: &str, dest: &str, level: i32) -> Result<(), Error> {
     let mut header_json = json!({
         "files": {},
         "compress": if level == 0 {false} else {true}
-        // "compress": true
     });
-    let mut archive = fs::File::create(dest)?;
+    let mut archive = OpenOptions::new().write(true).append(true).open(dest)?;
     let dir = PathBuf::from(path);
 
     if fs::try_exists(&path).unwrap() {
@@ -204,8 +206,7 @@ pub fn pack(path: &str, dest: &str, level: i32) -> Result<(), Error> {
     write_u32(&mut header[12..16], json_size as u32);
 
     // write header
-    archive.seek(SeekFrom::Start(0))?;
-    archive.write(&header)?;
+    archive.write_at(&header, 0)?;
 
     Ok(())
 }
@@ -232,19 +233,22 @@ pub fn extract(archive: &str, dest: &str) -> Result<(), Error> {
         fs::create_dir(&dest)?;
     }
 
+    // file.seek(SeekFrom::Start(header_size as u64 + offset))?;
+    // let a = file.read_to_end(&mut vec![])?;
+    // println!("{}  {}  {}", a, header_size as u64 + offset, offset);
+
     // iterate over entries
     iterate_entries_err(&json, |val, path| {
         if val["offset"] != Value::Null {
-            let offset = val["offset"].as_str().unwrap().parse::<u64>()?;
-            let size = val["size"].as_u64().unwrap();
-            file.seek(SeekFrom::Start(header_size as u64 + offset))?;
+            let offset = val.get("offset").unwrap().as_u64().unwrap();
+            let size = val.get("size").unwrap().as_u64().unwrap();
             let mut buffer = vec![0u8; size as usize];
-            file.read_exact(&mut buffer)?;
+            file.read_exact_at(&mut buffer, header_size as u64 + offset)?;
             if compressed {
-                zstd::stream::copy_decode(&mut fs::File::create(path)?, &mut buffer)?;
+                zstd::stream::copy_decode(&mut buffer.reader(), &mut fs::File::create(path)?)?;
             } else {
                 fs::write(dest.join(path), buffer)?;
-            }
+            };
         } else {
             let dir = dest.join(path);
             if !dir.exists() {
@@ -279,16 +283,15 @@ pub fn extract_file(archive: &str, dest: &str) -> Result<(), Error> {
     // iterate over entries
     iterate_entries_err(&json, |val, path| {
         if cwd.join(path) == full_path {
-            let offset = val["offset"].as_str().unwrap().parse::<u64>()?;
-            let size = val["size"].as_u64().unwrap();
-            file.seek(SeekFrom::Start(header_size as u64 + offset))?;
+            let offset = val.get("offset").unwrap().as_u64().unwrap();
+            let size = val.get("size").unwrap().as_u64().unwrap();
             let mut buffer = vec![0u8; size as usize];
-            file.read_exact(&mut buffer)?;
+            file.read_exact_at(&mut buffer, header_size as u64 + offset)?;
             if compressed {
-                zstd::stream::copy_decode(&mut fs::File::create(path)?, &mut buffer)?;
+                zstd::stream::copy_decode(&mut buffer.reader(), &mut fs::File::create(path)?)?;
             } else {
                 fs::write(dest.join(path), buffer)?;
-            }
+            };
         }
         Ok(())
     })?;

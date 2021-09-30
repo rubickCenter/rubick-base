@@ -158,9 +158,8 @@ const {
 	sendEvent,
 	getInstalledApps,
 	screenCapture,
+	screenCaptureAll,
 	screenCaptureAroundPosition,
-	compress,
-	decompress,
 } = await newRubickBase().getBasicAPI()
 ```
 

@@ -1,5 +1,7 @@
 简体中文 | [English](./README-EN.md)
 
+![403295935](https://user-images.githubusercontent.com/53158137/135377195-7fc4bb2f-e456-4d95-b2ec-2585417e600b.jpg)
+
 # rubickbase
 
 基于 Rust / WASM 提供截图、取色、键鼠事件监听模拟、压缩解压、图像处理、获取已安装应用等跨平台功能的现代异步 Nodejs 模块，占用空间小, 安装便捷, 使用简单, 高性能, 资源占用极小, 可取代 iohook 和 robotjs
@@ -382,7 +384,7 @@ rubickbase 还有以下功能:
 | Commit  | · `pnpm commit`  |
 | Release | · `pnpm release` |
 
-欢迎关注公众号，与我们共同成长:
+关注公众号后发送`联系`关键字加我微信:
 
 ![wechat](https://z3.ax1x.com/2021/09/26/4yRpN9.jpg)
 

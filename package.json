@@ -19,7 +19,7 @@
 		"@types/signale": "^1.4.2",
 		"bob-esbuild": "^2.0.0",
 		"bob-esbuild-cli": "^2.0.0",
-		"esbuild": "^0.13.2",
+		"esbuild": "^0.13.3",
 		"gitmoji-changelog": "^2.2.1",
 		"gitmoji-cli": "^4.6.1",
 		"prettier": "^2.4.1",

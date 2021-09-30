@@ -91,10 +91,10 @@ const { newRubickBase } = require('rubickbase')
 const rubickBase = newRubickBase()
 
 setInterval(async () => {
-    // start rubickbase and get APIs
-    const api = await rubickBase.getAPI()
-    // print Cursor Position
-    console.log(api.getCursorPosition())
+	// start rubickbase and get APIs
+	const api = await rubickBase.getAPI()
+	// print Cursor Position
+	console.log(api.getCursorPosition())
 }, 1000)
 ```
 

@@ -21,9 +21,9 @@ jobs:
               uses: actions/cache@v2
               with:
                   path: node_modules
-                  key: ${{ runner.os }}-${{ hashFiles('**/package.json') }}
+                  key: ${{ matrix.platform }}-${{ hashFiles('**/package.json') }}
                   restore-keys: |
-                      ${{ runner.os }}-
+                      ${{ matrix.platform }}-
 
             - uses: pnpm/action-setup@v2.0.1
               with:

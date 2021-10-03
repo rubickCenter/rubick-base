@@ -13,11 +13,11 @@ class Image {
 		return this.photonImage.get_base64()
 	}
 
-	width(): number {
+	get width(): number {
 		return this.photonImage.get_width()
 	}
 
-	height(): number {
+	get height(): number {
 		return this.photonImage.get_height()
 	}
 
@@ -55,7 +55,7 @@ class Image {
 	 * @returns img object
 	 */
 	crop(leftTopPosition: Position, width: number, height: number) {
-		const [w, h] = [this.width(), this.height()]
+		const [w, h] = [this.width, this.height]
 		const limitValue = (value: number, min: number, max: number) => {
 			if (value < min) {
 				value = min
@@ -82,11 +82,11 @@ class Image {
 	colorAt(position: Position): Color {
 		if (
 			0 < position.x &&
-			position.x <= this.width() &&
+			position.x <= this.width &&
 			0 < position.y &&
-			position.y <= this.height()
+			position.y <= this.height
 		) {
-			const strip = 4 * (this.width() * (position.y - 1) + position.x)
+			const strip = 4 * (this.width * (position.y - 1) + position.x)
 			const color = this.getRawPixel().slice(strip - 4, strip)
 			return <Color>{
 				hex16: rgbToHex(color[0], color[1], color[2], color[3]),

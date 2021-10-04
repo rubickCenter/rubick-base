@@ -33,7 +33,7 @@ class Image {
 	 * @param sampling_filter 最邻近差值算法 = 1, 二值寻找算法 = 2, CatmullRom插值算法 = 3, 高斯算法 = 4, 插值算法 = 5
 	 * @returns {Image}
 	 */
-	resize(width: number, height: number, sampling_filter?: number): Image {
+	resize(width: number, height: number, sampling_filter?: 1 | 2 | 3 | 4 | 5): Image {
 		sampling_filter = sampling_filter || 1
 		const img = resize(this.photonImage, width, height, sampling_filter)
 		return new Image(img)

@@ -61,9 +61,9 @@ export class RubickBase {
 			if (
 				event.device === 'Mouse' &&
 				event.action === 'Move' &&
-				((<unknown>event.info) as string).startsWith('{')
+				(<string>(<unknown>event.info)).startsWith('{')
 			) {
-				event.info = JSON.parse((<unknown>event.info) as string)
+				event.info = JSON.parse(<string>(<unknown>event.info))
 			}
 			// post event to global event channel
 			deviceEventEmitter.emit('deviceEvent', event)

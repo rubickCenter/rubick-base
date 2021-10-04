@@ -203,5 +203,29 @@ export interface BasicApi {
 	asarList(path: string): Promise<Array<string> | undefined>
 	asarExtractFile(path: string, dest: string): Promise<undefined>
 	asarExtract(path: string, dest: string): Promise<undefined>
-	asarPack(path: string, dest: string, level?: number): Promise<undefined>
+	asarPack(path: string, dest: string, level?: CompressLevel): Promise<undefined>
 }
+
+type CompressLevel =
+	| 0
+	| 1
+	| 2
+	| 3
+	| 4
+	| 5
+	| 6
+	| 7
+	| 8
+	| 9
+	| 10
+	| 11
+	| 12
+	| 13
+	| 14
+	| 15
+	| 16
+	| 17
+	| 18
+	| 19
+	| 20
+	| 21

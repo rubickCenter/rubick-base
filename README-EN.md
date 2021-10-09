@@ -3,7 +3,7 @@
 
 Based on Rust / WASM, a modern asynchronous Nodejs module that provides cross-platform functions such as screenshots, color picking, keyboard and mouse event monitoring simulation, image processing, and access to installed applications. It occupies a small space, is easy to install, simple to use, high performance, and consumes very little resources. , Can replace iohook and robotjs
 
-## Function
+## Features
 
 **Device event listening and simulation**
 
@@ -400,6 +400,6 @@ After paying attention to the official account, send the `contact` keyword to ad
 
 ![wechat](https://z3.ax1x.com/2021/09/26/4yRpN9.jpg)
 
-## Open Source Agreement
+## LISENCE
 
 MPLv2

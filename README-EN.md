@@ -7,30 +7,30 @@ Based on Rust / WASM, a modern asynchronous Nodejs module that provides cross-pl
 
 **Device event listening and simulation**
 
--[x] Get mouse position
--[x] Keyboard and mouse event monitoring
--[x] Keyboard event simulation
--[x] Mouse event simulation
--[x] Subscribe to shortcut key events
+- [x] Get mouse position
+- [x] Keyboard and mouse event monitoring
+- [x] Keyboard event simulation
+- [x] Mouse event simulation
+- [x] Subscribe to shortcut key events
 
 **Image and Screen**
 
--[x] Screenshot
--[x] Get mouse pixel color (main screen)
--[x] Image zoom
--[x] Picture color selection
--[x] Picture cropping
--[x] Multiple screenshots
+- [x] Screenshot
+- [x] Get mouse pixel color (main screen)
+- [x] Image zoom
+- [x] Picture color selection
+- [x] Picture cropping
+- [x] Multiple screenshots
 
 **System info**
 
--[x] Get the list of installed applications (linux✅/macos✅/windows✅)
--[x] Get detailed information of installed applications (linux✅)
--[x] Get system language
+- [x] Get the list of installed applications (linux✅/macos✅/windows✅)
+- [x] Get detailed information of installed applications (linux✅)
+- [x] Get system language
 
 **Other tools**
 
--[x] asar package compression and decompression (zstd algorithm)
+- [x] asar package compression and decompression (zstd algorithm)
 
 ## Install
 

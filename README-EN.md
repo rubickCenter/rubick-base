@@ -1,28 +1,42 @@
+
 # rubickbase
 
-基于 Rust / WASM 提供截图、取色、键鼠事件监听模拟、压缩解压、图像处理、获取已安装应用等跨平台功能的现代异步 Nodejs 模块，占用空间小, 安装便捷, 使用简单, 高性能, 资源占用极小, 可取代 iohook 和 robotjs
+Based on Rust / WASM, a modern asynchronous Nodejs module that provides cross-platform functions such as screenshots, color picking, keyboard and mouse event monitoring simulation, image processing, and access to installed applications. It occupies a small space, is easy to install, simple to use, high performance, and consumes very little resources. , Can replace iohook and robotjs
 
 ## Features
 
--   [x] Mouse/keyboard event listen
--   [x] Keyboard input event simulation
--   [x] Mouse input event simulation
--   [x] Screen capture
--   [x] Pixel color picker
--   [x] Get cursor position
--   [x] Pick color at cursor position
--   [x] Lzma2 (de)compress
--   [x] Register global hotkey
--   [x] Capture the screen around cursor
--   [x] Get installed app list (linux✅/macos✅/windows✅)
--   [x] Get installed app detail info (linux✅)
--   [x] Get system locale language
+**Device event listening and simulation**
+
+- [x] Get mouse position
+- [x] Keyboard and mouse event monitoring
+- [x] Keyboard event simulation
+- [x] Mouse event simulation
+- [x] Subscribe to shortcut key events
+
+**Image and Screen**
+
+- [x] Screenshot
+- [x] Get mouse pixel color (main screen)
+- [x] Image zoom
+- [x] Picture color selection
+- [x] Picture cropping
+- [x] Multiple screenshots
+
+**System info**
+
+- [x] Get the list of installed applications (linux✅/macos✅/windows✅)
+- [x] Get detailed information of installed applications (linux✅)
+- [x] Get system language
+
+**Other tools**
+
+- [x] asar package compression and decompression (zstd algorithm)
 
 ## Install
 
-与 iohook 与 robotjs 不同, 你不需要针对不同版本进行繁琐的重新编译, 一切开箱即用
+Unlike iohook and robotjs, you don't need to recompile tediously for different versions, everything works out of the box
 
-无论你是在 node 中还是在 electron 中，都可以用你喜欢的包管理器直接安装:
+Whether you are in node or electron, you can install it directly with your favorite package manager:
 
 ```
 # npm
@@ -36,80 +50,72 @@ pnpm add rubickbase
 ```
 
 <details>
-<summary>注意事项</summary>
+<summary>Notes</summary>
 
-rubickbase 基于 [N-API](https://nodejs.org/api/n-api.html) v6 , 因此 Nodejs 环境推荐以下版本
+rubickbase is based on [N-API](https://nodejs.org/api/n-api.html) v6, so the following versions are recommended for Nodejs environment
 
 v10.x ,v12.x ,14.x, 15.x, **16.x**
 
-Electron 环境推荐以下版本
+Electron environment recommends the following versions
 
-v13.x, **v14.x** ,v15.x ,16.x
+v13.x,v14.x ,**v15.x** ,16.x
 
 </details>
 
-## Getting start
+## Quick start
 
-### 引入依赖
+### Introducing dependencies
 
-rubickbase 支持 cjs 和 esm 两种规范，当然你可以并且推荐在 TypeScript 中使用它
+rubickbase supports both cjs and esm specifications, of course you can and recommend using it in TypeScript
 
 ```js
 // cjs
-const { newRubickBase } = require('rubickbase')
+const {newRubickBase} = require('rubickbase')
 // esm / typescript
-import { newRubickBase } from 'rubickbase'
+import {newRubickBase} from'rubickbase'
 ```
 
-### 基本使用
+### Basic usage
 
-在这个例子中，你通过 `newRubickbase` 获得了 rubickbase 服务实例，并通过 `start` 函数启动了服务，rubickbase 启动后会在后台进行服务侦听，你可以通过 `getAPI` 获取到 rubickbase 所有功能
+In this example, you get the rubickbase service instance through `newRubickbase`, you can get all the functions of rubickbase through `getAPI`
 
-这里每隔一秒获取当前的鼠标位置，并且 10 秒后调用 `close` 将 rubickbase 服务关闭
+Here get the current mouse position every second
 
 ```js
+const {newRubickBase} = require('rubickbase')
+
 // init rubickbase
 const rubickBase = newRubickBase()
 
-async function main() {
-	// start rubickbase
-	await server.start()
-	const api = server.getAPI()
-	// cursor Position
-	let task = setInterval(async () => {
-		console.log(await api.getCursorPosition())
-	}, 1000)
-	// close rubickbase
-	setTimeout(async () => {
-		await server.close()
-		clearInterval(task)
-	}, 10000)
-}
-
-main()
+setInterval(async () => {
+	// start rubickbase and get APIs
+	const api = await rubickBase.getAPI()
+	// print Cursor Position
+	console.log(api.getCursorPosition())
+}, 1000)
 ```
 
 <details>
-<summary> 可选初始化参数 </summary>
+<summary> Optional initialization parameters</summary>
 
-| 参数名称        | 参数意义               | 类型          |
-| --------------- | ---------------------- | ------------- |
-| port            | GRPC 服务器的端口      | number        |
-| logger          | 日志器                 | Logger        |
-| tmpdir          | 临时文件目录           | string        |
-| workerBoot      | 是否将 worker 一起启动 | boolean       |
-| ioEventCallback | 侦听所有设备事件       | EventCallback |
+| Parameter name | Parameter meaning | Type |
+| --------------- | -------------------------- | ------ ------- |
+| port | Port of the GRPC server | number |
+| logger | Logger | Logger |
+| tmpdir | Temporary file directory | string |
+| workerBoot | Whether to start workers together | boolean |
+| ioEventCallback | Callback function that listens to all device events | EventCallback |
 
 </details>
 
 <details>
-<summary> 分离工作模式 </summary>
+<summary> Advanced startup</summary>
 
-rubickbase 由 GRPC 服务器 master 与多个提供不同功能的 worker 组合运行
+rubickbase is run by a combination of the GRPC server master and multiple workers that provide different functions
 
-如果你需要在不同的地方或不同的时间运行他们, 可以依据需要分别启动
+Generally speaking, when you call `getAPI`, rubickbase will automatically turn on all services, but if you need to run them in a different place or time, you can manually control their life cycle to achieve more refined control
 
-首先你需要在 master 启动时选择不启动 workers
+First of all, you need to choose not to start the workers when the master starts. At this time, the master will listen to messages from the workers.
 
 ```js
 // init rubickbase
@@ -117,16 +123,19 @@ const rubickBase = newRubickBase({ workerBoot: false })
 rubickBase.start()
 ```
 
-然后在需要的地方手动启动 workers
+Then manually start workers where needed
 
 ```js
 const rubickWorker = newRubickWorker()
+// start all workers
 rubickWorker.start()
+// Start ioio worker separately
+rubickWorker.start('ioio')
 ```
 
-注意, worker 的生命周期(存在时间)必须比 master 要短, 否则 worker 中的 GRPC client 会抛出找不到服务端的异常
+Note that the life cycle (existence time) of the worker must be shorter than that of the master, otherwise the GRPC client in the worker will throw an exception that the server cannot be found
 
-并且如果你在启动 master 时更改了端口, 那么也要把端口传递给 worker
+And if you change the port when starting the master, then pass the port to the worker
 
 ```js
 // init rubickbase
@@ -139,76 +148,94 @@ rubickWorker.start()
 
 </details>
 
-### 设备输入事件模拟
+<details>
+<summary> Use the underlying stateless API directly </summary>
 
-模拟鼠标键盘输入事件非常简单，只要调用 `sendEvent` 即可
-
-由于 rubickbase 是用 TypeScript 书写，书写 Event 时编辑器会自动提示
+Allows you to directly call some basic APIs without starting the master and workers
 
 ```js
-// 这里将会模拟按下 F1 键
+const {
+	language,
+	sendEvent,
+	getInstalledApps,
+	screenCapture,
+	screenCaptureAll,
+	screenCaptureAroundPosition,
+} = await newRubickBase().getBasicAPI()
+```
+
+</details>
+
+### Device input event simulation
+
+It is very simple to simulate mouse and keyboard input events, just call `sendEvent`
+
+Since rubickbase is written in TypeScript, the editor will automatically prompt when writing Event
+
+```js
+// This will simulate pressing the F1 key
 api.sendEvent({
-	device: 'KeyBoard',
-	action: 'Press',
-	info: 'F1',
+	device:'KeyBoard',
+	action:'Press',
+	info:'F1',
 })
 
-// 这里将会模拟按下鼠标中键
+// This will simulate pressing the middle mouse button
 api.sendEvent({
-	device: 'Mouse',
-	action: 'Press',
-	info: 'Middle',
+	device:'Mouse',
+	action:'Press',
+	info:'Middle',
 })
 ```
 
-### 设备输入事件侦听
+### Device input event listening
 
-通过 `setEventChannel` API 创建目标事件频道, 获取对应事件的订阅器
+Create a target event channel through the `setEventChannel` API, and get the subscriber of the corresponding event
 
 ```js
-// 这里创建了监听鼠标左键的频道
-const { registerHook } = api.setEventChannel({
-	device: 'Mouse',
-	action: 'Press',
-	info: 'Left',
+// Created here to monitor the left mouse button channel
+const {registerHook} = api.setEventChannel({
+	device:'Mouse',
+	action:'Press',
+	info:'Left',
 })
 
-// 查看目前所有已创建的事件频道
+// View all currently created event channels
 console.log(api.allEventChannels())
 
-// 通过 `registerHook` 注册打印函数
+// Register the printing function through `registerHook`
 registerHook('myeventchannel', async (e) => {
 	console.log(e)
 })
 
-// 删除事件频道
+// delete event channel
 api.delEventChannel('myeventchannel')
 
 console.log(api.hasEventChannel('myeventchannel'), api.allEventChannels())
 ```
 
 <details>
-<summary> 检索和关闭频道 </summary>
+<summary> Retrieve and close channels</summary>
 
-`allEventChannels` 可以获得目前所有已存在的事件频道
+`allEventChannels` can get all existing event channels
 
-`hasEventChannel` 可以判断是否有某个名字的频道
+`hasEventChannel` can determine whether there is a channel with a certain name
 
-`delEventChannel` 可以删除创建的事件频道
+`delEventChannel` can delete the created event channel
 
 </details>
 
 <details>
-<summary>TypeScript用法</summary>
+<summary>TypeScript usage</summary>
 
-**<summary>你可以在 TypeScript 中使用装饰器来进行事件订阅注册**
+**<summary>You can use decorators in TypeScript to register for event subscriptions**
 
 ```ts
-// 这里创建了监听鼠标左键的频道
-const { register } = api.setEventChannel({
-	device: 'Mouse',
-	action: 'Press',
-	info: 'Left',
+// Created here to monitor the left mouse button channel
+const {register} = api.setEventChannel({
+	device:'Mouse',
+	action:'Press',
+	info:'Left',
 })
 
 @register('myeventchannel')
@@ -219,60 +246,60 @@ function myCallback(event: DeviceEvent) {
 
 </details>
 
-### 事件模糊匹配
+### Event fuzzy matching
 
-一个设备事件有 `device` `action` `info` 三个约束条件, 你可以去掉其中的任何条件来完成事件模糊匹配
+A device event has three constraints: `device` `action` `info`, you can remove any of these conditions to complete event fuzzy matching
 
 ```js
-// 匹配鼠标左键的按下事件
+// Match the press event of the left mouse button
 api.setEventChannel({
-	device: 'Mouse',
-	action: 'Press',
-	info: 'Left',
+	device:'Mouse',
+	action:'Press',
+	info:'Left',
 })
 
-// 匹配鼠标移动事件
+// Match the mouse movement event
 api.setEventChannel({
-	device: 'Mouse',
-	action: 'Move',
+	device:'Mouse',
+	action:'Move',
 })
 
-// 匹配鼠标所有键的按下事件
+// Match the press event of all the mouse buttons
 api.setEventChannel({
-	device: 'Mouse',
-	action: 'Press',
+	device:'Mouse',
+	action:'Press',
 })
 
-// 匹配所有设备所有键的按下事件
+// Match all key press events of all devices
 api.setEventChannel({
-	action: 'Press',
+	action:'Press',
 })
 ```
 
-### 图像处理
+### Image Processing
 
-rubickbase 基于 [Photon](https://silvia-odwyer.github.io/photon/) 的高性能 WASM 模块进行图像处理
+rubickbase is based on the high-performance WASM module of [Photon](https://silvia-odwyer.github.io/photon/) for image processing
 
-1. 取色 Image.colorAt
+1. Take color Image.colorAt
 
 ```js
 const color = img.colorAt({ x: 1, y: 1 })
 ```
 
-2. 缩放 Image.resize
+2. Resize Image.resize
 
-输入宽和高，输出缩放后的图像
+Input width and height, output scaled image
 
 ```js
 const newImg = img.resize(100, 100)
 ```
 
 <details>
-<summary> 可选缩放算法 </summary>
+<summary> Optional scaling algorithm</summary>
 
-默认最邻近差值算法，其他的算法的图像结果边缘更光滑，可以根据自己的需要进行选择
+The default nearest neighbor difference algorithm, the image results of other algorithms have smoother edges, you can choose according to your needs
 
-最邻近差值算法 = 1, 二值寻找算法 = 2, CatmullRom 插值算法 = 3, 高斯算法 = 4, 插值算法 = 5
+Nearest Neighbor Difference Algorithm = 1, Binary Finding Algorithm = 2, CatmullRom Interpolation Algorithm = 3, Gaussian Algorithm = 4, Interpolation Algorithm = 5
 
 ```js
 const newImg = img.resize(100, 100, 1)
@@ -280,76 +307,99 @@ const newImg = img.resize(100, 100, 1)
 
 </details>
 
-### 功能一览
+3. Crop Image.crop
 
-rubickbase 还有以下功能:
+Input the point, width and height of the upper left corner, and output the cropped image
 
-1.  lzma 压缩  
-    compress: (fromPath: string, toPath: string) => Promise< undefined >
+```js
+const newImg = img.crop({ x: 5, y: 5 }, 10, 10)
+```
 
-2.  lzma 解压  
-    decompress: (fromPath: string, toPath: string) => Promise< undefined >
+### Features at a glance
 
-3.  获取鼠标当前座标  
+Rubickbase also has the following features:
+
+1. Get the current coordinates of the mouse  
     getCursorPosition: () => Position
 
-4.  获取鼠标当前座标的像素值  
-    getCursorPositionPixelColor: () => Promise< Color >
+2. Get the pixel value of the current coordinates of the mouse  
+    _This API is only available for the home screen_  
+    getCursorPositionPixelColor: () => Promise< Color>
 
-5.  主屏幕截屏  
-    screenCapture: () => Promise< Image >
+3. Main screen screenshot  
+    screenCapture: () => Promise< Image>
 
-6.  获取鼠标周围图像  
-    screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image >
+4. All screenshots  
+    screenCaptureAll: () => Promise< Image[]>
 
-7.  获取系统内已安装的应用列表  
-    getInstalledApps: (getDetailInfo: boolean = false, extraDirs?: Array< string >) => Promise< string >
+5. Get the image around the mouse  
+    _This API is only available for the home screen_  
+    screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image>
 
-    `getDetailInfo` 是否获取应用详细信息 默认否 (目前只有 Linux 有效)  
-    `extraDirs` 额外要扫描的目录  
-    return JSON 格式的快捷方式路径列表 如果 getDetailInfo 为 true, 那么返回应用详细信息列表
+6. Get the list of installed applications in the system  
+    getInstalledApps: (getDetailInfo: boolean = false, extraDirs?: Array< string >) => Promise< string>
+
+    `getDetailInfo` Whether to obtain application detailed information. Default no (currently only available on Linux)  
+    `extraDirs` additional directories to be scanned  
+    Return a list of shortcut paths in JSON format. If getDetailInfo is true, then return a list of application details
 
     <details>
-    <summary> 应用详细信息字段解释 </summary>
+    <summary> Application details field explanation</summary>
 
-    name: 名称  
-    icon_path: 各个尺寸的图标列表  
-    description: 应用描述  
-    command: 应用启动命令  
-    desktop_entry_path: 快捷方式路径
+    name: name  
+    icon_path: list of icons of various sizes  
+    description: application description  
+    command: application start command  
+    desktop_entry_path: shortcut path
 
     </details>
 
     <details>
-    <summary> 扫描原理 </summary>
+    <summary> Scanning principle</summary>
 
-    扫描系统存放快捷方式的目录来获取所有系统内安装的应用, 包含的扫描格式:
+    Scan the directory where the system stores the shortcuts to get all the applications installed in the system, including the scan format:
 
-    | 平台    | 后辍名       |
+    | Platform | Suffix |
     | ------- | ------------ |
-    | linux   | desktop      |
-    | macos   | app,prefPane |
-    | windows | lnk          |
+    | linux | desktop |
+    | macos | app,prefPane |
+    | windows | lnk |
 
     </details>
 
-## Contribute
+7. Get system language
+    language: () => Promise< string>
 
-欢迎任何形式的贡献与开源协作！
+8. asar + zstd compression
 
-项目依赖 `pnpm` 包管理器, 你需要先安装它
+    It is a superset of electron's official asar format, and zstd compression algorithm is added when packaging
+
+    asarList(path: string): Promise< Array <string> | undefined>   
+    asarExtractFile(path: string, dest: string): Promise< undefined>   
+    asarExtract(path: string, dest: string): Promise< undefined>   
+    asarPack(path: string, dest: string, level?: number): Promise< undefined>   
+
+## Contribution and contact
+
+Any kind of contribution and open source collaboration are welcome!
+
+The project depends on the `pnpm` package manager, you need to install it first
 
 `npm install -g pnpm`
 
-项目采用全自动化的代码检查与构建, 使用以下命令进行开发即可
+The project adopts fully automated code inspection and construction, and you can use the following commands to develop
 
-| Action  | Command          |
+| Action | Command |
 | ------- | ---------------- |
-| Install | · `pnpm i`       |
-| Build   | · `pnpm build`   |
-| Commit  | · `pnpm commit`  |
+| Install | · `pnpm i` |
+| Build | · `pnpm build` |
+| Commit | · `pnpm commit` |
 | Release | · `pnpm release` |
 
-## LICENSE
+After paying attention to the official account, send the `contact` keyword to add me on WeChat:
+
+![wechat](https://z3.ax1x.com/2021/09/26/4yRpN9.jpg)
+
+## LISENCE
 
 MPLv2

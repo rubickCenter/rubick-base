@@ -171,7 +171,7 @@ const {
 
 ### 设备输入事件模拟
 
-模拟鼠标键盘输入事件非常简单，只要调用 `sendEvent` 即可
+模拟设备输入事件非常简单，只要调用 `sendEvent` 即可
 
 由于 rubickbase 是用 TypeScript 书写，书写 Event 时编辑器会自动提示
 

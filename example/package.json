@@ -1,6 +1,6 @@
 {
 	"name": "rubickbase-example",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "example usage of rubickbase",
 	"main": "src/index.js",
 	"author": "sovlookup",

@@ -33,7 +33,7 @@
 
 **其他工具**
 
--   [x] asar 打包压缩解压 (zstd算法)
+-   [x] asar 打包压缩解压 (zstd 算法)
 
 ## 安装
 
@@ -197,17 +197,17 @@ api.sendEvent({
 
 ```js
 // 这里创建了监听鼠标左键的频道
-const { registerHook } = api.setEventChannel({
+const register = api.setEventChannel({
 	device: 'Mouse',
 	action: 'Press',
 	info: 'Left',
 })
 
-// 查看目前所有已创建的事件频道
+// 查看目前所有已创建的事件订阅
 console.log(api.allEventChannels())
 
 // 通过 `registerHook` 注册打印函数
-registerHook('myeventchannel', async (e) => {
+register('myeventchannel', async (e) => {
 	console.log(e)
 })
 
@@ -225,27 +225,6 @@ console.log(api.hasEventChannel('myeventchannel'), api.allEventChannels())
 `hasEventChannel` 可以判断是否有某个名字的频道
 
 `delEventChannel` 可以删除创建的事件频道
-
-</details>
-
-<details>
-<summary>TypeScript用法</summary>
-
-**<summary>你可以在 TypeScript 中使用装饰器来进行事件订阅注册**
-
-```ts
-// 这里创建了监听鼠标左键的频道
-const { register } = api.setEventChannel({
-	device: 'Mouse',
-	action: 'Press',
-	info: 'Left',
-})
-
-@register('myeventchannel')
-function myCallback(event: DeviceEvent) {
-	console.log(event)
-}
-```
 
 </details>
 
@@ -377,10 +356,10 @@ rubickbase 还有以下功能:
 
     是 electron 官方 asar 格式的超集，打包时增加了 zstd 压缩算法
 
-    asarList(path: string): Promise< Array < string > | undefined>   
-    asarExtractFile(path: string, dest: string): Promise< undefined >   
-    asarExtract(path: string, dest: string): Promise< undefined >   
-    asarPack(path: string, dest: string, level?: number): Promise< undefined >   
+    asarList(path: string): Promise< Array < string > | undefined>  
+    asarExtractFile(path: string, dest: string): Promise< undefined >  
+    asarExtract(path: string, dest: string): Promise< undefined >  
+    asarPack(path: string, dest: string, level?: number): Promise< undefined >
 
 ## 贡献与联系
 

@@ -8,6 +8,10 @@ import {
 	Color,
 	WorkerSettings,
 	BasicApi,
+	KeyBoardEvent,
+	MouseClickEvent,
+	MouseMoveEvent,
+	MouseWheelEvent,
 } from './types'
 import newRustBackend, { RustBackendAPI } from './backend'
 import { loadPackageDefinition } from '@grpc/grpc-js'
@@ -207,13 +211,12 @@ export class RubickBase {
 		/** set a channel and get register
 		 *
 		 * @param bindEvent
-		 * @returns register - Decorator register; registerHook - Function hook register
+		 * @returns register - register a hook;
 		 */
 		const setEventChannel = (bindEvent: DeviceEvent) => {
-			// Decorator
-			const register = (name: string) => {
-				return (hook: EventCallback) => {
-					const listener = async (deviceEvent: DeviceEvent) => {
+			const register = (name: string, hook: EventCallback) => {
+				const registerHook = (hook: EventCallback) => {
+					const listener = async (deviceEvent: typeof bindEvent) => {
 						if (eventEqual(deviceEvent, bindEvent)) await hook(deviceEvent)
 					}
 
@@ -223,14 +226,11 @@ export class RubickBase {
 					// hook callback
 					deviceEventEmitter.on('deviceEvent', listener)
 				}
-			}
-
-			const registerHook = (name: string, hook: EventCallback) => {
-				register(name)(hook)
+				registerHook(hook)
 			}
 
 			// return register
-			return { register, registerHook }
+			return register
 		}
 
 		/** get all channels

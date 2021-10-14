@@ -1,4 +1,3 @@
-
 # rubickbase
 
 Based on Rust / WASM, a modern asynchronous Nodejs module that provides cross-platform functions such as screenshots, color picking, keyboard and mouse event monitoring simulation, image processing, and access to installed applications. It occupies a small space, is easy to install, simple to use, high performance, and consumes very little resources. , Can replace iohook and robotjs
@@ -7,30 +6,30 @@ Based on Rust / WASM, a modern asynchronous Nodejs module that provides cross-pl
 
 **Device event listening and simulation**
 
-- [x] Get mouse position
-- [x] Keyboard and mouse event monitoring
-- [x] Keyboard event simulation
-- [x] Mouse event simulation
-- [x] Subscribe to shortcut key events
+-   [x] Get mouse position
+-   [x] Keyboard and mouse event monitoring
+-   [x] Keyboard event simulation
+-   [x] Mouse event simulation
+-   [x] Subscribe to shortcut key events
 
 **Image and Screen**
 
-- [x] Screenshot
-- [x] Get mouse pixel color (main screen)
-- [x] Image zoom
-- [x] Picture color selection
-- [x] Picture cropping
-- [x] Multiple screenshots
+-   [x] Screenshot
+-   [x] Get mouse pixel color (main screen)
+-   [x] Image zoom
+-   [x] Picture color selection
+-   [x] Picture cropping
+-   [x] Multiple screenshots
 
 **System info**
 
-- [x] Get the list of installed applications (linux✅/macos✅/windows✅)
-- [x] Get detailed information of installed applications (linux✅)
-- [x] Get system language
+-   [x] Get the list of installed applications (linux✅/macos✅/windows✅)
+-   [x] Get detailed information of installed applications (linux✅)
+-   [x] Get system language
 
 **Other tools**
 
-- [x] asar package compression and decompression (zstd algorithm)
+-   [x] asar package compression and decompression (zstd algorithm)
 
 ## Install
 
@@ -70,9 +69,9 @@ rubickbase supports both cjs and esm specifications, of course you can and recom
 
 ```js
 // cjs
-const {newRubickBase} = require('rubickbase')
+const { newRubickBase } = require('rubickbase')
 // esm / typescript
-import {newRubickBase} from'rubickbase'
+import { newRubickBase } from 'rubickbase'
 ```
 
 ### Basic usage
@@ -82,7 +81,7 @@ In this example, you get the rubickbase service instance through `newRubickbase`
 Here get the current mouse position every second
 
 ```js
-const {newRubickBase} = require('rubickbase')
+const { newRubickBase } = require('rubickbase')
 
 // init rubickbase
 const rubickBase = newRubickBase()
@@ -98,12 +97,12 @@ setInterval(async () => {
 <details>
 <summary> Optional initialization parameters</summary>
 
-| Parameter name | Parameter meaning | Type |
-| --------------- | -------------------------- | ------ ------- |
-| port | Port of the GRPC server | number |
-| logger | Logger | Logger |
-| tmpdir | Temporary file directory | string |
-| workerBoot | Whether to start workers together | boolean |
+| Parameter name  | Parameter meaning                                   | Type          |
+| --------------- | --------------------------------------------------- | ------------- |
+| port            | Port of the GRPC server                             | number        |
+| logger          | Logger                                              | Logger        |
+| tmpdir          | Temporary file directory                            | string        |
+| workerBoot      | Whether to start workers together                   | boolean       |
 | ioEventCallback | Callback function that listens to all device events | EventCallback |
 
 </details>
@@ -175,16 +174,16 @@ Since rubickbase is written in TypeScript, the editor will automatically prompt 
 ```js
 // This will simulate pressing the F1 key
 api.sendEvent({
-	device:'KeyBoard',
-	action:'Press',
-	info:'F1',
+	device: 'KeyBoard',
+	action: 'Press',
+	info: 'F1',
 })
 
 // This will simulate pressing the middle mouse button
 api.sendEvent({
-	device:'Mouse',
-	action:'Press',
-	info:'Middle',
+	device: 'Mouse',
+	action: 'Press',
+	info: 'Middle',
 })
 ```
 
@@ -194,17 +193,17 @@ Create a target event channel through the `setEventChannel` API, and get the sub
 
 ```js
 // Created here to monitor the left mouse button channel
-const {registerHook} = api.setEventChannel({
-	device:'Mouse',
-	action:'Press',
-	info:'Left',
+const register = api.setEventChannel({
+	device: 'Mouse',
+	action: 'Press',
+	info: 'Left',
 })
 
 // View all currently created event channels
 console.log(api.allEventChannels())
 
 // Register the printing function through `registerHook`
-registerHook('myeventchannel', async (e) => {
+register('myeventchannel', async (e) => {
 	console.log(e)
 })
 
@@ -225,27 +224,6 @@ console.log(api.hasEventChannel('myeventchannel'), api.allEventChannels())
 
 </details>
 
-<details>
-<summary>TypeScript usage</summary>
-
-**<summary>You can use decorators in TypeScript to register for event subscriptions**
-
-```ts
-// Created here to monitor the left mouse button channel
-const {register} = api.setEventChannel({
-	device:'Mouse',
-	action:'Press',
-	info:'Left',
-})
-
-@register('myeventchannel')
-function myCallback(event: DeviceEvent) {
-	console.log(event)
-}
-```
-
-</details>
-
 ### Event fuzzy matching
 
 A device event has three constraints: `device` `action` `info`, you can remove any of these conditions to complete event fuzzy matching
@@ -253,26 +231,26 @@ A device event has three constraints: `device` `action` `info`, you can remove a
 ```js
 // Match the press event of the left mouse button
 api.setEventChannel({
-	device:'Mouse',
-	action:'Press',
-	info:'Left',
+	device: 'Mouse',
+	action: 'Press',
+	info: 'Left',
 })
 
 // Match the mouse movement event
 api.setEventChannel({
-	device:'Mouse',
-	action:'Move',
+	device: 'Mouse',
+	action: 'Move',
 })
 
 // Match the press event of all the mouse buttons
 api.setEventChannel({
-	device:'Mouse',
-	action:'Press',
+	device: 'Mouse',
+	action: 'Press',
 })
 
 // Match all key press events of all devices
 api.setEventChannel({
-	action:'Press',
+	action: 'Press',
 })
 ```
 
@@ -319,65 +297,73 @@ const newImg = img.crop({ x: 5, y: 5 }, 10, 10)
 
 Rubickbase also has the following features:
 
-1. Get the current coordinates of the mouse  
+1.  Get the current coordinates of the mouse  
     getCursorPosition: () => Position
 
-2. Get the pixel value of the current coordinates of the mouse  
+2.  Get the pixel value of the current coordinates of the mouse  
     _This API is only available for the home screen_  
     getCursorPositionPixelColor: () => Promise< Color>
 
-3. Main screen screenshot  
+3.  Main screen screenshot  
     screenCapture: () => Promise< Image>
 
-4. All screenshots  
+4.  All screenshots  
     screenCaptureAll: () => Promise< Image[]>
 
-5. Get the image around the mouse  
+5.  Get the image around the mouse  
     _This API is only available for the home screen_  
     screenCaptureAroundPosition: (position: Position, width: number, height: number) => Promise< Image>
 
-6. Get the list of installed applications in the system  
+6.  Get the list of installed applications in the system  
     getInstalledApps: (getDetailInfo: boolean = false, extraDirs?: Array< string >) => Promise< string>
 
     `getDetailInfo` Whether to obtain application detailed information. Default no (currently only available on Linux)  
+     `extraDirs` additional directories to be scanned  
     `extraDirs` additional directories to be scanned  
-    Return a list of shortcut paths in JSON format. If getDetailInfo is true, then return a list of application details
+     `extraDirs` additional directories to be scanned  
+     Return a list of shortcut paths in JSON format. If getDetailInfo is true, then return a list of application details
 
-    <details>
-    <summary> Application details field explanation</summary>
+        <details>
+        <summary> Application details field explanation</summary>
 
     name: name  
+     icon_path: list of icons of various sizes  
     icon_path: list of icons of various sizes  
+     icon_path: list of icons of various sizes  
+     description: application description  
     description: application description  
+     description: application description  
+     command: application start command  
     command: application start command  
-    desktop_entry_path: shortcut path
+     command: application start command  
+     desktop_entry_path: shortcut path
 
-    </details>
+        </details>
 
-    <details>
-    <summary> Scanning principle</summary>
+        <details>
+        <summary> Scanning principle</summary>
 
     Scan the directory where the system stores the shortcuts to get all the applications installed in the system, including the scan format:
 
-    | Platform | Suffix |
-    | ------- | ------------ |
-    | linux | desktop |
-    | macos | app,prefPane |
-    | windows | lnk |
+    | Platform | Suffix       |
+    | -------- | ------------ |
+    | linux    | desktop      |
+    | macos    | app,prefPane |
+    | windows  | lnk          |
 
-    </details>
+        </details>
 
-7. Get system language
+7.  Get system language
     language: () => Promise< string>
 
-8. asar + zstd compression
+8.  asar + zstd compression
 
     It is a superset of electron's official asar format, and zstd compression algorithm is added when packaging
 
-    asarList(path: string): Promise< Array <string> | undefined>   
-    asarExtractFile(path: string, dest: string): Promise< undefined>   
-    asarExtract(path: string, dest: string): Promise< undefined>   
-    asarPack(path: string, dest: string, level?: number): Promise< undefined>   
+    asarList(path: string): Promise< Array <string> | undefined>  
+    asarExtractFile(path: string, dest: string): Promise< undefined>  
+    asarExtract(path: string, dest: string): Promise< undefined>  
+    asarPack(path: string, dest: string, level?: number): Promise< undefined>
 
 ## Contribution and contact
 
@@ -389,11 +375,11 @@ The project depends on the `pnpm` package manager, you need to install it first
 
 The project adopts fully automated code inspection and construction, and you can use the following commands to develop
 
-| Action | Command |
+| Action  | Command          |
 | ------- | ---------------- |
-| Install | · `pnpm i` |
-| Build | · `pnpm build` |
-| Commit | · `pnpm commit` |
+| Install | · `pnpm i`       |
+| Build   | · `pnpm build`   |
+| Commit  | · `pnpm commit`  |
 | Release | · `pnpm release` |
 
 After paying attention to the official account, send the `contact` keyword to add me on WeChat:

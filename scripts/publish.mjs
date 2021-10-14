@@ -12,6 +12,5 @@ if (process.platform === 'linux') {
   await $`pnpm build`
 
   cd('packages/rubickbase')
-  await $`pnpx ncu -u`
   await $`pnpm publish --access public --no-git-checks`
 }

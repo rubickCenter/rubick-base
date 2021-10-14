@@ -10,9 +10,9 @@ crate-type = ["cdylib"]
 [profile.release]
 lto = true
 opt-level = "s"
-# panic = "abort"
-# codegen-units = 1
-# incremental = false
+panic = "abort"
+codegen-units = 1
+incremental = false
 
 [dependencies]
 # mouse/keyboard event
@@ -20,7 +20,9 @@ rdev = "0.5.1"
 # GRPC
 tonic = "0.5.2"
 prost = "0.8.0"
-tokio = { version = "1.11.0", features = ["macros", "rt-multi-thread"] }
+# async
+tokio = { version = "1.12.0", features = ["full"] }
+# datetime
 chrono = "0.4.19"
 # screen capture
 scrap = "0.5.0"
@@ -28,12 +30,9 @@ scrap = "0.5.0"
 image = "0.23.14"
 base64 = "0.13.0"
 # de/composs
-# clap = "2.33.3"
-# glob = "0.3.0"
 zstd = "0.9"
-# lzma-rs = "0.2.0"
 # parse apps
-xdg = "2.2.0"
+xdg = "2.3.0"
 rust-ini = "0.17.0"
 walkdir = "2.3.2"
 serde = { version = "1.0.130", features = ["derive"] }

@@ -45,10 +45,13 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.github_token }}
 
             # rust
-            - uses: Swatinem/rust-cache@v1
             - uses: actions-rs/toolchain@v1
               with:
                   toolchain: nightly
+            - uses: Swatinem/rust-cache@v1
+              with:
+                  working-directory: packages/rust-backend
+                  cache-on-failure: true
 
             # Prepare
             - name: Prepare linux

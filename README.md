@@ -354,7 +354,7 @@ rubickbase 还有以下功能:
 
 8.  asar + zstd 压缩
 
-    是 electron 官方 asar 格式的超集，增加了 zstd 压缩算法，可减少文件60-85%的大小
+    是 electron 官方 asar 格式的超集，兼容打包解包官方 asar 文件，增加了 zstd 压缩算法，可减少文件60-85%的大小
 
     asarList(path: string): Promise< Array < string > | undefined>  
     asarExtractFile(path: string, dest: string): Promise< undefined >  

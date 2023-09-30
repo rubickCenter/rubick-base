@@ -1,3 +1,5 @@
+项目迁移至 https://github.com/rubickCenter/native
+---
 简体中文 | [English](./README-EN.md)
 
 ![403295935](https://user-images.githubusercontent.com/53158137/135377195-7fc4bb2f-e456-4d95-b2ec-2585417e600b.jpg)
